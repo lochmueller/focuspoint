@@ -31,7 +31,12 @@ class TestController extends ActionController {
 	 * @plugin Test
 	 */
 	public function testAction() {
-		$fileReferences = $this->fileRepository->findByRelation('tt_content', 'image', $this->configurationManager->getContentObject()->data['uid']);
-		$this->view->assign('fileReferences', $fileReferences);
+		$contentElement = $this->configurationManager->getContentObject()->data;
+		$fileReferences = $this->fileRepository->findByRelation('tt_content', 'image', $contentElement['uid']);
+
+		$this->view->assignMultiple(array(
+			'fileReferences' => $fileReferences,
+			'customRatio'    => $contentElement['image_ratio']
+		));
 	}
 }

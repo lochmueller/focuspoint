@@ -3,18 +3,26 @@
 <h2>There are {fileReferences -> f:count()} references!</h2>
 
 <f:for each="{fileReferences}" as="fileReference">
+	<h1>Image #{fileReference.uid}</h1>
 
-	<h3>Normal</h3>
+	<h2>Normal</h2>
 	<f:image src="{fileReference.uid}" treatIdAsReference="1" alt="" />
 
-	<h3>Focuspoint (CSS/JS)</h3>
-	<fp:image src="{fileReference.uid}" treatIdAsReference="1" alt="" ratio="1:1" />
+	<f:if condition="{customRatio}">
+		<f:then>
+			<h3>Focuspoint (CSS/JS)</h3>
+			<fp:image src="{fileReference.uid}" treatIdAsReference="1" alt="" ratio="{customRatio}" />
 
-	<h3>Focuspoint (Real)</h3>
-	<fp:image src="{fileReference.uid}" treatIdAsReference="1" alt="" ratio="9:16" realCrop="1" />
+			<h3>Focuspoint (Real)</h3>
+			<fp:image src="{fileReference.uid}" treatIdAsReference="1" alt="" ratio="{customRatio}" realCrop="1" />
 
-	<h3>URI</h3>
-	<fp:uri.image src="{fileReference.uid}" treatIdAsReference="1" ratio="1:1" />
+			<h3>URI</h3>
+			<fp:uri.image src="{fileReference.uid}" treatIdAsReference="1" ratio="{customRatio}" />
+		</f:then>
+		<f:else>
+			Please select a ratio :)
+		</f:else>
+	</f:if>
 
 </f:for>
 
