@@ -151,8 +151,8 @@ class DimensionService {
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function getRatio($ratio) {
-		$ratio = GeneralUtility::intExplode(':', $ratio, TRUE);
+	public function getRatio($ratio) {
+		$ratio = GeneralUtility::trimExplode(':', $ratio, TRUE);
 		if (sizeof($ratio) !== 2) {
 			throw new \Exception('Ratio have to be in the format of e.g. "1:1" oder "16:9"', 34627384862);
 		}
