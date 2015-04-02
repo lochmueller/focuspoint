@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<T3locallang>
+	<meta type="array">
+		<type>misc</type>
+		<description>Language file for the Autoloader extension</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="sys_file_metadata.focus_point_y"><![CDATA[Focus point (Y)]]></label>
+			<label index="sys_file_metadata.focus_point_x"><![CDATA[Focus point (X)]]></label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="sys_file_metadata.focus_point_y"><![CDATA[Fokuspunkt (Y)]]></label>
+			<label index="sys_file_metadata.focus_point_x"><![CDATA[Fokuspunkt (X)]]></label>
+		</languageKey>
+	</data>
+</T3locallang>

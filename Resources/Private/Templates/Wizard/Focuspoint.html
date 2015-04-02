@@ -1,0 +1,98 @@
+<f:be.container loadJQuery="1" includeCssFiles="{0: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-03-31/css/focuspoint.css\')}', 1: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-03-31/demos/demo.css\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-03-31/demos/grid/grid.css\')}', 3: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-03-31/demos/helper/helper-tool.css\')}'}" includeJsFiles="{0:'{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-03-31/js/jquery.focuspoint.min.js\')}', 1: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-03-31/js/jquery.focuspoint.helpertool.js\')}'}">
+
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div id="typo3-docheader-row1">
+				<div class="buttonsleft">
+					<f:render section="iconButtons" optional="true" arguments="{saveUri: saveUri}" />
+				</div>
+				<div class="buttonsright">
+					<f:be.buttons.shortcut />
+				</div>
+			</div>
+			<div id="typo3-docheader-row2">
+				<div class="docheader-row2-left">
+					<f:be.buttons.csh />
+					<f:render section="menu" optional="true" />
+				</div>
+				<div class="docheader-row2-right">
+					<f:be.pagePath />
+					<f:be.pageInfo />
+				</div>
+			</div>
+		</div>
+
+		<div id="typo3-docbody">
+			<div id="typo3-inner-docbody">
+				<f:flashMessages class="tx-extbase-flash-message" renderMode="div" />
+				<f:render section="content" arguments="{filePath: filePath, currentTop:currentTop, currentLeft: currentLeft}" />
+			</div>
+		</div>
+	</div>
+</f:be.container>
+
+<f:section name="content">
+
+	<div id="Frames">
+	</div>
+
+	<div id="Info">
+		<div class="helper-tool">
+			<h1>Click the image to set the FocusPoint.</h1>
+
+			<div class="helper-tool-target">
+				<img class="helper-tool-img" width="100%">
+				<img class="reticle" src="{f:uri.resource(extensionName:'focuspoint',path:'jquery-focuspoint-2015-03-31/demos/img/focuspoint-target.png')}">
+			</div>
+			<p style="display: none;">
+				<label for="set-src">Paste in a URL to change the image</label>
+				<input name="set-src" id="set-src" class='helper-tool-set-src' type='text' value="{filePath}">
+			</p>
+			<p style="display: none;">
+				<label for="data-attr">FocusPoint data- attributes:</label>
+				<input class='helper-tool-data-attr' id="data-attr" name="data-attr" type='text' placeholder='data-focus-x="0" data-focus-y="0" '>
+			</p>
+		</div>
+	</div>
+
+	<style type="text/css">
+		body {
+			top: 0;
+			left: 0;
+			right: 0;
+		}
+	</style>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function () {
+			jQuery('#set-src').trigger('blur');
+			//jQuery('.reticle').css('top', '{currentTop}');
+			//jQuery('.reticle').css('left', '{currentLeft}');
+			//jQuery('img.helper-tool-img').trigger('click');
+
+			jQuery('#saveFocus').click(function () {
+				var valueString = jQuery('#data-attr').val();
+
+				var Ausdruck = /-y="([-0-9\.]*)"/;
+				Ausdruck.exec(valueString);
+				var yValue = (RegExp.$1);
+
+				Ausdruck = /-x="([-0-9\.]*)"/;
+				Ausdruck.exec(valueString);
+				var xValue = (RegExp.$1);
+
+				jQuery(this).attr('href', jQuery(this).attr('href') + "&yValue=" + yValue + "&xValue=" + xValue);
+				return true;
+			});
+		});
+	</script>
+
+</f:section>
+
+<f:section name="iconButtons">
+	<f:be.buttons.icon uri="{saveUri}" icon="actions-document-save-close" title="Save and close" additionalAttributes="{id: 'saveFocus'}" />
+</f:section>
+
+<f:section name="menu">
+
+</f:section>

@@ -1,0 +1,11 @@
+page {
+	includeCSS.focuspoint = typo3conf/ext/focuspoint/Resources/Public/jquery-focuspoint-2015-03-31/css/focuspoint.css
+	includeJSFooter.focuspoint = typo3conf/ext/focuspoint/Resources/Public/jquery-focuspoint-2015-03-31/js/jquery.focuspoint.min.js
+	includeJSFooter.focuspoint.disableCompression = 1
+
+	jsFooterInline.1001 = TEXT
+	jsFooterInline.1001.value = $(document).ready(function(){ $('.focuspoint').focusPoint(); });
+}
+
+# @todo check the handling of regular images in the TYPO3 context
+#tt_content.image.20.1.layout.default.element = <div class="focuspoint" data-focus-x="0" data-focus-y="0" data-image-w="###WIDTH###" data-image-h="###HEIGHT###"><img src="###SRC###" width="###WIDTH###" height="###HEIGHT###"###PARAMS######ALTPARAMS######BORDER######SELFCLOSINGTAGSLASH###></div>

@@ -1,0 +1,37 @@
+/* !CONTAINERS */
+/*-----------------------------------------*/
+
+html,body{
+	height: 100%;
+	width: 100%;
+	max-height: none;
+	max-width: none;
+	overflow: hidden;/*Prevent scrollbars in IE8*/
+	margin: 0;
+}
+body {
+	position: fixed;
+	left: 5px;
+	right: 5px;
+	top: 5px;
+	bottom: 5px;
+	height: auto;
+	width: auto;
+}
+
+#Frame1, #Frame2 {
+	position: absolute;
+	overflow: hidden;
+	border: 5px solid #fff;
+	margin: -5px 0 0 -5px;
+	width: 37.5%;
+	height: 100%;
+	left: 25%;
+	top: 0;
+}
+#Frame2 {
+	left: 62.5%;
+	background-image: url(../img/bird.jpg);
+	background-size: cover;
+	background-position: 64.4677661% 64.2%;
+}

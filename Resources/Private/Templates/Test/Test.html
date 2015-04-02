@@ -1,0 +1,20 @@
+{namespace fp=HDNET\Focuspoint\ViewHelpers}
+
+<h2>There are {fileReferences -> f:count()} references!</h2>
+
+<f:for each="{fileReferences}" as="fileReference">
+
+	<h3>Normal</h3>
+	<f:image src="{fileReference.uid}" treatIdAsReference="1" alt="" />
+
+	<h3>Focuspoint (CSS/JS)</h3>
+	<fp:image src="{fileReference.uid}" treatIdAsReference="1" alt="" ratio="1:1" />
+
+	<h3>Focuspoint (Real)</h3>
+	<fp:image src="{fileReference.uid}" treatIdAsReference="1" alt="" ratio="9:16" realCrop="1" />
+
+	<h3>URI</h3>
+	<fp:uri.image src="{fileReference.uid}" treatIdAsReference="1" ratio="1:1" />
+
+</f:for>
+
