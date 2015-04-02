@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper {
 
 	/**
-	 * Resizes the image (if required) and returns its path. If the image was not resized, the path will be equal to $src
+	 * Resize the image (if required) and returns its path. If the image was not changed, the path will be equal to $src
 	 *
 	 * @see http://typo3.org/documentation/document-library/references/doc_core_tsref/4.2.0/view/1/5/#id4164427
 	 *

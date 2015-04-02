@@ -14,7 +14,7 @@ namespace HDNET\Focuspoint\Domain\Model;
  * @author Tim Lochmüller
  * @db     sys_file_metadata
  */
-class FileMetadata extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class FileMetadata extends AbstractModel {
 
 	/**
 	 * Focus point Y

@@ -10,8 +10,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 $GLOBALS['TCA']['sys_file_metadata'] = ModelUtility::getTcaOverrideInformation('focuspoint', 'sys_file_metadata');
 
-// custom manipulation calls here
-
 $overridePointConfiguration = array(
 	'config' => array(
 		'size'    => 4,

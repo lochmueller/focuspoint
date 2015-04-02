@@ -8,6 +8,7 @@
 
 namespace HDNET\Focuspoint\Hooks;
 
+use TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
@@ -19,7 +20,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Tim Lochmüller
  * @hook   TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tceforms_inline.php|tceformsInlineHook
  */
-class InlineRecord implements \TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface {
+class InlineRecord implements InlineElementHookInterface {
 
 	/**
 	 * Initializes this hook object.

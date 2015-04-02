@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper {
 
 	/**
-	 * Resizes a given image (if required) and renders the respective img tag
+	 * Resize a given image (if required) and renders the respective img tag
 	 *
 	 * @see http://typo3.org/documentation/document-library/references/doc_core_tsref/4.2.0/view/1/5/#id4164427
 	 *
@@ -57,7 +57,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper {
 			return $this->tag->render();
 		}
 
-		// Ratio berechnen
+		// Ratio calculation
 		$focusPointY = $internalImage->getProperty('focus_point_y');
 		$focusPointX = $internalImage->getProperty('focus_point_x');
 		$width = $this->tag->getAttribute('width');

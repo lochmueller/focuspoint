@@ -8,12 +8,14 @@
 
 namespace HDNET\Focuspoint\Controller;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
 /**
  * Test controller
  *
  * @author Tim Lochmüller
  */
-class TestController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class TestController extends ActionController {
 
 	/**
 	 * File repository
