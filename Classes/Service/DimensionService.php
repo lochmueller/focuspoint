@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Tim Lochmüller
  */
-class DimensionService {
+class DimensionService extends AbstractService {
 
 	/**
 	 * Crop mode. Not necessary

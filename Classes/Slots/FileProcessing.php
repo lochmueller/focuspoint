@@ -20,18 +20,24 @@ use TYPO3\CMS\Core\Resource\Service\FileProcessingService;
 class FileProcessing implements SingletonInterface {
 
 	/**
+	 * Dimension service
+	 *
 	 * @var \HDNET\Focuspoint\Service\DimensionService
 	 * @inject
 	 */
 	protected $dimensionService;
 
 	/**
+	 * focus crop service
+	 *
 	 * @var \HDNET\Focuspoint\Service\FocusCropService
 	 * @inject
 	 */
 	protected $focusCropService;
 
 	/**
+	 * Handle the custom processing of files
+	 *
 	 * @param FileProcessingService $fileProcessingService
 	 * @param                       $driver
 	 * @param                       $processedFile

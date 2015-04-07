@@ -56,7 +56,8 @@ class FocuspointController {
 		// current point
 		$information = $this->getCurrentFocusPoint($parameter['P']['uid']);
 
-		$template = new StandaloneView();
+		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $template */
+		$template = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 		$template->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('focuspoint', 'Resources/Private/Templates/Wizard/Focuspoint.html'));
 		$template->assign('filePath', $fileObject->getPublicUrl(TRUE));
 		$template->assign('saveUri', $saveUri);

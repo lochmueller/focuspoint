@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  *
  * @author Tim Lochmüller
  */
-class FocusCropService {
+class FocusCropService extends AbstractService {
 
 	/**
 	 * Graphical functions
@@ -78,7 +78,8 @@ class FocusCropService {
 		$height = $imageSizeInformation[1];
 
 		// dimensions
-		$dimensionService = new DimensionService();
+		/** @var \HDNET\Focuspoint\Service\DimensionService $service */
+		$dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
 		list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
 		$cropMode = $dimensionService->getCropMode($width, $height, $ratio);
 		list($sourceX, $sourceY) = $dimensionService->calculateSourcePosition($cropMode, $width, $height, $focusWidth, $focusHeight, $focusPointX, $focusPointY);

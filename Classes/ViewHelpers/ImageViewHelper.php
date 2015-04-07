@@ -9,9 +9,9 @@
 namespace HDNET\Focuspoint\ViewHelpers;
 
 use HDNET\Focuspoint\Service\DimensionService;
-use HDNET\Focuspoint\Service\FocusCropService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
 
@@ -45,7 +45,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper {
 	public function render($src = NULL, $width = NULL, $height = NULL, $minWidth = NULL, $minHeight = NULL, $maxWidth = NULL, $maxHeight = NULL, $treatIdAsReference = FALSE, $image = NULL, $ratio = '1:1', $realCrop = FALSE) {
 		$internalImage = $this->getImage($src, $treatIdAsReference);
 		if ($realCrop) {
-			$service = new FocusCropService();
+			/** @var \HDNET\Focuspoint\Service\FocusCropService $service */
+			$service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
 			$src = $service->getCroppedImageSrcByFile($internalImage, $ratio);
 			$treatIdAsReference = FALSE;
 			$image = NULL;
@@ -63,7 +64,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper {
 		$width = $this->tag->getAttribute('width');
 		$height = $this->tag->getAttribute('height');
 
-		$dimensionService = new DimensionService();
+		/** @var \HDNET\Focuspoint\Service\DimensionService $service */
+		$dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
 		list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
 
 		$focusTag = '<div class="focuspoint" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $focusWidth . '" data-image-h="' . $focusHeight . '">';
