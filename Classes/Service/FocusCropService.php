@@ -59,10 +59,16 @@ class FocusCropService {
 		$focusPointX = MathUtility::forceIntegerInRange((int)$file->getProperty('focus_point_x'), -100, 100, 0);
 		$focusPointY = MathUtility::forceIntegerInRange((int)$file->getProperty('focus_point_y'), -100, 100, 0);
 
-		$tempImageName = 'typo3temp/focuscrop-' . $file->getSha1() . '-' . str_replace(':', '-', $ratio) . '-' . $focusPointX . '-' . $focusPointY . '.' . $file->getExtension();
+		$tempImageFolder = 'typo3temp/focuscrop/';
+		$tempImageName = $tempImageFolder . $file->getSha1() . '-' . str_replace(':', '-', $ratio) . '-' . $focusPointX . '-' . $focusPointY . '.' . $file->getExtension();
 		$absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 		if (is_file($absoluteTempImageName)) {
-			#return $tempImageName;
+			return $tempImageName;
+		}
+
+		$absoluteTempImageFolder = GeneralUtility::getFileAbsFileName($tempImageFolder);
+		if (!is_dir($absoluteTempImageFolder)) {
+			GeneralUtility::mkdir_deep($absoluteTempImageFolder);
 		}
 
 		$this->graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
