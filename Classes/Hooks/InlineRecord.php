@@ -8,10 +8,10 @@
 
 namespace HDNET\Focuspoint\Hooks;
 
+use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\Utility\IconUtility;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -93,18 +93,9 @@ class InlineRecord implements InlineElementHookInterface {
 	 * @return int
 	 */
 	protected function getMetaDataUidByFileUid($fileUid) {
-		$row = $this->getDatabaseConnection()
+		$row = GlobalUtility::getDatabaseConnection()
 			->exec_SELECTgetSingleRow('uid', 'sys_file_metadata', 'file=' . (int)$fileUid);
 		return (isset($row['uid'])) ? $row['uid'] : 0;
-	}
-
-	/**
-	 * Get database connection
-	 *
-	 * @return DatabaseConnection
-	 */
-	protected function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];
 	}
 
 	/**

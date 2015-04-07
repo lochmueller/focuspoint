@@ -61,27 +61,26 @@ class DimensionService extends AbstractService {
 	 * @return array
 	 */
 	public function getFocusWidthAndHeight($width, $height, $ratio) {
-
 		$width = (int)$width;
 		$height = (int)$height;
 		$ratio = $this->getRatio($ratio);
 		$widthDiff = $width / $ratio[0];
 		$heightDiff = $height / $ratio[1];
 
-		if ($widthDiff == $heightDiff) {
-			$focusWidth = $width;
-			$focusHeight = $height;
-		} elseif ($widthDiff < $heightDiff) {
-			$focusWidth = $width;
-			$focusHeight = (int)ceil($widthDiff / $heightDiff * $height);
-		} else {
-			$focusHeight = $height;
-			$focusWidth = (int)ceil($heightDiff / $widthDiff * $width);
+		if ($widthDiff < $heightDiff) {
+			return array(
+				$width,
+				(int)ceil($widthDiff / $heightDiff * $height)
+			);
+		} elseif ($widthDiff > $heightDiff) {
+			return array(
+				(int)ceil($heightDiff / $widthDiff * $width),
+				$height
+			);
 		}
-
 		return array(
-			$focusWidth,
-			$focusHeight
+			$width,
+			$height
 		);
 	}
 

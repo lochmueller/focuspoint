@@ -9,13 +9,12 @@
 namespace HDNET\Focuspoint\Controller\Wizard;
 
 use HDNET\Focuspoint\Utility\FileUtility;
+use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Wizard controller
@@ -39,7 +38,7 @@ class FocuspointController {
 				'focus_point_x' => $parameter['xValue'] * 100,
 			);
 			$uid = (int)$parameter['P']['uid'];
-			$this->getDatabaseConnection()
+			GlobalUtility::getDatabaseConnection()
 				->exec_UPDATEquery('sys_file_metadata', 'uid=' . $uid, $values);
 			HttpUtility::redirect($parameter['P']['returnUrl']);
 		}
@@ -75,19 +74,10 @@ class FocuspointController {
 	 * @return array|FALSE|NULL
 	 */
 	protected function getCurrentFocusPoint($uid) {
-		$row = $this->getDatabaseConnection()
+		$row = GlobalUtility::getDatabaseConnection()
 			->exec_SELECTgetSingleRow('focus_point_x, focus_point_y', 'sys_file_metadata', 'uid=' . $uid);
 		$row['focus_point_x'] = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
 		$row['focus_point_y'] = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
 		return $row;
-	}
-
-	/**
-	 * Get database connection
-	 *
-	 * @return DatabaseConnection
-	 */
-	protected function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];
 	}
 }
