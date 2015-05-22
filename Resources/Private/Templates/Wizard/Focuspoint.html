@@ -66,9 +66,11 @@
 	<script type="text/javascript">
 		jQuery(document).ready(function () {
 			jQuery('#set-src').trigger('blur');
-			//jQuery('.reticle').css('top', '{currentTop}');
-			//jQuery('.reticle').css('left', '{currentLeft}');
-			//jQuery('img.helper-tool-img').trigger('click');
+			jQuery('.reticle').css('top', '{currentTop}');
+			jQuery('.reticle').css('left', '{currentLeft}');
+			setTimeout(function () {
+				jQuery('img.helper-tool-img').trigger('click');
+			}, 1000);
 
 			jQuery('#saveFocus').click(function () {
 				var valueString = jQuery('#data-attr').val();

@@ -119,6 +119,20 @@
 			//Calculate FocusPoint coordinates
 			var offsetX = e.pageX - $(this).offset().left;
 			var offsetY = e.pageY - $(this).offset().top;
+
+			// start HDNET
+			if(!$.isNumeric(offsetX) || !$.isNumeric(offsetY)) {
+				var $imageElement = jQuery('.helper-tool-img');
+				imageW = $imageElement.width();
+				imageH = $imageElement.height();
+
+				var $reticle = jQuery('.reticle');
+				offsetX = $reticle.position().left + 50;
+				offsetY = $reticle.position().top + 50;
+			}
+			// end HDNET
+
+
 			var focusX = (offsetX/imageW - .5)*2;
 			var focusY = (offsetY/imageH - .5)*-2;
 			focusPointAttr.x = focusX;
