@@ -12,6 +12,7 @@ use HDNET\Focuspoint\Utility\FileUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Resource\AbstractFile;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
 
@@ -36,13 +37,13 @@ class FileList implements FileListEditIconHookInterface {
 			$metaUid = $this->getFileMetaUidByCells($cells);
 			$file = FileUtility::getFileByMetaData($metaUid);
 		} catch (\Exception $ex) {
-			$cells['focuspoint'] = IconUtility::getSpriteIcon('empty-empty');
+			$cells['focuspoint'] = $this->getEmptyIcon();
 			return;
 		}
 
 		// no Image?
 		if ($file->getType() !== AbstractFile::FILETYPE_IMAGE) {
-			$cells['focuspoint'] = IconUtility::getSpriteIcon('empty-empty');
+			$cells['focuspoint'] = $this->getEmptyIcon();
 			return;
 		}
 
@@ -53,7 +54,16 @@ class FileList implements FileListEditIconHookInterface {
 			),
 		);
 		$wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
-		$cells['focuspoint'] = '<a href="' . $wizardUri . '">' . IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint') . '</a>';
+		$cells['focuspoint'] = '<a href="' . $wizardUri . '" class="btn btn-default">' . IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint') . '</a>';
+	}
+
+	/**
+	 * Get the empty icon
+	 *
+	 * @return string
+	 */
+	protected function getEmptyIcon() {
+		return '<span class="btn btn-default disabled">' . IconUtility::getSpriteIcon('empty-empty') . '</span>';
 	}
 
 	/**
@@ -65,10 +75,20 @@ class FileList implements FileListEditIconHookInterface {
 	 * @throws \Exception
 	 */
 	protected function getFileMetaUidByCells($cells) {
-		$pattern = '/sys_file_metadata\]\[([0-9]*)\]/';
-		if (!preg_match($pattern, $cells['editmetadata'], $matches)) {
-			throw new \Exception('No valid metadata information found', 127846873264328);
+		if (GeneralUtility::compat_version('7.2.0')) {
+			$pattern = "/'([0-9]:.*?)'/";
+			if (!preg_match($pattern, $cells['info'], $matches)) {
+				throw new \Exception('No valid metadata information found', 24674575467452);
+			}
+			$resourceFactory = ResourceFactory::getInstance();
+			$fileObject = $resourceFactory->getFileObjectFromCombinedIdentifier(str_replace('\\', '', $matches[1]));
+			return (int)$fileObject->getUid();
+		} else {
+			$pattern = '/sys_file_metadata\]\[([0-9]*)\]/';
+			if (!preg_match($pattern, $cells['editmetadata'], $matches)) {
+				throw new \Exception('No valid metadata information found', 127846873264328);
+			}
+			return (int)$matches[1];
 		}
-		return (int)$matches[1];
 	}
 }
