@@ -82,7 +82,11 @@ class FileList implements FileListEditIconHookInterface {
 			}
 			$resourceFactory = ResourceFactory::getInstance();
 			$fileObject = $resourceFactory->getFileObjectFromCombinedIdentifier(str_replace('\\', '', $matches[1]));
-			return (int)$fileObject->getUid();
+			$metaData = $fileObject->_getMetaData();
+			if (!isset($metaData['uid'])) {
+				throw new \Exception('No meta data found', 2462378462378);
+			}
+			return (int)$metaData['uid'];
 		} else {
 			$pattern = '/sys_file_metadata\]\[([0-9]*)\]/';
 			if (!preg_match($pattern, $cells['editmetadata'], $matches)) {
