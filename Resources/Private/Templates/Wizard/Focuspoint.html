@@ -2,22 +2,22 @@
 
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
-			<div id="typo3-docheader-row1">
-				<div class="buttonsleft">
-					<f:render section="iconButtons" optional="true" arguments="{saveUri: saveUri}" />
-				</div>
-				<div class="buttonsright">
-					<f:be.buttons.shortcut />
-				</div>
-			</div>
-			<div id="typo3-docheader-row2">
-				<div class="docheader-row2-left">
+			<div id="typo3-docheader-row1" class="typo3-docheader-functions">
+				<div class="buttonsleft left">
 					<f:be.buttons.csh />
 					<f:render section="menu" optional="true" />
 				</div>
-				<div class="docheader-row2-right">
+				<div class="buttonsright right">
 					<f:be.pagePath />
 					<f:be.pageInfo />
+				</div>
+			</div>
+			<div id="typo3-docheader-row2" class="typo3-docheader-buttons">
+				<div class="docheader-row2-left left">
+					<f:render section="iconButtons" optional="true" arguments="{saveUri: saveUri}" />
+				</div>
+				<div class="docheader-row2-right right">
+					<f:be.buttons.shortcut />
 				</div>
 			</div>
 		</div>
