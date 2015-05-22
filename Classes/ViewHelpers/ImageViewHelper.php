@@ -8,7 +8,6 @@
 
 namespace HDNET\Focuspoint\ViewHelpers;
 
-use HDNET\Focuspoint\Service\DimensionService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -61,12 +60,6 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper {
 		// Ratio calculation
 		$focusPointY = $internalImage->getProperty('focus_point_y');
 		$focusPointX = $internalImage->getProperty('focus_point_x');
-		$width = $this->tag->getAttribute('width');
-		$height = $this->tag->getAttribute('height');
-
-		/** @var \HDNET\Focuspoint\Service\DimensionService $service */
-		$dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
-		list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
 
 		$focusTag = '<div class="focuspoint" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
 		return $focusTag . $this->tag->render() . '</div>';

@@ -1,8 +1,8 @@
 <?php
 /**
- * @todo    General file information
+ * Local crop scale mask helper (overwrite)
  *
- * @package Hdnet
+ * @package Focuspoint\Xclass
  * @author  Tim Lochmüller
  */
 
@@ -16,10 +16,9 @@ use TYPO3\CMS\Core\Resource\Processing\TaskInterface;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
- * @todo   General class information
+ * Local crop scale mask helper (overwrite)
  *
  * @author Tim Lochmüller
  */
@@ -42,6 +41,8 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 	protected $focusCropService;
 
 	/**
+	 * Build up the object
+	 *
 	 * @param LocalImageProcessor $processor
 	 */
 	public function __construct(LocalImageProcessor $processor) {
@@ -50,6 +51,8 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 	}
 
 	/**
+	 * Processing the focus point crop (fallback to LocalCropScaleMaskHelper)
+	 *
 	 * @param TaskInterface $task
 	 *
 	 * @return array|NULL
