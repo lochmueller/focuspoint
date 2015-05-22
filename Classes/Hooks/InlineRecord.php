@@ -80,7 +80,7 @@ class InlineRecord implements InlineElementHookInterface {
 			),
 		);
 		$wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
-		$configuration = '<a href="' . $wizardUri . '">' . IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint') . '</a>';
+		$configuration = '<a href="' . $wizardUri . '" class="btn btn-default">' . IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint') . '</a>';
 
 		$this->arrayUnshiftAssoc($controlItems, 'focuspoint', $configuration);
 	}
