@@ -65,7 +65,13 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 			$newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
 			$file = ResourceFactory::getInstance()
 				->retrieveFileOrFolderObject($newFile);
-			ObjectAccess::setProperty($task, 'sourceFile', $file);
+
+			$targetFile = $task->getTargetFile();
+			ObjectAccess::setProperty($targetFile, 'originalFile', $file, TRUE);
+			ObjectAccess::setProperty($targetFile, 'originalFileSha1', $file->getSha1(), TRUE);
+			ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), TRUE);
+			ObjectAccess::setProperty($task, 'sourceFile', $file, TRUE);
+			ObjectAccess::setProperty($task, 'targetFile', $targetFile, TRUE);
 		} catch (\Exception $ex) {
 		}
 
