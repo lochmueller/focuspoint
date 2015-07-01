@@ -151,9 +151,9 @@ class DimensionService extends AbstractService {
 	 * @throws \Exception
 	 */
 	public function getRatio($ratio) {
-		$ratio = GeneralUtility::trimExplode(':', $ratio, TRUE);
+		$ratio = explode(':', $ratio);
 		if (sizeof($ratio) !== 2) {
-			throw new \Exception('Ratio have to be in the format of e.g. "1:1" oder "16:9"', 34627384862);
+			throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 34627384862);
 		}
 		return $ratio;
 	}
