@@ -143,6 +143,55 @@ class DimensionService extends AbstractService {
 	}
 
 	/**
+	 * get the shifted focus point point position
+	 * for e.g. Frontend handling of the new created image
+	 *
+	 * @param int    $imgWidth
+	 * @param int    $imgHeight
+	 * @param int    $focusX
+	 * @param int 	 $focusY
+	 * @param string $ratio
+	 *
+	 * @return array
+	 */
+	public function getShiftedFocusPointPosition($imgWidth, $imgHeight, $focusX, $focusY, $ratio) {
+		$halfWidth  = $imgWidth / 2;
+		$halfHeight = $imgHeight / 2;
+
+		$realFocusX = $halfWidth + ($focusX / 100 * $halfWidth);
+		$realFocusY = $halfHeight - ($focusY / 100 * $halfHeight);
+
+		list($focusWidth, $focusHeight) = $this->getFocusWidthAndHeight($imgWidth, $imgHeight, $ratio);
+
+		list($sourceX, $sourceY) = $this->calculateSourcePosition(
+			$imgWidth,
+			$imgHeight,
+			$focusWidth,
+			$focusHeight,
+			$focusX,
+			$focusY,
+			$ratio
+		);
+
+		$newHalfWidth  = $focusWidth / 2;
+		$newHalfHeight = $focusHeight / 2;
+
+		$newRealFocusX = $realFocusX - $sourceX;
+		$newRealFocusY = $realFocusY - $sourceY;
+
+		$newFocusX = ($newRealFocusX - $newHalfWidth) * 100 / ($newHalfWidth);
+		$newFocusY = ($newHalfHeight - $newRealFocusY) * 100 / ($newHalfHeight);
+		$newFocusX = (int)round($newFocusX, 0);
+		$newFocusY = (int)round($newFocusY, 0);
+
+		return array(
+		    $newFocusX,
+		    $newFocusY,
+		);
+	}
+
+
+	/**
 	 * Check the ratio and create an array
 	 *
 	 * @param string $ratio
