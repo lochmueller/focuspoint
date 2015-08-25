@@ -22,77 +22,81 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
  *
  * @author Tim Lochmüller
  */
-class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\LocalCropScaleMaskHelper {
+class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\LocalCropScaleMaskHelper
+{
 
-	/**
-	 * Dimension service
-	 *
-	 * @var \HDNET\Focuspoint\Service\DimensionService
-	 * @inject
-	 */
-	protected $dimensionService;
+    /**
+     * Dimension service
+     *
+     * @var \HDNET\Focuspoint\Service\DimensionService
+     * @inject
+     */
+    protected $dimensionService;
 
-	/**
-	 * focus crop service
-	 *
-	 * @var \HDNET\Focuspoint\Service\FocusCropService
-	 * @inject
-	 */
-	protected $focusCropService;
+    /**
+     * focus crop service
+     *
+     * @var \HDNET\Focuspoint\Service\FocusCropService
+     * @inject
+     */
+    protected $focusCropService;
 
-	/**
-	 * Build up the object
-	 *
-	 * @param LocalImageProcessor $processor
-	 */
-	public function __construct(LocalImageProcessor $processor) {
-		$this->dimensionService = new DimensionService();
-		$this->focusCropService = new FocusCropService();
-	}
+    /**
+     * Build up the object
+     *
+     * @param LocalImageProcessor $processor
+     */
+    public function __construct(LocalImageProcessor $processor)
+    {
+        $this->dimensionService = new DimensionService();
+        $this->focusCropService = new FocusCropService();
+    }
 
-	/**
-	 * Processing the focus point crop (fallback to LocalCropScaleMaskHelper)
-	 *
-	 * @param TaskInterface $task
-	 *
-	 * @return array|NULL
-	 */
-	public function process(TaskInterface $task) {
-		$sourceFile = $task->getSourceFile();
-		try {
-			$ratio = $this->getCurrentRatioConfiguration();
-			$this->dimensionService->getRatio($ratio);
-			$newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
-			$file = ResourceFactory::getInstance()
-				->retrieveFileOrFolderObject($newFile);
+    /**
+     * Processing the focus point crop (fallback to LocalCropScaleMaskHelper)
+     *
+     * @param TaskInterface $task
+     *
+     * @return array|NULL
+     */
+    public function process(TaskInterface $task)
+    {
+        $sourceFile = $task->getSourceFile();
+        try {
+            $ratio = $this->getCurrentRatioConfiguration();
+            $this->dimensionService->getRatio($ratio);
+            $newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
+            $file = ResourceFactory::getInstance()
+                ->retrieveFileOrFolderObject($newFile);
 
-			$targetFile = $task->getTargetFile();
-			ObjectAccess::setProperty($targetFile, 'originalFile', $file, TRUE);
-			ObjectAccess::setProperty($targetFile, 'originalFileSha1', $file->getSha1(), TRUE);
-			ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), TRUE);
-			ObjectAccess::setProperty($task, 'sourceFile', $file, TRUE);
-			ObjectAccess::setProperty($task, 'targetFile', $targetFile, TRUE);
-		} catch (\Exception $ex) {
-		}
+            $targetFile = $task->getTargetFile();
+            ObjectAccess::setProperty($targetFile, 'originalFile', $file, true);
+            ObjectAccess::setProperty($targetFile, 'originalFileSha1', $file->getSha1(), true);
+            ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), true);
+            ObjectAccess::setProperty($task, 'sourceFile', $file, true);
+            ObjectAccess::setProperty($task, 'targetFile', $targetFile, true);
+        } catch (\Exception $ex) {
+        }
 
-		return parent::process($task);
-	}
+        return parent::process($task);
+    }
 
-	/**
-	 * Find the current ratio configuration
-	 *
-	 * @return string|NULL
-	 */
-	protected function getCurrentRatioConfiguration() {
-		$currentRecord = $GLOBALS['TSFE']->currentRecord;
-		$parts = GeneralUtility::trimExplode(':', $currentRecord);
-		if (sizeof($parts) !== 2) {
-			return NULL;
-		}
-		if ($parts[0] !== 'tt_content') {
-			return NULL;
-		}
-		$record = BackendUtility::getRecord($parts[0], (int)$parts[1]);
-		return isset($record['image_ratio']) ? trim($record['image_ratio']) : NULL;
-	}
+    /**
+     * Find the current ratio configuration
+     *
+     * @return string|NULL
+     */
+    protected function getCurrentRatioConfiguration()
+    {
+        $currentRecord = $GLOBALS['TSFE']->currentRecord;
+        $parts = GeneralUtility::trimExplode(':', $currentRecord);
+        if (sizeof($parts) !== 2) {
+            return null;
+        }
+        if ($parts[0] !== 'tt_content') {
+            return null;
+        }
+        $record = BackendUtility::getRecord($parts[0], (int)$parts[1]);
+        return isset($record['image_ratio']) ? trim($record['image_ratio']) : null;
+    }
 }

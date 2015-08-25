@@ -15,14 +15,16 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
  *
  * @author Tim Lochmüller
  */
-class GlobalUtility {
+class GlobalUtility
+{
 
-	/**
-	 * Get database connection
-	 *
-	 * @return DatabaseConnection
-	 */
-	public static function getDatabaseConnection() {
-		return $GLOBALS['TYPO3_DB'];
-	}
+    /**
+     * Get database connection
+     *
+     * @return DatabaseConnection
+     */
+    public static function getDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
+    }
 }
