@@ -5,7 +5,25 @@ page {
 
 	jsFooterInline.1001 = TEXT
 	jsFooterInline.1001.value = $(document).ready(function(){ $('.focuspoint').focusPoint(); });
+
+	cssInline.1001 = TEXT
+	cssInline.1001.value = #pageBackground {width:100%;height:100%;overflow:hidden;position:absolute;}
 }
 
 # @todo check the handling of regular images in the TYPO3 context
 #tt_content.image.20.1.layout.default.element = <div class="focuspoint" data-focus-x="0" data-focus-y="0" data-image-w="###WIDTH###" data-image-h="###HEIGHT###"><img src="###SRC###" width="###WIDTH###" height="###HEIGHT###"###PARAMS######ALTPARAMS######BORDER######SELFCLOSINGTAGSLASH###></div>
+
+# <f:cObject typoscriptObjectPath="lib.pageBackground" /> (example)
+# Page Background helper
+lib.pageBackground = COA
+lib.pageBackground {
+
+	10 = FILES
+	10 {
+		references.data =  levelmedia:-1, slide
+		references.listNum = 0
+
+		renderObj = TEXT
+		renderObj.dataWrap = <div id="pageBackground" class="focuspoint" data-image-h="{focuspoint:h}" data-image-w="{focuspoint:w}" data-focus-y="{focuspoint:y}" data-focus-x="{focuspoint:x}"><img src="{file:current:publicUrl}" /></div>
+	}
+}
