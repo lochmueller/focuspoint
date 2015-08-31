@@ -28,6 +28,7 @@ class FocuspointController
      * Main action
      *
      * @throws \Exception
+     * @return string
      */
     public function main()
     {
@@ -66,7 +67,7 @@ class FocuspointController
         $template->assign('currentLeft', (($information['focus_point_x'] + 100) / 2) . '%');
         $template->assign('currentTop', (($information['focus_point_y'] - 100) / -2) . '%');
 
-        echo $template->render();
+        return $template->render();
     }
 
     /**

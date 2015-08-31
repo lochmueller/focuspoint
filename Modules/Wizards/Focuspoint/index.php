@@ -16,5 +16,6 @@
  * Wizard to add new records to a group/select TCEform formfield
  */
 
+/** @var \HDNET\Focuspoint\Controller\Wizard\FocuspointController $editController */
 $editController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('HDNET\\Focuspoint\\Controller\\Wizard\\FocuspointController');
-$editController->main();
+echo $editController->main();
