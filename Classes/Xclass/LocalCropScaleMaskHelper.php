@@ -50,6 +50,7 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     {
         $this->dimensionService = new DimensionService();
         $this->focusCropService = new FocusCropService();
+        parent::__construct($processor);
     }
 
     /**
