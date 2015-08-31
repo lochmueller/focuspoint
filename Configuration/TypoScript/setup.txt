@@ -1,6 +1,6 @@
 page {
-	includeCSS.focuspoint = typo3conf/ext/focuspoint/Resources/Public/jquery-focuspoint-2015-03-31/css/focuspoint.css
-	includeJSFooter.focuspoint = typo3conf/ext/focuspoint/Resources/Public/jquery-focuspoint-2015-03-31/js/jquery.focuspoint.min.js
+	includeCSS.focuspoint = typo3conf/ext/focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/css/focuspoint.css
+	includeJSFooter.focuspoint = typo3conf/ext/focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/js/jquery.focuspoint.min.js
 	includeJSFooter.focuspoint.disableCompression = 1
 
 	jsFooterInline.1001 = TEXT
