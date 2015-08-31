@@ -4,7 +4,17 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-\HDNET\Autoloader\Loader::extTables('HDNET', 'focuspoint');
+$loader = array(
+    'Xclass',
+    'Hooks',
+    'SmartObjects',
+    'ExtensionTypoScriptSetup',
+    'Plugins',
+    'StaticTyposcript',
+    'Xclass',
+    'Xclass',
+);
+\HDNET\Autoloader\Loader::extTables('HDNET', 'focuspoint', $loader);
 
 $icons = array(
     'focuspoint' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('focuspoint') . 'ext_icon.png',
