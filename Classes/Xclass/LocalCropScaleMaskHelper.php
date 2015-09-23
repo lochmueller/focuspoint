@@ -48,8 +48,8 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
      */
     public function __construct(LocalImageProcessor $processor)
     {
-        $this->dimensionService = new DimensionService();
-        $this->focusCropService = new FocusCropService();
+        $this->dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
+        $this->focusCropService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
         parent::__construct($processor);
     }
 
