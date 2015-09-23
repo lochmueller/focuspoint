@@ -9,6 +9,7 @@
 namespace HDNET\Focuspoint\Service;
 
 use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -28,6 +29,51 @@ class FocusCropService extends AbstractService
      * @inject
      */
     protected $graphicalFunctions;
+
+    /**
+     * get the image
+     *
+     * @param $src
+     * @param $image
+     * @param $treatIdAsReference
+     *
+     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|\TYPO3\CMS\Core\Resource\FileReference|\TYPO3\CMS\Core\Resource\Folder
+     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     */
+    public function getViewHelperImage($src, $image, $treatIdAsReference)
+    {
+        $resourceFactory = ResourceFactory::getInstance();
+        if (!MathUtility::canBeInterpretedAsInteger($src)) {
+            $file = $resourceFactory->retrieveFileOrFolderObject($src);
+        } else if (!$treatIdAsReference) {
+            $file = $resourceFactory->getFileObject($src);
+        } else {
+            $image = $resourceFactory->getFileReferenceObject($src);
+            $file = $image->getOriginalFile();
+        }
+
+        return $file;
+    }
+
+    /**
+     * Helper function for view helpers
+     *
+     * @param $src
+     * @param $image
+     * @param $treatIdAsReference
+     * @param $ratio
+     *
+     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     *
+     * @return string
+     */
+    public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio)
+    {
+        $file = $this->getViewHelperImage($src, $image, $treatIdAsReference);
+        return $this->getCroppedImageSrcByFile($file, $ratio);
+    }
 
     /**
      * Get the cropped image

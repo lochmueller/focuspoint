@@ -9,12 +9,12 @@
 
 namespace HDNET\Focuspoint\ViewHelpers\Uri;
 
-use HDNET\Focuspoint\Service\FocusCropService;
 use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
 
 /**
  * Get the URI of the cropped image
@@ -53,33 +53,77 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         $treatIdAsReference = false,
         $ratio = '1:1'
     ) {
-        $internalImage = $this->getImage($src, $treatIdAsReference);
+
+        if (GeneralUtility::compat_version('7.0')) {
+            return self::renderStatic(array(
+                'src'                => $src,
+                'image'              => $image,
+                'width'              => $width,
+                'height'             => $height,
+                'minWidth'           => $minWidth,
+                'minHeight'          => $minHeight,
+                'maxWidth'           => $maxWidth,
+                'maxHeight'          => $maxHeight,
+                'treatIdAsReference' => $treatIdAsReference,
+                'crop'               => null,
+                'ratio'              => $ratio, // added ratio
+            ), $this->buildRenderChildrenClosure(), $this->renderingContext);
+        }
+
         /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
         $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
-        $src = $service->getCroppedImageSrcByFile($internalImage, $ratio);
+        $src = $service->getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio);
         return parent::render($src, null, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight, false);
     }
 
     /**
-     * get the image
+     * @param array                     $arguments
+     * @param callable|\Closure         $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
      *
-     * @param $src
-     * @param $treatIdAsReference
-     *
-     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|\TYPO3\CMS\Core\Resource\FileReference|\TYPO3\CMS\Core\Resource\Folder
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     * @return string
+     * @throws Exception
      */
-    protected function getImage($src, $treatIdAsReference)
-    {
-        $resourceFactory = ResourceFactory::getInstance();
-        if (!MathUtility::canBeInterpretedAsInteger($src)) {
-            return $resourceFactory->retrieveFileOrFolderObject($src);
+    static public function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+
+        /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
+        $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
+        $arguments['src'] = $service->getCroppedImageSrcForViewHelper($arguments['src'], $arguments['image'],
+            $arguments['treatIdAsReference'], $arguments['ratio']);
+        $arguments['image'] = null;
+        $arguments['treatIdAsReference'] = false;
+
+        $src = $arguments['src'];
+        $image = $arguments['image'];
+
+        $treatIdAsReference = $arguments['treatIdAsReference'];
+        $crop = $arguments['crop'];
+
+        if (is_null($src) && is_null($image) || !is_null($src) && !is_null($image)) {
+            throw new Exception('You must either specify a string src or a File object.', 1382284105);
         }
-        if (!$treatIdAsReference) {
-            return $resourceFactory->getFileObject($src);
+
+        $imageService = self::getImageService();
+        $image = $imageService->getImage($src, $image, $treatIdAsReference);
+
+        if ($crop === null) {
+            $crop = $image instanceof FileReference ? $image->getProperty('crop') : null;
         }
-        $image = $resourceFactory->getFileReferenceObject($src);
-        return $image->getOriginalFile();
+
+        $processingInstructions = array(
+            'width'     => $arguments['width'],
+            'height'    => $arguments['height'],
+            'minWidth'  => $arguments['minWidth'],
+            'minHeight' => $arguments['minHeight'],
+            'maxWidth'  => $arguments['maxWidth'],
+            'maxHeight' => $arguments['maxHeight'],
+            'crop'      => $crop,
+        );
+        $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
+        return $imageService->getImageUri($processedImage);
     }
 }

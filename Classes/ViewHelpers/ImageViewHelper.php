@@ -9,9 +9,7 @@
 namespace HDNET\Focuspoint\ViewHelpers;
 
 use TYPO3\CMS\Core\Resource\FileInterface;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
 
 /**
@@ -55,10 +53,10 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         $ratio = '1:1',
         $realCrop = false
     ) {
-        $internalImage = $this->getImage($src, $treatIdAsReference);
+        /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
+        $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
+        $internalImage = $service->getViewHelperImage($src, $image, $treatIdAsReference);
         if ($realCrop) {
-            /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
-            $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
             $src = $service->getCroppedImageSrcByFile($internalImage, $ratio);
             $treatIdAsReference = false;
             $image = null;
@@ -76,28 +74,5 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 
         $focusTag = '<div class="focuspoint" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
         return $focusTag . $this->tag->render() . '</div>';
-    }
-
-    /**
-     * get the image
-     *
-     * @param $src
-     * @param $treatIdAsReference
-     *
-     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|\TYPO3\CMS\Core\Resource\FileReference|\TYPO3\CMS\Core\Resource\Folder
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
-     */
-    protected function getImage($src, $treatIdAsReference)
-    {
-        $resourceFactory = ResourceFactory::getInstance();
-        if (!MathUtility::canBeInterpretedAsInteger($src)) {
-            return $resourceFactory->retrieveFileOrFolderObject($src);
-        }
-        if (!$treatIdAsReference) {
-            return $resourceFactory->getFileObject($src);
-        }
-        $image = $resourceFactory->getFileReferenceObject($src);
-        return $image->getOriginalFile();
     }
 }
