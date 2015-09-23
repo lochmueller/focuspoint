@@ -9,6 +9,7 @@
 namespace HDNET\Focuspoint\Service;
 
 use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -37,23 +38,27 @@ class FocusCropService extends AbstractService
      * @param $image
      * @param $treatIdAsReference
      *
-     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|\TYPO3\CMS\Core\Resource\FileReference|\TYPO3\CMS\Core\Resource\Folder
+     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|CoreFileReference|\TYPO3\CMS\Core\Resource\Folder
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
      */
     public function getViewHelperImage($src, $image, $treatIdAsReference)
     {
         $resourceFactory = ResourceFactory::getInstance();
-        if (!MathUtility::canBeInterpretedAsInteger($src)) {
-            $file = $resourceFactory->retrieveFileOrFolderObject($src);
-        } else if (!$treatIdAsReference) {
-            $file = $resourceFactory->getFileObject($src);
-        } else {
-            $image = $resourceFactory->getFileReferenceObject($src);
-            $file = $image->getOriginalFile();
+        if ($image instanceof FileReference) {
+            $image = $image->getOriginalResource();
         }
-
-        return $file;
+        if ($image instanceof CoreFileReference) {
+            return $image->getOriginalFile();
+        }
+        if (!MathUtility::canBeInterpretedAsInteger($src)) {
+            return $resourceFactory->retrieveFileOrFolderObject($src);
+        }
+        if (!$treatIdAsReference) {
+            return $resourceFactory->getFileObject($src);
+        }
+        $image = $resourceFactory->getFileReferenceObject($src);
+        return $image->getOriginalFile();
     }
 
     /**
@@ -88,7 +93,7 @@ class FocusCropService extends AbstractService
         if ($fileReference instanceof FileReference) {
             $fileReference = $fileReference->getOriginalResource();
         }
-        if ($fileReference instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+        if ($fileReference instanceof CoreFileReference) {
             return $this->getCroppedImageSrcByFile($fileReference->getOriginalFile(), $ratio);
         }
         throw new \InvalidArgumentException('The given argument is not a valid file reference', 123671283);
