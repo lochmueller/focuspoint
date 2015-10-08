@@ -24,14 +24,6 @@ class FocusCropService extends AbstractService
 {
 
     /**
-     * Graphical functions
-     *
-     * @var \TYPO3\CMS\Core\Imaging\GraphicalFunctions
-     * @inject
-     */
-    protected $graphicalFunctions;
-
-    /**
      * get the image
      *
      * @param $src
@@ -103,7 +95,7 @@ class FocusCropService extends AbstractService
      * Get the cropped image by File Object
      *
      * @param FileInterface $file
-     * @param string        $ratio
+     * @param string $ratio
      *
      * @return string The new filename
      */
@@ -126,7 +118,6 @@ class FocusCropService extends AbstractService
             GeneralUtility::mkdir_deep($absoluteTempImageFolder);
         }
 
-        $this->graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
 
         $imageSizeInformation = getimagesize($absoluteImageName);
         $width = $imageSizeInformation[0];
@@ -141,12 +132,43 @@ class FocusCropService extends AbstractService
             $focusHeight, $focusPointX, $focusPointY);
 
         // generate image
-        $sourceImage = $this->graphicalFunctions->imageCreateFromFile($absoluteImageName);
-        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
-        $this->graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY, $focusWidth,
-            $focusHeight, $focusWidth, $focusHeight);
-        $this->graphicalFunctions->ImageWrite($destinationImage, $absoluteTempImageName,
-            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']);
+        $this->createCropImage($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY,
+            $absoluteTempImageName);
         return $tempImageName;
+    }
+
+    /**
+     * Create the crop image
+     *
+     * @param $absoluteImageName
+     * @param $focusWidth
+     * @param $focusHeight
+     * @param $sourceX
+     * @param $sourceY
+     * @param $absoluteTempImageName
+     *
+     * @todo migrate the function to the GifBuilder
+     */
+    protected function createCropImage(
+        $absoluteImageName,
+        $focusWidth,
+        $focusHeight,
+        $sourceX,
+        $sourceY,
+        $absoluteTempImageName
+    ) {
+
+        /** @var \TYPO3\CMS\Frontend\Imaging\GifBuilder $gifBuilder */
+        //$gifBuilder = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Imaging\\GifBuilder');
+
+        /** @var \TYPO3\CMS\Core\Imaging\GraphicalFunctions $graphicalFunctions */
+        $graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
+        $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
+        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
+        $graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY,
+            $focusWidth,
+            $focusHeight, $focusWidth, $focusHeight);
+        $graphicalFunctions->ImageWrite($destinationImage, $absoluteTempImageName,
+            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']);
     }
 }
