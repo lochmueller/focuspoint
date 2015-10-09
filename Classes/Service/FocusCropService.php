@@ -185,35 +185,4 @@ class FocusCropService extends AbstractService
         $gifBuilder->output($absoluteTempImageName);
         $gifBuilder->destroy();
     }
-
-
-    /**
-     * Create the crop image (GraphicalFunctions)
-     *
-     * @param $absoluteImageName
-     * @param $focusWidth
-     * @param $focusHeight
-     * @param $sourceX
-     * @param $sourceY
-     * @param $absoluteTempImageName
-     * @deprecated
-     */
-    protected function createCropImageGraphicalFunctions(
-        $absoluteImageName,
-        $focusWidth,
-        $focusHeight,
-        $sourceX,
-        $sourceY,
-        $absoluteTempImageName
-    ) {
-        /** @var \TYPO3\CMS\Core\Imaging\GraphicalFunctions $graphicalFunctions */
-        $graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
-        $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
-        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
-        $graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY,
-            $focusWidth,
-            $focusHeight, $focusWidth, $focusHeight);
-        $graphicalFunctions->ImageWrite($destinationImage, $absoluteTempImageName,
-            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']);
-    }
 }
