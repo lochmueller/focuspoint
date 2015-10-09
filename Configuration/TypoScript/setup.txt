@@ -24,6 +24,6 @@ lib.pageBackground {
 		references.listNum = 0
 
 		renderObj = TEXT
-		renderObj.dataWrap = <div id="pageBackground" class="focuspoint" data-image-h="{focuspoint:h}" data-image-w="{focuspoint:w}" data-focus-y="{focuspoint:y}" data-focus-x="{focuspoint:x}"><img src="{file:current:publicUrl}" /></div>
+		renderObj.dataWrap = <div id="pageBackground" class="focuspoint" data-image-h="{fp:h}" data-image-w="{fp:w}" data-focus-y="{fp:y}" data-focus-x="{fp:x}"><img src="{file:current:publicUrl}" /></div>
 	}
 }

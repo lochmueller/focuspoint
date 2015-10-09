@@ -39,7 +39,7 @@ class GetData implements ContentObjectGetDataHookInterface
         ContentObjectRenderer &$parentObject
     ) {
         $parts = explode(':', $getDataString);
-        if (isset($parts[0]) && isset($parts[1]) && $parts[0] === 'focuspoint') {
+        if (isset($parts[0]) && isset($parts[1]) && $parts[0] === 'fp') {
             $fileObject = $parentObject->getCurrentFile();
             if (!($fileObject instanceof FileReference)) {
                 return $returnValue;
