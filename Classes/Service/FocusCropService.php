@@ -15,6 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Crop images via focus crop
@@ -114,7 +115,7 @@ class FocusCropService extends AbstractService
         if (is_file($absoluteTempImageName)) {
             return $tempImageName;
         }
-
+        
         $absoluteTempImageFolder = GeneralUtility::getFileAbsFileName($tempImageFolder);
         if (!is_dir($absoluteTempImageFolder)) {
             GeneralUtility::mkdir_deep($absoluteTempImageFolder);
@@ -157,13 +158,14 @@ class FocusCropService extends AbstractService
         $absoluteTempImageName
     ) {
         $size = getimagesize($absoluteImageName);
+        $relativeImagePath = rtrim(PathUtility::getRelativePath(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), $absoluteImageName), '/');
         $configuration = array(
             'format' => strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
             'transparentBackground' => '1',
             '10' => 'IMAGE',
             '10.' => array(
-                'file' => $absoluteImageName,
+                'file' => $relativeImagePath,
                 'file.' => array(
                     'quality' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'],
                     'width' => $size[0],
