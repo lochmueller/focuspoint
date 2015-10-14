@@ -12,6 +12,7 @@ use HDNET\Focuspoint\Utility\FileUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Resource\AbstractFile;
+use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
 
@@ -79,7 +80,9 @@ class FileList implements FileListEditIconHookInterface
     protected function getFileMetaUidByCells($cells)
     {
         if (GeneralUtility::compat_version('7.2.0')) {
-            $metaData = $cells['__fileOrFolderObject']->_getMetaData();
+            if($cells['__fileOrFolderObject'] instanceof FileInterface) {
+                $metaData = $cells['__fileOrFolderObject']->_getMetaData();
+            }
             if (!isset($metaData['uid'])) {
                 throw new \Exception('No meta data found', 2462378462378);
             }
