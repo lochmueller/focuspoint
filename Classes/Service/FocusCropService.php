@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Crop images via focus crop
@@ -126,7 +125,7 @@ class FocusCropService extends AbstractService
         $height = $imageSizeInformation[1];
 
         // dimensions
-        /** @var \HDNET\Focuspoint\Service\DimensionService $service */
+        /** @var \HDNET\Focuspoint\Service\DimensionService $dimensionService */
         $dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
         list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
         $cropMode = $dimensionService->getCropMode($width, $height, $ratio);
@@ -134,8 +133,13 @@ class FocusCropService extends AbstractService
             $focusHeight, $focusPointX, $focusPointY);
 
         // generate image
-        $this->createCropImageGifBuilder($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY,
-            $absoluteTempImageName);
+        if (strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)) == 'png') {
+            $this->createCropImageGifBuilder($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY,
+                $absoluteTempImageName);
+        } else {
+            $this->createCropImageGraphicalFunctions($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY,
+                $absoluteTempImageName);
+        }
         return $tempImageName;
     }
 
@@ -186,5 +190,35 @@ class FocusCropService extends AbstractService
         $gifBuilder->make();
         $gifBuilder->output($absoluteTempImageName);
         $gifBuilder->destroy();
+    }
+
+    /**
+     * Create the crop image (GraphicalFunctions)
+     *
+     * @param $absoluteImageName
+     * @param $focusWidth
+     * @param $focusHeight
+     * @param $sourceX
+     * @param $sourceY
+     * @param $absoluteTempImageName
+     */
+    protected function createCropImageGraphicalFunctions(
+        $absoluteImageName,
+        $focusWidth,
+        $focusHeight,
+        $sourceX,
+        $sourceY,
+        $absoluteTempImageName
+    ) {
+        /** @var \TYPO3\CMS\Core\Imaging\GraphicalFunctions $graphicalFunctions */
+        $graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
+        $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
+        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
+        $graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY,
+            $focusWidth,
+            $focusHeight, $focusWidth, $focusHeight);
+
+        $graphicalFunctions->ImageWrite($destinationImage, $absoluteTempImageName,
+            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']);
     }
 }
