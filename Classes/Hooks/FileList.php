@@ -8,9 +8,9 @@
 
 namespace HDNET\Focuspoint\Hooks;
 
+use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\FileUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Resource\AbstractFile;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -28,45 +28,38 @@ class FileList implements FileListEditIconHookInterface
     /**
      * Modifies edit icon array
      *
-     * @param array                        $cells        Array of edit icons
+     * @param array $cells Array of edit icons
      * @param \TYPO3\CMS\Filelist\FileList $parentObject Parent object
      *
      * @return void
      */
     public function manipulateEditIcons(&$cells, &$parentObject)
     {
+        /** @var WizardService $wizardService */
+        $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
+
         try {
             $metaUid = $this->getFileMetaUidByCells($cells);
             $file = FileUtility::getFileByMetaData($metaUid);
         } catch (\Exception $ex) {
-            $cells['focuspoint'] = $this->getEmptyIcon();
+            $cells['focuspoint'] = $wizardService->getWizardIcon();
             return;
         }
 
         // no Image?
         if ($file->getType() !== AbstractFile::FILETYPE_IMAGE) {
-            $cells['focuspoint'] = $this->getEmptyIcon();
+            $cells['focuspoint'] = $wizardService->getWizardIcon();
             return;
         }
 
         $wizardArguments = array(
             'P' => array(
-                'uid'       => $metaUid,
+                'uid' => $metaUid,
                 'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
             ),
         );
         $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
-        $cells['focuspoint'] = '<a href="' . $wizardUri . '" class="btn btn-default">' . IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint') . '</a>';
-    }
-
-    /**
-     * Get the empty icon
-     *
-     * @return string
-     */
-    protected function getEmptyIcon()
-    {
-        return '<span class="btn btn-default disabled">' . IconUtility::getSpriteIcon('empty-empty') . '</span>';
+        $cells['focuspoint'] = $wizardService->getWizardIcon($wizardUri);
     }
 
     /**
@@ -80,7 +73,7 @@ class FileList implements FileListEditIconHookInterface
     protected function getFileMetaUidByCells($cells)
     {
         if (GeneralUtility::compat_version('7.2.0')) {
-            if($cells['__fileOrFolderObject'] instanceof FileInterface) {
+            if ($cells['__fileOrFolderObject'] instanceof FileInterface) {
                 $metaData = $cells['__fileOrFolderObject']->_getMetaData();
             }
             if (!isset($metaData['uid'])) {

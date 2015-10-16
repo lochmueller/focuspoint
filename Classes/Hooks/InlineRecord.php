@@ -8,6 +8,7 @@
 
 namespace HDNET\Focuspoint\Hooks;
 
+use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -108,9 +109,9 @@ class InlineRecord implements InlineElementHookInterface
         } else {
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
         }
-        $configuration = '<a href="' . $wizardUri . '" class="btn btn-default">' . IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint') . '</a>';
-
-        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $configuration);
+        /** @var WizardService $wizardService */
+        $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
+        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardIcon($wizardUri));
     }
 
     /**

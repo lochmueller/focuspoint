@@ -6,12 +6,16 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="focuspoint.wizard"><![CDATA[Focus point wizard]]></label>
+			<label index="focuspoint.wizard.imagesonly"><![CDATA[(just for images)]]></label>
 			<label index="plugin.Test"><![CDATA[Test Plugin (Focus point crop)]]></label>
 			<label index="tt_content.image_ratio"><![CDATA[Ratio]]></label>
 			<label index="sys_file_metadata.focus_point_y"><![CDATA[Focus point (Y)]]></label>
 			<label index="sys_file_metadata.focus_point_x"><![CDATA[Focus point (X)]]></label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="focuspoint.wizard"><![CDATA[Fokuspunkt Assistent]]></label>
+			<label index="focuspoint.wizard.imagesonly"><![CDATA[(nur für Bilder)]]></label>
 			<label index="plugin.Test"><![CDATA[Test Plugin (Focus point crop)]]></label>
 			<label index="tt_content.image_ratio"><![CDATA[Verhältnis]]></label>
 			<label index="sys_file_metadata.focus_point_y"><![CDATA[Fokuspunkt (Y)]]></label>
