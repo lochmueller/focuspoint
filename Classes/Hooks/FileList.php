@@ -42,13 +42,13 @@ class FileList implements FileListEditIconHookInterface
             $metaUid = $this->getFileMetaUidByCells($cells);
             $file = FileUtility::getFileByMetaData($metaUid);
         } catch (\Exception $ex) {
-            $cells['focuspoint'] = $wizardService->getWizardIcon();
+            $cells['focuspoint'] = $wizardService->getWizardButton();
             return;
         }
 
         // no Image?
         if ($file->getType() !== AbstractFile::FILETYPE_IMAGE) {
-            $cells['focuspoint'] = $wizardService->getWizardIcon();
+            $cells['focuspoint'] = $wizardService->getWizardButton();
             return;
         }
 
@@ -59,7 +59,7 @@ class FileList implements FileListEditIconHookInterface
             ),
         );
         $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
-        $cells['focuspoint'] = $wizardService->getWizardIcon($wizardUri);
+        $cells['focuspoint'] = $wizardService->getWizardButton($wizardUri);
     }
 
     /**

@@ -111,7 +111,7 @@ class InlineRecord implements InlineElementHookInterface
         }
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
-        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardIcon($wizardUri));
+        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton($wizardUri));
     }
 
     /**
