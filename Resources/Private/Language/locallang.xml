@@ -6,6 +6,12 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="sys_file_reference.focus_point_x"><![CDATA[focus_point_x]]></label>
+			<label index="sys_file_reference.focus_point_y"><![CDATA[focus_point_y]]></label>
+			<label index="tx_focuspoint_domain_model_filestandalone"><![CDATA[focuspoint ==> LLL:tx_focuspoint_domain_model_filestandalone]]></label>
+			<label index="tx_focuspoint_domain_model_filestandalone.relative_file_path"><![CDATA[relative_file_path]]></label>
+			<label index="tx_focuspoint_domain_model_filestandalone.focus_point_x"><![CDATA[focus_point_x]]></label>
+			<label index="tx_focuspoint_domain_model_filestandalone.focus_point_y"><![CDATA[focus_point_y]]></label>
 			<label index="focuspoint.wizard"><![CDATA[Focus point wizard]]></label>
 			<label index="focuspoint.wizard.imagesonly"><![CDATA[(just for images)]]></label>
 			<label index="plugin.Test"><![CDATA[Test Plugin (Focus point crop)]]></label>
