@@ -4,8 +4,17 @@
  * Base TCA generation for the model HDNET\\Focuspoint\\Domain\\Model\\FileStandalone
  */
 
-$base = \HDNET\Autoloader\Utility\ModelUtility::getTcaInformation('HDNET\\Focuspoint\\Domain\\Model\\FileStandalone');
+use HDNET\Autoloader\Utility\ArrayUtility;
+use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Focuspoint\Utility\TcaUtility;
 
-$custom = array();
+$base = ModelUtility::getTcaInformation('HDNET\\Focuspoint\\Domain\\Model\\FileStandalone');
 
-return \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($base, $custom);
+$custom = array(
+    'columns' => array(
+        'focus_point_y' => TcaUtility::getBaseConfiguration(),
+        'focus_point_x' => TcaUtility::getBaseConfiguration(),
+    ),
+);
+
+return ArrayUtility::mergeRecursiveDistinct($base, $custom);
