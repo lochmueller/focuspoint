@@ -9,6 +9,7 @@ namespace HDNET\Focuspoint\Hooks;
 
 use HDNET\Focuspoint\Service\WizardService;
 use TYPO3\CMS\Backend\Form\DatabaseFileIconsHookInterface;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -48,5 +49,15 @@ class GroupItem implements DatabaseFileIconsHookInterface
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
         $icons['R'][] = $wizardService->getWizardButton();
+
+        // JS
+        static $alreadyAdded = false;
+        if (!$alreadyAdded) {
+            $alreadyAdded = true;
+            /** @var PageRenderer $pageRenderer */
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $pageRenderer->addRequireJsConfiguration()
+            $icons['R'][] = '<script type="text/javascript" src="/typo3conf/ext/focuspoint/Resources/Public/JavaScript/GroupSelect.js"></script>';
+        }
     }
 }
