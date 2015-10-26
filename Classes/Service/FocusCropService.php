@@ -15,6 +15,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * Crop images via focus crop
@@ -214,6 +215,11 @@ class FocusCropService extends AbstractService
         $graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
         $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
         $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
+
+        // prevent the problem of large images result in a "Allowed memory size" error
+        // we do not need the alpha layer at all, because the PNG rendered with createCropImageGifBuilder
+        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', TRUE, TRUE);
+
         $graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY,
             $focusWidth,
             $focusHeight, $focusWidth, $focusHeight);
