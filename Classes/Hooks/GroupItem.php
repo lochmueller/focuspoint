@@ -13,7 +13,6 @@ namespace HDNET\Focuspoint\Hooks;
 use HDNET\Focuspoint\Service\WizardService;
 use TYPO3\CMS\Backend\Form\DatabaseFileIconsHookInterface;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 // Work arround for changing Interface
@@ -172,7 +171,9 @@ class GroupItem extends AbstractGroupItem
         static $alreadyAdded = false;
         if (!$alreadyAdded) {
             $alreadyAdded = true;
-            $icons['R'][] = '<script type="text/javascript" src="' . ExtensionManagementUtility::extRelPath('focuspoint') . '/Resources/Public/JavaScript/GroupSelect.js"></script>';
+            /** @var PageRenderer $pageRenderer */
+            $pageRenderer = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Page\\PageRenderer');
+            $pageRenderer->loadRequireJsModule('TYPO3/CMS/Focuspoint/GroupSelect');
         }
     }
 }

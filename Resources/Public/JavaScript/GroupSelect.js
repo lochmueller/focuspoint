@@ -1,5 +1,5 @@
-/*define('HDNET/Focuspoint/GroupSelect', ['jquery'], function ($) {
-	$(document).ready(function () {
-		alert('Test');
-	});
-});*/
+define('TYPO3/CMS/Focuspoint/GroupSelect', ['jquery'], function ($) {
+    $(document).ready(function () {
+        // alert('Test');
+    });
+});
