@@ -20,9 +20,10 @@ class WizardService extends AbstractService
      * Get the wizard button with the given URI
      *
      * @param string|null $uri
+     * @param null $additionalClass
      * @return string
      */
-    public function getWizardButton($uri = null)
+    public function getWizardButton($uri = null, $additionalClass = null)
     {
         $spriteIcon = $this->getWizardIcon();
         $label = LocalizationUtility::translate('focuspoint.wizard', 'focuspoint');
@@ -30,7 +31,7 @@ class WizardService extends AbstractService
             $label .= ' ' . LocalizationUtility::translate('focuspoint.wizard.imagesonly', 'focuspoint');
             return '<span class="btn btn-default disabled" title="' . $label . '">' . $spriteIcon . '</span>';
         }
-        return '<a href="' . $uri . '" class="btn btn-default" title="' . $label . '">' . $spriteIcon . '</a>';
+        return '<a href="' . $uri . '" class="btn btn-default' . ($additionalClass ? ' ' . $additionalClass : '') . '" title="' . $label . '">' . $spriteIcon . '</a>';
     }
 
     /**

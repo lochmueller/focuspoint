@@ -14,6 +14,7 @@ use HDNET\Focuspoint\Service\WizardService;
 use TYPO3\CMS\Backend\Form\DatabaseFileIconsHookInterface;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 // Work arround for changing Interface
 if (GeneralUtility::compat_version('7.0')) {
@@ -163,11 +164,27 @@ class GroupItem extends AbstractGroupItem
         array $additionalParams,
         $parentObject
     ) {
+        if (!isset($additionalParams['mode']) || $additionalParams['mode'] !== 'file') {
+            return;
+        }
+        $this->loadJavaScript();
+
+        $matches = [];
+        if (!preg_match('/\[([a-zA-Z0-9_]+)\]\[([a-zA-Z0-9_]+)\]\[([a-zA-Z0-9_]+)\]/', $fName, $matches)) {
+            return;
+        }
+
+        $uri = $matches['1'] . ';' . $matches['3'] . ';' . $parentObject->returnUrl;
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
-        $icons['R'][] = $wizardService->getWizardButton();
+        $icons['R'][] = $wizardService->getWizardButton($uri, 'group-focuspoint');
+    }
 
-        // JS
+    /**
+     * Load the JS
+     */
+    protected function loadJavaScript()
+    {
         static $alreadyAdded = false;
         if (!$alreadyAdded) {
             $alreadyAdded = true;
