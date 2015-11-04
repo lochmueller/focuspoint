@@ -32,8 +32,6 @@ class FocuspointController
     public function main()
     {
         $handler = $this->getCurrentHandler();
-
-        /// ####
         $parameter = GeneralUtility::_GET();
         if (isset($parameter['save'])) {
             if (is_object($handler)) {

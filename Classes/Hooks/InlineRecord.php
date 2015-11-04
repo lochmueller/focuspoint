@@ -9,10 +9,8 @@
 namespace HDNET\Focuspoint\Hooks;
 
 use HDNET\Focuspoint\Service\WizardService;
-use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -99,10 +97,19 @@ class InlineRecord implements InlineElementHookInterface
                 'edit' => $arguments['edit'],
                 'returnUrl' => $arguments['returnUrl'],
             );
+
+            if (GeneralUtility::compat_version('7.0')) {
+                $returnUrlGenerated = BackendUtility::getModuleUrl('record_edit', $returnUrl);
+            } else {
+                $returnUrlGenerated = 'alt_doc.php?' . ltrim(GeneralUtility::implodeArrayForUrl('', $returnUrl, '',
+                        true, true),
+                        '&') . BackendUtility::getUrlToken('editRecord');
+            }
+
             $wizardArguments = array(
                 'P' => array(
                     'referenceUid' => $childRecord['uid'],
-                    'returnUrl' => BackendUtility::getModuleUrl('record_edit', $returnUrl)
+                    'returnUrl' => $returnUrlGenerated
                 ),
             );
             $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
