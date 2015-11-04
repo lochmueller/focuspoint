@@ -39,12 +39,12 @@ class FocuspointController
             }
             HttpUtility::redirect($parameter['P']['returnUrl']);
         }
-        $saveArguments = array(
+        $saveArguments = [
             'save' => 1,
-            'P' => array(
+            'P' => [
                 'returnUrl' => $parameter['P']['returnUrl'],
-            )
-        );
+            ]
+        ];
 
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $template */
         $template = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
@@ -87,10 +87,10 @@ class FocuspointController
      */
     protected function getWizardHandler()
     {
-        return array(
+        return [
             GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\File'),
             GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\FileReference'),
             GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\Group'),
-        );
+        ];
     }
 }

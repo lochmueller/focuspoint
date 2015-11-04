@@ -12,6 +12,7 @@ namespace HDNET\Focuspoint\Hooks;
 
 use HDNET\Focuspoint\Service\WizardService;
 use TYPO3\CMS\Backend\Form\DatabaseFileIconsHookInterface;
+use TYPO3\CMS\Backend\Form\FormEngine;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -87,7 +88,7 @@ if (GeneralUtility::compat_version('7.0')) {
          * @param string $fName Form element name
          * @param array $uidList The array of item-uids. Have a look at \TYPO3\CMS\Backend\Form\FormEngine::dbFileIcons parameter "$itemArray
          * @param array $additionalParams Array with additional parameters which are be available at method call. Includes $mode, $allowed, $itemArray, $onFocus, $table, $field, $uid.
-         * @param \TYPO3\CMS\Backend\Form\FormEngine $parentObject Parent object
+         * @param FormEngine $parentObject Parent object
          *
          * @return void
          */
@@ -100,7 +101,7 @@ if (GeneralUtility::compat_version('7.0')) {
             &$fName,
             array &$uidList,
             array $additionalParams,
-            \TYPO3\CMS\Backend\Form\FormEngine $parentObject
+            FormEngine $parentObject
         ) {
             $this->dbFileIcons_postProcessCompatibility($params,
                 $selector,
@@ -174,13 +175,13 @@ class GroupItem extends AbstractGroupItem
             return;
         }
 
-        $wizardArguments = array(
-            'P' => array(
+        $wizardArguments = [
+            'P' => [
                 'table' => $matches['1'],
                 'field' => $matches['3'],
                 'returnUrl' => $parentObject->returnUrl,
-            ),
-        );
+            ],
+        ];
         $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
 
         /** @var WizardService $wizardService */

@@ -25,30 +25,30 @@ class TcaUtility
      */
     public static function getBaseConfiguration()
     {
-        return array(
-            'config' => array(
+        return [
+            'config' => [
                 'type' => 'input',
                 'size' => 4,
                 'eval' => 'trim,int',
-                'range' => array(
+                'range' => [
                     'lower' => -100,
                     'upper' => 100
-                ),
-                'wizards' => array(
+                ],
+                'wizards' => [
                     '_DISTANCE' => '10',
-                    'focuspoint' => array(
+                    'focuspoint' => [
                         'type' => 'script',
                         'icon' => ExtensionManagementUtility::extRelPath('focuspoint') . 'ext_icon.png',
-                        'module' => array(
+                        'module' => [
                             'name' => 'focuspoint'
-                        ),
-                    ),
-                    'slider' => array(
+                        ],
+                    ],
+                    'slider' => [
                         'type' => 'slider',
                         'step' => '1',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
     }
 }

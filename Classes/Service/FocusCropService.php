@@ -164,29 +164,29 @@ class FocusCropService extends AbstractService
     ) {
         $size = getimagesize($absoluteImageName);
         $relativeImagePath = rtrim(PathUtility::getRelativePath(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), $absoluteImageName), '/');
-        $configuration = array(
+        $configuration = [
             'format' => strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
             'transparentBackground' => '1',
             '10' => 'IMAGE',
-            '10.' => array(
+            '10.' => [
                 'file' => $relativeImagePath,
-                'file.' => array(
+                'file.' => [
                     'quality' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'],
                     'width' => $size[0],
                     'height' => $size[1],
-                ),
-            ),
+                ],
+            ],
             '20' => 'CROP',
-            '20.' => array(
+            '20.' => [
                 'crop' => $sourceX . ',' . $sourceY . ',' . $focusWidth . ',' . $focusHeight,
-            ),
-        );
+            ],
+        ];
 
         /** @var \TYPO3\CMS\Frontend\Imaging\GifBuilder $gifBuilder */
         $gifBuilder = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Imaging\\GifBuilder');
         $gifBuilder->init();
-        $gifBuilder->start($configuration, array());
+        $gifBuilder->start($configuration, []);
         $gifBuilder->createTempSubDir('focuscrop/');
         $gifBuilder->make();
         $gifBuilder->output($absoluteTempImageName);

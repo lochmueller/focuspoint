@@ -36,9 +36,9 @@ class TestController extends ActionController
         $contentElement = $this->configurationManager->getContentObject()->data;
         $fileReferences = $this->fileRepository->findByRelation('tt_content', 'image', $contentElement['uid']);
 
-        $this->view->assignMultiple(array(
+        $this->view->assignMultiple([
             'fileReferences' => $fileReferences,
             'customRatio'    => $contentElement['image_ratio']
-        ));
+        ]);
     }
 }

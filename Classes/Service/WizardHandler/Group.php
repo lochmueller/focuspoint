@@ -60,11 +60,11 @@ class Group extends AbstractWizardHandler
         $row = $connection->exec_SELECTgetSingleRow('uid,focus_point_x,focus_point_y',
             self::TABLE,
             'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE));
-        $values = array(
+        $values = [
             'focus_point_x' => $x,
             'focus_point_y' => $y,
             'relative_file_path' => $this->getRelativeFilePath()
-        );
+        ];
         if ($row) {
             $connection->exec_UPDATEquery(self::TABLE, 'uid=' . $row['uid'], $values);
         } else {

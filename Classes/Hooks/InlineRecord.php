@@ -93,10 +93,10 @@ class InlineRecord implements InlineElementHookInterface
 
         $arguments = GeneralUtility::_GET();
         if ($this->isValidRecord($table, $uid) && isset($arguments['edit'])) {
-            $returnUrl = array(
+            $returnUrl = [
                 'edit' => $arguments['edit'],
                 'returnUrl' => $arguments['returnUrl'],
-            );
+            ];
 
             if (GeneralUtility::compat_version('7.0')) {
                 $returnUrlGenerated = BackendUtility::getModuleUrl('record_edit', $returnUrl);
@@ -106,12 +106,12 @@ class InlineRecord implements InlineElementHookInterface
                         '&') . BackendUtility::getUrlToken('editRecord');
             }
 
-            $wizardArguments = array(
-                'P' => array(
+            $wizardArguments = [
+                'P' => [
                     'referenceUid' => $childRecord['uid'],
                     'returnUrl' => $returnUrlGenerated
-                ),
-            );
+                ],
+            ];
             $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
         } else {
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';

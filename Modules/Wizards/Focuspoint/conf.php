@@ -3,4 +3,3 @@
 $MCONF['name'] = 'focuspoint';
 $MCONF['script'] = '_DISPATCH';
 $MCONF['access'] = '';
-?>

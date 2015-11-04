@@ -10,11 +10,11 @@ use HDNET\Focuspoint\Utility\TcaUtility;
 
 $base = ModelUtility::getTcaInformation('HDNET\\Focuspoint\\Domain\\Model\\FileStandalone');
 
-$custom = array(
-    'columns' => array(
+$custom = [
+    'columns' => [
         'focus_point_y' => TcaUtility::getBaseConfiguration(),
         'focus_point_x' => TcaUtility::getBaseConfiguration(),
-    ),
-);
+    ],
+];
 
 return ArrayUtility::mergeRecursiveDistinct($base, $custom);

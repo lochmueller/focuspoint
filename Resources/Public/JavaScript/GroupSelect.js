@@ -1,4 +1,4 @@
-define('TYPO3/CMS/Focuspoint/GroupSelect', ['jquery'], function ($) {
+define('TYPO3/CMS/Focuspoint/GroupSelect', ['jquery'], function ($, document) {
     $(document).ready(function () {
 
         $('a.group-focuspoint').click(function (e) {

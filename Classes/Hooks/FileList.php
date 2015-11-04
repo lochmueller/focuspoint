@@ -52,12 +52,12 @@ class FileList implements FileListEditIconHookInterface
             return;
         }
 
-        $wizardArguments = array(
-            'P' => array(
+        $wizardArguments = [
+            'P' => [
                 'metaUid' => $metaUid,
                 'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
-            ),
-        );
+            ],
+        ];
         $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
         $cells['focuspoint'] = $wizardService->getWizardButton($wizardUri);
     }

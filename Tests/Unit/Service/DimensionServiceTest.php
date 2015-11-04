@@ -53,9 +53,9 @@ class DimensionServiceTest extends UnitTestCase
      */
     public function testValidRatio()
     {
-        $this->assertEquals(array(1, 1), $this->service->getRatio('1:1'));
-        $this->assertEquals(array(16, 9), $this->service->getRatio('16:9'));
-        $this->assertEquals(array(4, 2), $this->service->getRatio('4:3'));
+        $this->assertEquals([1, 1], $this->service->getRatio('1:1'));
+        $this->assertEquals([16, 9], $this->service->getRatio('16:9'));
+        $this->assertEquals([4, 2], $this->service->getRatio('4:3'));
     }
 
     /**

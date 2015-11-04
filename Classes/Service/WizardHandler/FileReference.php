@@ -8,7 +8,6 @@ use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class FileReference extends AbstractWizardHandler
 {

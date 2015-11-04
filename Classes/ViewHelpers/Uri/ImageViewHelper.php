@@ -55,7 +55,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     ) {
 
         if (GeneralUtility::compat_version('7.0')) {
-            return self::renderStatic(array(
+            return self::renderStatic([
                 'src'                => $src,
                 'image'              => $image,
                 'width'              => $width,
@@ -67,7 +67,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
                 'treatIdAsReference' => $treatIdAsReference,
                 'crop'               => null,
                 'ratio'              => $ratio, // added ratio
-            ), $this->buildRenderChildrenClosure(), $this->renderingContext);
+            ], $this->buildRenderChildrenClosure(), $this->renderingContext);
         }
 
         /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
@@ -114,7 +114,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
             $crop = $image instanceof FileReference ? $image->getProperty('crop') : null;
         }
 
-        $processingInstructions = array(
+        $processingInstructions = [
             'width'     => $arguments['width'],
             'height'    => $arguments['height'],
             'minWidth'  => $arguments['minWidth'],
@@ -122,7 +122,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
             'maxWidth'  => $arguments['maxWidth'],
             'maxHeight' => $arguments['maxHeight'],
             'crop'      => $crop,
-        );
+        ];
         $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
         return $imageService->getImageUri($processedImage);
     }

@@ -69,20 +69,20 @@ class DimensionService extends AbstractService
         $heightDiff = $height / $ratio[1];
 
         if ($widthDiff < $heightDiff) {
-            return array(
+            return [
                 $width,
                 (int)ceil($widthDiff / $heightDiff * $height)
-            );
+            ];
         } elseif ($widthDiff > $heightDiff) {
-            return array(
+            return [
                 (int)ceil($heightDiff / $widthDiff * $width),
                 $height
-            );
+            ];
         }
-        return array(
+        return [
             $width,
             $height
-        );
+        ];
     }
 
     /**
@@ -105,10 +105,10 @@ class DimensionService extends AbstractService
         } elseif ($cropMode == DimensionService::CROP_LANDSCAPE) {
             return $this->getShiftedFocusAreaPosition($width, $focusWidth, $focusPointX);
         }
-        return array(
+        return [
             0,
             0
-        );
+        ];
     }
 
     /**
@@ -139,10 +139,10 @@ class DimensionService extends AbstractService
 
         $sourceX = $crop1;
         $sourceY = 0;
-        return array(
+        return [
             $sourceX,
             $sourceY
-        );
+        ];
     }
 
     /**
@@ -181,7 +181,7 @@ class DimensionService extends AbstractService
         $newFocusX = (int)round($newFocusX, 0);
         $newFocusY = (int)round($newFocusY, 0);
 
-        return array($newFocusX, $newFocusY);
+        return [$newFocusX, $newFocusY];
     }
 
     /**
