@@ -101,7 +101,7 @@ class InlineRecord implements InlineElementHookInterface
             );
             $wizardArguments = array(
                 'P' => array(
-                    'uid' => $this->getMetaDataUidByFileUid($parts[1]),
+                    'referenceUid' => $childRecord['uid'],
                     'returnUrl' => BackendUtility::getModuleUrl('record_edit', $returnUrl)
                 ),
             );
@@ -124,20 +124,6 @@ class InlineRecord implements InlineElementHookInterface
     protected function isValidRecord($table, $uid)
     {
         return BackendUtility::getRecord($table, $uid) !== null;
-    }
-
-    /**
-     * Get the meta data uid by file uid
-     *
-     * @param $fileUid
-     *
-     * @return int
-     */
-    protected function getMetaDataUidByFileUid($fileUid)
-    {
-        $row = GlobalUtility::getDatabaseConnection()
-            ->exec_SELECTgetSingleRow('uid', 'sys_file_metadata', 'file=' . (int)$fileUid);
-        return (isset($row['uid'])) ? $row['uid'] : 0;
     }
 
     /**

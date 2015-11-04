@@ -54,7 +54,7 @@ class FileList implements FileListEditIconHookInterface
 
         $wizardArguments = array(
             'P' => array(
-                'uid' => $metaUid,
+                'metaUid' => $metaUid,
                 'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
             ),
         );

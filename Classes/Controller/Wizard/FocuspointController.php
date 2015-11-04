@@ -8,13 +8,12 @@
 
 namespace HDNET\Focuspoint\Controller\Wizard;
 
-use HDNET\Focuspoint\Utility\FileUtility;
-use HDNET\Focuspoint\Utility\GlobalUtility;
+use HDNET\Focuspoint\Service\WizardHandler\AbstractWizardHandler;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Wizard controller
@@ -32,57 +31,68 @@ class FocuspointController
      */
     public function main()
     {
-        $parameter = GeneralUtility::_GET();
-        $fileObject = FileUtility::getFileByMetaData((int)$parameter['P']['uid']);
+        $handler = $this->getCurrentHandler();
 
-        if (isset($parameter['save']) && $fileObject) {
-            $values = array(
-                'focus_point_y' => $parameter['yValue'] * 100,
-                'focus_point_x' => $parameter['xValue'] * 100,
-            );
-            $uid = (int)$parameter['P']['uid'];
-            GlobalUtility::getDatabaseConnection()
-                ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $uid, $values);
+        /// ####
+        $parameter = GeneralUtility::_GET();
+        if (isset($parameter['save'])) {
+            if (is_object($handler)) {
+                $handler->setCurrentPoint($parameter['xValue'] * 100, $parameter['yValue'] * 100);
+            }
             HttpUtility::redirect($parameter['P']['returnUrl']);
         }
-
         $saveArguments = array(
             'save' => 1,
-            'P'    => array(
-                'uid'       => $parameter['P']['uid'],
+            'P' => array(
                 'returnUrl' => $parameter['P']['returnUrl'],
             )
         );
-        $saveUri = BackendUtility::getModuleUrl('focuspoint', $saveArguments);
-
-        // current point
-        $information = $this->getCurrentFocusPoint($parameter['P']['uid']);
 
         /** @var \TYPO3\CMS\Fluid\View\StandaloneView $template */
         $template = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
         $template->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('focuspoint',
             'Resources/Private/Templates/Wizard/Focuspoint.html'));
-        $template->assign('filePath', $fileObject->getPublicUrl(true));
-        $template->assign('saveUri', $saveUri);
-        $template->assign('currentLeft', (($information['focus_point_x'] + 100) / 2) . '%');
-        $template->assign('currentTop', (($information['focus_point_y'] - 100) / -2) . '%');
+
+        if (is_object($handler)) {
+            ArrayUtility::mergeRecursiveWithOverrule($saveArguments, $handler->getArguments());
+            list($x, $y) = $handler->getCurrentPoint();
+            $template->assign('filePath', $handler->getPublicUrl());
+            $template->assign('currentLeft', (($x + 100) / 2) . '%');
+            $template->assign('currentTop', (($y - 100) / -2) . '%');
+        }
+
+        $template->assign('saveUri', BackendUtility::getModuleUrl('focuspoint', $saveArguments));
 
         return $template->render();
     }
 
     /**
-     * Get focus point information
+     * Get the current handler
      *
-     * @param $uid
-     *
-     * @return array|FALSE|NULL
+     * @return AbstractWizardHandler|null
      */
-    protected function getCurrentFocusPoint($uid)
+    protected function getCurrentHandler()
     {
-        $row = GlobalUtility::getDatabaseConnection()
-            ->exec_SELECTgetSingleRow('focus_point_x, focus_point_y', 'sys_file_metadata', 'uid=' . $uid);
-        $row['focus_point_x'] = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
-        $row['focus_point_y'] = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
-        return $row;
+        foreach ($this->getWizardHandler() as $handler) {
+            /** @var $handler AbstractWizardHandler */
+            if ($handler->canHandle()) {
+                return $handler;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the wizard handler
+     *
+     * @return array
+     */
+    protected function getWizardHandler()
+    {
+        return array(
+            GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\File'),
+            GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\FileReference'),
+            GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\Group'),
+        );
     }
 }
