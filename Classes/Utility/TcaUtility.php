@@ -27,7 +27,7 @@ class TcaUtility
     {
         return array(
             'config' => array(
-                'type' => 'text',
+                'type' => 'input',
                 'size' => 4,
                 'eval' => 'trim,int',
                 'range' => array(
