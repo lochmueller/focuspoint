@@ -10,10 +10,8 @@ define('TYPO3/CMS/Focuspoint/GroupSelect', ['jquery'], function ($) {
                 return;
             }
 
-            var parts = $(this).attr('href').split(';');
-            //alert(selection);
-            //alert(parts);
-            alert('Not implemented yet');
+            var image = selection.join();
+            document.location.href = $(this).attr('href') + '&P[file]=' + image;
         });
     });
 });
