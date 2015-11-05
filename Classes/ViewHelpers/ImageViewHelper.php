@@ -51,7 +51,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         $treatIdAsReference = false,
         $image = null,
         $ratio = '1:1',
-        $realCrop = false
+        $realCrop = true
     ) {
         /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
         $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
