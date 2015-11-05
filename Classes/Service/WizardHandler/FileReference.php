@@ -74,6 +74,18 @@ class FileReference extends AbstractWizardHandler
         ];
         GlobalUtility::getDatabaseConnection()
             ->exec_UPDATEquery('sys_file_reference', 'uid=' . $this->getReferenceUid(), $values);
+
+        // save also to the file
+        $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
+        $fileUid = $reference->getOriginalFile()->getUid();
+        $row = GlobalUtility::getDatabaseConnection()
+            ->exec_SELECTgetSingleRow('*', 'sys_file_metadata',
+                'file=' . $fileUid);
+        if ($row) {
+            GlobalUtility::getDatabaseConnection()
+                ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $row['uid'], $values);
+        }
+
     }
 
     /**
