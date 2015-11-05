@@ -8,6 +8,8 @@
 
 namespace HDNET\Focuspoint\Service;
 
+use HDNET\Focuspoint\Service\WizardHandler\Group;
+use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -126,6 +128,17 @@ class FocusCropService extends AbstractService
         }
         $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
         $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
+
+        if ($focusPointX === 0 && $focusPointY === 0) {
+            $connection = GlobalUtility::getDatabaseConnection();
+            $row = $connection->exec_SELECTgetSingleRow('uid,focus_point_x,focus_point_y',
+                Group::TABLE,
+                'relative_file_path = ' . $connection->fullQuoteStr($src, Group::TABLE));
+            if ($row) {
+                $focusPointX = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
+                $focusPointY = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
+            }
+        }
 
         $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
         $tempImageFolder = 'typo3temp/focuscrop/';
