@@ -103,19 +103,41 @@ class FocusCropService extends AbstractService
      */
     public function getCroppedImageSrcByFile(FileInterface $file, $ratio)
     {
-        $absoluteImageName = GeneralUtility::getFileAbsFileName($file->getPublicUrl());
-        $focusPointX = MathUtility::forceIntegerInRange((int)$file->getProperty('focus_point_x'), -100, 100, 0);
-        $focusPointY = MathUtility::forceIntegerInRange((int)$file->getProperty('focus_point_y'), -100, 100, 0);
+        return $this->getCroppedImageSrcBySrc($file->getPublicUrl(), $ratio, $file->getProperty('focus_point_x'),
+            $file->getProperty('focus_point_y'));
+    }
 
+
+    /**
+     * Get the cropped image by src
+     *
+     * @param string $src Relative file name
+     * @param string $ratio
+     * @param int $x
+     * @param int $y
+     *
+     * @return string The new filename
+     */
+    public function getCroppedImageSrcBySrc($src, $ratio, $x, $y)
+    {
+        $absoluteImageName = GeneralUtility::getFileAbsFileName($src);
+        if (!is_file($absoluteImageName)) {
+            return null;
+        }
+        $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
+        $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
+
+        $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
         $tempImageFolder = 'typo3temp/focuscrop/';
-        $tempImageName = $tempImageFolder . $file->getSha1() . '-' . str_replace(':', '-',
-                $ratio) . '-' . $focusPointX . '-' . $focusPointY . '.' . $file->getExtension();
+        $tempImageName = $tempImageFolder . $hash . '-' . str_replace(':', '-',
+                $ratio) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo($absoluteImageName,
+                PATHINFO_EXTENSION);
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
         if (is_file($absoluteTempImageName)) {
             return $tempImageName;
         }
-        
+
         $absoluteTempImageFolder = GeneralUtility::getFileAbsFileName($tempImageFolder);
         if (!is_dir($absoluteTempImageFolder)) {
             GeneralUtility::mkdir_deep($absoluteTempImageFolder);
@@ -163,7 +185,8 @@ class FocusCropService extends AbstractService
         $absoluteTempImageName
     ) {
         $size = getimagesize($absoluteImageName);
-        $relativeImagePath = rtrim(PathUtility::getRelativePath(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), $absoluteImageName), '/');
+        $relativeImagePath = rtrim(PathUtility::getRelativePath(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
+            $absoluteImageName), '/');
         $configuration = [
             'format' => strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
@@ -218,7 +241,7 @@ class FocusCropService extends AbstractService
 
         // prevent the problem of large images result in a "Allowed memory size" error
         // we do not need the alpha layer at all, because the PNG rendered with createCropImageGifBuilder
-        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', TRUE, TRUE);
+        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true, true);
 
         $graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY,
             $focusWidth,
