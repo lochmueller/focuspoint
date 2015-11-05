@@ -19,7 +19,7 @@ define('TYPO3/CMS/Focuspoint/GroupSelect', ['jquery'], function ($, document) {
                 selection = selection.join();
             }
 
-            document.location.href = $(this).attr('href') + '&P[file]=' + selection;
+            location.href = $(this).attr('href') + '&P[file]=' + selection;
         });
     });
 });
