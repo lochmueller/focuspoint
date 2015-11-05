@@ -120,6 +120,7 @@ class FocusCropService extends AbstractService
      */
     public function getCroppedImageSrcBySrc($src, $ratio, $x, $y)
     {
+
         $absoluteImageName = GeneralUtility::getFileAbsFileName($src);
         if (!is_file($absoluteImageName)) {
             return null;
