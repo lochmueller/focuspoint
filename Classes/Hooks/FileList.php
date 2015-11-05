@@ -10,8 +10,8 @@ namespace HDNET\Focuspoint\Hooks;
 
 use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\FileUtility;
+use HDNET\Focuspoint\Utility\ImageUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Resource\AbstractFile;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
@@ -46,8 +46,7 @@ class FileList implements FileListEditIconHookInterface
             return;
         }
 
-        // no Image?
-        if ($file->getType() !== AbstractFile::FILETYPE_IMAGE) {
+        if (!ImageUtility::isValidFileExtension($file->getExtension())) {
             $cells['focuspoint'] = $wizardService->getWizardButton();
             return;
         }
