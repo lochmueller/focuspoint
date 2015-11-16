@@ -12,6 +12,7 @@ $custom = [
         'image_ratio' => [
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     [
                         '',
