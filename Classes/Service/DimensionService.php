@@ -8,6 +8,8 @@
 
 namespace HDNET\Focuspoint\Service;
 
+use TYPO3\CMS\Core\Utility\MathUtility;
+
 /**
  * Calc dimensions for focus point cropping
  *
@@ -198,6 +200,11 @@ class DimensionService extends AbstractService
         if (sizeof($ratio) !== 2) {
             throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 34627384862);
         }
-        return $ratio;
+        return [
+            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int)$ratio[0] : (float)str_replace(',', '.',
+                $ratio[0]),
+            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int)$ratio[1] : (float)str_replace(',', '.',
+                $ratio[1]),
+        ];
     }
 }
