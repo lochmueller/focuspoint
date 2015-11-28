@@ -24,6 +24,13 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 {
 
     /**
+     * If set to true, the pocess is running and no addinal calculation are needed
+     *
+     * @var bool
+     */
+    protected static $deepCheck = false;
+
+    /**
      * Dimension service
      *
      * @var \HDNET\Focuspoint\Service\DimensionService
@@ -67,20 +74,25 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 
         $sourceFile = $task->getSourceFile();
         try {
-            $ratio = $this->getCurrentRatioConfiguration();
-            $this->dimensionService->getRatio($ratio);
-            $newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
-            $file = ResourceFactory::getInstance()
-                ->retrieveFileOrFolderObject($newFile);
+            if (self::$deepCheck === false) {
+                self::$deepCheck = true;
+                $ratio = $this->getCurrentRatioConfiguration();
+                $this->dimensionService->getRatio($ratio);
 
-            $targetFile = $task->getTargetFile();
-            ObjectAccess::setProperty($targetFile, 'originalFile', $file, true);
-            ObjectAccess::setProperty($targetFile, 'originalFileSha1', $file->getSha1(), true);
-            ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), true);
-            ObjectAccess::setProperty($task, 'sourceFile', $file, true);
-            ObjectAccess::setProperty($task, 'targetFile', $targetFile, true);
+                $newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
+                $file = ResourceFactory::getInstance()
+                    ->retrieveFileOrFolderObject($newFile);
+
+                $targetFile = $task->getTargetFile();
+                ObjectAccess::setProperty($targetFile, 'originalFile', $file, true);
+                ObjectAccess::setProperty($targetFile, 'originalFileSha1', $file->getSha1(), true);
+                ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), true);
+                ObjectAccess::setProperty($task, 'sourceFile', $file, true);
+                ObjectAccess::setProperty($task, 'targetFile', $targetFile, true);
+            }
         } catch (\Exception $ex) {
         }
+        self::$deepCheck = false;
 
         return parent::process($task);
     }
