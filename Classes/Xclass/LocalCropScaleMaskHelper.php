@@ -58,6 +58,13 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
      */
     public function process(TaskInterface $task)
     {
+        $configuration = $task->getConfiguration();
+        $crop = $configuration['crop'] ? json_decode($configuration['crop']) : null;
+        if ($crop instanceof \stdClass && isset($crop->x)) {
+            // if crop is enable release the process
+            return parent::process($task);
+        }
+
         $sourceFile = $task->getSourceFile();
         try {
             $ratio = $this->getCurrentRatioConfiguration();
