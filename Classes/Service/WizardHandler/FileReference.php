@@ -45,7 +45,10 @@ class FileReference extends AbstractWizardHandler
     {
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
         $properties = $reference->getProperties();
-        return [$properties['focus_point_x'], $properties['focus_point_y']];
+        return $this->cleanupPosition([
+            $properties['focus_point_x'],
+            $properties['focus_point_y']
+        ]);
     }
 
     /**

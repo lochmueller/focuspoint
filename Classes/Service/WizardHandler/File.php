@@ -45,12 +45,11 @@ class File extends AbstractWizardHandler
     public function getCurrentPoint()
     {
         $row = GlobalUtility::getDatabaseConnection()
-            ->exec_SELECTgetSingleRow('focus_point_x, focus_point_y', 'sys_file_metadata',
-                'uid=' . $this->getMataDataUid());
-        return [
-            MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0),
-            MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0)
-        ];
+            ->exec_SELECTgetSingleRow('focus_point_x, focus_point_y', 'sys_file_metadata', 'uid=' . $this->getMataDataUid());
+        return $this->cleanupPosition([
+            $row['focus_point_x'],
+            $row['focus_point_y']
+        ]);
     }
 
     /**

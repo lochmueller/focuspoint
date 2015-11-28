@@ -41,10 +41,10 @@ class Group extends AbstractWizardHandler
         if ($row === false) {
             return [0, 0];
         }
-        return [
-            MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0),
-            MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0)
-        ];
+        return $this->cleanupPosition([
+            $row['focus_point_x'],
+            $row['focus_point_y']
+        ]);
     }
 
     /**

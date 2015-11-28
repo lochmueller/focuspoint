@@ -6,6 +6,8 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
+use TYPO3\CMS\Core\Utility\MathUtility;
+
 /**
  * Abstract wizard handler
  */
@@ -48,5 +50,19 @@ abstract class AbstractWizardHandler
      * @return string
      */
     abstract public function getPublicUrl();
+
+    /**
+     * Cleanup the position of both values
+     *
+     * @param array $position
+     *
+     * @return array
+     */
+    protected function cleanupPosition($position) {
+        return [
+            MathUtility::forceIntegerInRange((int)$position[0], -100, 100, 0),
+            MathUtility::forceIntegerInRange((int)$position[1], -100, 100, 0)
+        ];
+    }
 
 }
