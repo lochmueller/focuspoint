@@ -41,10 +41,10 @@ class WizardService extends AbstractService
      */
     protected function getWizardIcon()
     {
-        if (GeneralUtility::compat_version('7.5')) {
+        if (GeneralUtility::compat_version('7.6')) {
             /** @var \TYPO3\CMS\Core\Imaging\IconFactory $iconFactory */
             $iconFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconFactory');
-            $icon = $iconFactory->getIcon('extensions-focuspoint-focuspoint', Icon::SIZE_SMALL, null);
+            $icon = $iconFactory->getIcon('tcarecords-tx_focuspoint_domain_model_filestandalone-default', Icon::SIZE_SMALL, null);
             return $icon->render();
         }
         return IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint');
