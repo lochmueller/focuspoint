@@ -54,6 +54,10 @@ class GetData implements ContentObjectGetDataHookInterface
                 case 'yp':
                     $metaData = $originalFile->_getMetaData();
                     return (float)$metaData['focus_point_' . substr($parts[1], 0, 1)];
+                case 'xp_positive':
+                case 'yp_positive':
+                    $metaData = $originalFile->_getMetaData();
+                    return ((float)$metaData['focus_point_' . substr($parts[1], 0, 1)] + 100) / 2;
                 case 'w':
                 case 'h':
                     $fileName = GeneralUtility::getFileAbsFileName($fileObject->getPublicUrl(true));
