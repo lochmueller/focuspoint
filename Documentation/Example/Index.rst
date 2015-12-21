@@ -8,6 +8,7 @@ Thanks for contributing and sharing.
 Responsive Header IMG with pure CSS
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Contributed by Martin Zarth (www.zarthwork.de).
 The header files are integrated inwards the page relations in three different sizes. Additional CSS for the image container has been set to:
 
 .. code-block:: css
