@@ -13,6 +13,7 @@ $base = ModelUtility::getTcaInformation('HDNET\\Focuspoint\\Domain\\Model\\FileS
 $custom = [
     'ctrl' => [
         'hideTable' => true,
+        'rootLevel' => 1,
     ],
     'columns' => [
         'focus_point_y' => TcaUtility::getBaseConfiguration(),
