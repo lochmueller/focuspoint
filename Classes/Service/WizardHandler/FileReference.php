@@ -59,7 +59,7 @@ class FileReference extends AbstractWizardHandler
     public function getPublicUrl()
     {
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
-        return $reference->getPublicUrl(true);
+        return $this->displayableImageUrl($reference->getPublicUrl(true));
     }
 
     /**

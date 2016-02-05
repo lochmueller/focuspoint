@@ -52,6 +52,17 @@ abstract class AbstractWizardHandler
     abstract public function getPublicUrl();
 
     /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function displayableImageUrl($url){
+        // @todo take care, that tif, tiff and all the other formats
+        // @todo without <img>-support are converted to a readable png
+        return $url;
+    }
+
+    /**
      * Cleanup the position of both values
      *
      * @param array $position
