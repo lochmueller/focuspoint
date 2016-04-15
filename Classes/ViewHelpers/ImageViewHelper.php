@@ -8,6 +8,7 @@
 
 namespace HDNET\Focuspoint\ViewHelpers;
 
+use HDNET\Focuspoint\Service\FocusCropService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
@@ -53,8 +54,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         $ratio = '1:1',
         $realCrop = true
     ) {
-        /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
-        $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
+        /** @var FocusCropService $service */
+        $service = GeneralUtility::makeInstance(FocusCropService::class);
         try {
             $internalImage = $service->getViewHelperImage($src, $image, $treatIdAsReference);
             if ($realCrop) {

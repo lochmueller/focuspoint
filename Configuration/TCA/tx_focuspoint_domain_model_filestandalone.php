@@ -1,14 +1,11 @@
 <?php
 
-/**
- * Base TCA generation for the model HDNET\\Focuspoint\\Domain\\Model\\FileStandalone
- */
-
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Focuspoint\Domain\Model\FileStandalone;
 use HDNET\Focuspoint\Utility\TcaUtility;
 
-$base = ModelUtility::getTcaInformation('HDNET\\Focuspoint\\Domain\\Model\\FileStandalone');
+$base = ModelUtility::getTcaInformation(FileStandalone::class);
 
 $custom = [
     'ctrl' => [

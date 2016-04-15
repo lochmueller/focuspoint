@@ -9,6 +9,7 @@
 
 namespace HDNET\Focuspoint\ViewHelpers\Uri;
 
+use HDNET\Focuspoint\Service\FocusCropService;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,16 +28,16 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
      *
      * @see http://typo3.org/documentation/document-library/references/doc_core_tsref/4.2.0/view/1/5/#id4164427
      *
-     * @param string                           $src
+     * @param string $src
      * @param FileInterface|AbstractFileFolder $image
-     * @param string                           $width              width of the image. This can be a numeric value representing the fixed width of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
-     * @param string                           $height             height of the image. This can be a numeric value representing the fixed height of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
-     * @param integer                          $minWidth           minimum width of the image
-     * @param integer                          $minHeight          minimum height of the image
-     * @param integer                          $maxWidth           maximum width of the image
-     * @param integer                          $maxHeight          maximum height of the image
-     * @param boolean                          $treatIdAsReference given src argument is a sys_file_reference record
-     * @param string                           $ratio
+     * @param string $width width of the image. This can be a numeric value representing the fixed width of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
+     * @param string $height height of the image. This can be a numeric value representing the fixed height of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
+     * @param integer $minWidth minimum width of the image
+     * @param integer $minHeight minimum height of the image
+     * @param integer $maxWidth maximum width of the image
+     * @param integer $maxHeight maximum height of the image
+     * @param boolean $treatIdAsReference given src argument is a sys_file_reference record
+     * @param string $ratio
      *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      * @return string path to the image
@@ -56,29 +57,29 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
 
         if (GeneralUtility::compat_version('7.0')) {
             return self::renderStatic([
-                'src'                => $src,
-                'image'              => $image,
-                'width'              => $width,
-                'height'             => $height,
-                'minWidth'           => $minWidth,
-                'minHeight'          => $minHeight,
-                'maxWidth'           => $maxWidth,
-                'maxHeight'          => $maxHeight,
+                'src' => $src,
+                'image' => $image,
+                'width' => $width,
+                'height' => $height,
+                'minWidth' => $minWidth,
+                'minHeight' => $minHeight,
+                'maxWidth' => $maxWidth,
+                'maxHeight' => $maxHeight,
                 'treatIdAsReference' => $treatIdAsReference,
-                'crop'               => null,
-                'ratio'              => $ratio, // added ratio
+                'crop' => null,
+                'ratio' => $ratio, // added ratio
             ], $this->buildRenderChildrenClosure(), $this->renderingContext);
         }
 
-        /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
-        $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
+        /** @var FocusCropService $service */
+        $service = GeneralUtility::makeInstance(FocusCropService::class);
         $src = $service->getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio);
         return parent::render($src, null, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight, false);
     }
 
     /**
-     * @param array                     $arguments
-     * @param callable|\Closure         $renderChildrenClosure
+     * @param array $arguments
+     * @param callable|\Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      *
      * @return string
@@ -90,8 +91,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         RenderingContextInterface $renderingContext
     ) {
 
-        /** @var \HDNET\Focuspoint\Service\FocusCropService $service */
-        $service = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
+        /** @var FocusCropService $service */
+        $service = GeneralUtility::makeInstance(FocusCropService::class);
         $arguments['src'] = $service->getCroppedImageSrcForViewHelper($arguments['src'], $arguments['image'],
             $arguments['treatIdAsReference'], $arguments['ratio']);
         $arguments['image'] = null;
@@ -115,13 +116,13 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         }
 
         $processingInstructions = [
-            'width'     => $arguments['width'],
-            'height'    => $arguments['height'],
-            'minWidth'  => $arguments['minWidth'],
+            'width' => $arguments['width'],
+            'height' => $arguments['height'],
+            'minWidth' => $arguments['minWidth'],
             'minHeight' => $arguments['minHeight'],
-            'maxWidth'  => $arguments['maxWidth'],
+            'maxWidth' => $arguments['maxWidth'],
             'maxHeight' => $arguments['maxHeight'],
-            'crop'      => $crop,
+            'crop' => $crop,
         ];
         $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
         return $imageService->getImageUri($processedImage);

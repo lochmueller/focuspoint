@@ -8,6 +8,7 @@ namespace HDNET\Focuspoint\Service;
 
 use TYPO3\CMS\Backend\Utility\IconUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -42,9 +43,10 @@ class WizardService extends AbstractService
     protected function getWizardIcon()
     {
         if (GeneralUtility::compat_version('7.6')) {
-            /** @var \TYPO3\CMS\Core\Imaging\IconFactory $iconFactory */
-            $iconFactory = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\IconFactory');
-            $icon = $iconFactory->getIcon('tcarecords-tx_focuspoint_domain_model_filestandalone-default', Icon::SIZE_SMALL, null);
+            /** @var IconFactory $iconFactory */
+            $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+            $icon = $iconFactory->getIcon('tcarecords-tx_focuspoint_domain_model_filestandalone-default',
+                Icon::SIZE_SMALL, null);
             return $icon->render();
         }
         return IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint');

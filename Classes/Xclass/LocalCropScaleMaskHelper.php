@@ -8,6 +8,8 @@
 
 namespace HDNET\Focuspoint\Xclass;
 
+use HDNET\Focuspoint\Service\DimensionService;
+use HDNET\Focuspoint\Service\FocusCropService;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Resource\Processing\LocalImageProcessor;
 use TYPO3\CMS\Core\Resource\Processing\TaskInterface;
@@ -33,14 +35,14 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     /**
      * Dimension service
      *
-     * @var \HDNET\Focuspoint\Service\DimensionService
+     * @var DimensionService
      */
     protected $dimensionService;
 
     /**
      * focus crop service
      *
-     * @var \HDNET\Focuspoint\Service\FocusCropService
+     * @var FocusCropService
      */
     protected $focusCropService;
 
@@ -51,8 +53,8 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
      */
     public function __construct(LocalImageProcessor $processor)
     {
-        $this->dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
-        $this->focusCropService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\FocusCropService');
+        $this->dimensionService = GeneralUtility::makeInstance(DimensionService::class);
+        $this->focusCropService = GeneralUtility::makeInstance(FocusCropService::class);
         parent::__construct($processor);
     }
 

@@ -36,7 +36,7 @@ class FileList implements FileListEditIconHookInterface
     public function manipulateEditIcons(&$cells, &$parentObject)
     {
         /** @var WizardService $wizardService */
-        $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
+        $wizardService = GeneralUtility::makeInstance(WizardService::class);
 
         try {
             $metaUid = $this->getFileMetaUidByCells($cells);

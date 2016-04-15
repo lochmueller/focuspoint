@@ -185,7 +185,7 @@ class GroupItem extends AbstractGroupItem
         $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
 
         /** @var WizardService $wizardService */
-        $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
+        $wizardService = GeneralUtility::makeInstance(WizardService::class);
         $icons['R'][] = $wizardService->getWizardButton($wizardUri, 'group-focuspoint');
     }
 
@@ -198,7 +198,7 @@ class GroupItem extends AbstractGroupItem
         if (!$alreadyAdded) {
             $alreadyAdded = true;
             /** @var PageRenderer $pageRenderer */
-            $pageRenderer = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Page\\PageRenderer');
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Focuspoint/GroupSelect');
         }
     }

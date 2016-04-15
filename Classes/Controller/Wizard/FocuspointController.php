@@ -9,11 +9,15 @@
 namespace HDNET\Focuspoint\Controller\Wizard;
 
 use HDNET\Focuspoint\Service\WizardHandler\AbstractWizardHandler;
+use HDNET\Focuspoint\Service\WizardHandler\File;
+use HDNET\Focuspoint\Service\WizardHandler\FileReference;
+use HDNET\Focuspoint\Service\WizardHandler\Group;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Wizard controller
@@ -46,8 +50,8 @@ class FocuspointController
             ]
         ];
 
-        /** @var \TYPO3\CMS\Fluid\View\StandaloneView $template */
-        $template = GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+        /** @var StandaloneView $template */
+        $template = GeneralUtility::makeInstance(StandaloneView::class);
         $template->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('focuspoint',
             'Resources/Private/Templates/Wizard/Focuspoint.html'));
 
@@ -88,9 +92,9 @@ class FocuspointController
     protected function getWizardHandler()
     {
         return [
-            GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\File'),
-            GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\FileReference'),
-            GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardHandler\\Group'),
+            GeneralUtility::makeInstance(File::class),
+            GeneralUtility::makeInstance(FileReference::class),
+            GeneralUtility::makeInstance(Group::class),
         ];
     }
 }

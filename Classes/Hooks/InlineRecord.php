@@ -117,7 +117,7 @@ class InlineRecord implements InlineElementHookInterface
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
         }
         /** @var WizardService $wizardService */
-        $wizardService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\WizardService');
+        $wizardService = GeneralUtility::makeInstance(WizardService::class);
         $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton($wizardUri));
     }
 

@@ -10,6 +10,7 @@ namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Service\WizardHandler\Group;
 use HDNET\Focuspoint\Utility\GlobalUtility;
+use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -18,6 +19,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 
 /**
  * Crop images via focus crop
@@ -161,8 +163,8 @@ class FocusCropService extends AbstractService
         $height = $imageSizeInformation[1];
 
         // dimensions
-        /** @var \HDNET\Focuspoint\Service\DimensionService $dimensionService */
-        $dimensionService = GeneralUtility::makeInstance('HDNET\\Focuspoint\\Service\\DimensionService');
+        /** @var DimensionService $dimensionService */
+        $dimensionService = GeneralUtility::makeInstance(DimensionService::class);
         list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
         $cropMode = $dimensionService->getCropMode($width, $height, $ratio);
         list($sourceX, $sourceY) = $dimensionService->calculateSourcePosition($cropMode, $width, $height, $focusWidth,
@@ -219,8 +221,8 @@ class FocusCropService extends AbstractService
             ],
         ];
 
-        /** @var \TYPO3\CMS\Frontend\Imaging\GifBuilder $gifBuilder */
-        $gifBuilder = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Imaging\\GifBuilder');
+        /** @var GifBuilder $gifBuilder */
+        $gifBuilder = GeneralUtility::makeInstance(GifBuilder::class);
         $gifBuilder->init();
         $gifBuilder->start($configuration, []);
         $gifBuilder->createTempSubDir('focuscrop/');
@@ -247,8 +249,8 @@ class FocusCropService extends AbstractService
         $sourceY,
         $absoluteTempImageName
     ) {
-        /** @var \TYPO3\CMS\Core\Imaging\GraphicalFunctions $graphicalFunctions */
-        $graphicalFunctions = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Imaging\\GraphicalFunctions');
+        /** @var GraphicalFunctions $graphicalFunctions */
+        $graphicalFunctions = GeneralUtility::makeInstance(GraphicalFunctions::class);
         $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
         $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
 

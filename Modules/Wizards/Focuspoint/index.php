@@ -11,11 +11,13 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
+use HDNET\Focuspoint\Controller\Wizard\FocuspointController;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Wizard to add new records to a group/select TCEform formfield
  */
 
-/** @var \HDNET\Focuspoint\Controller\Wizard\FocuspointController $editController */
-$editController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('HDNET\\Focuspoint\\Controller\\Wizard\\FocuspointController');
+/** @var FocuspointController $editController */
+$editController = GeneralUtility::makeInstance(FocuspointController::class);
 echo $editController->main();
