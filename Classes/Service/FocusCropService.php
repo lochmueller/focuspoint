@@ -147,6 +147,7 @@ class FocusCropService extends AbstractService
         $tempImageName = $tempImageFolder . $hash . '-fp-' . preg_replace('/[^0-9]/', '-',
                 $ratio) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo($absoluteImageName,
                 PATHINFO_EXTENSION);
+        $tempImageName = preg_replace('/--+/', '-', $tempImageName);
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
         if (is_file($absoluteTempImageName)) {
