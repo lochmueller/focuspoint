@@ -23,11 +23,11 @@ class GetData implements ContentObjectGetDataHookInterface
     /**
      * Extends the getData()-Method of ContentObjectRenderer to process more/other commands
      *
-     * @param string                $getDataString Full content of getData-request e.g. "TSFE:id // field:title // field:uid
-     * @param array                 $fields        Current field-array
-     * @param string                $sectionValue  Currently examined section value of the getData request e.g. "field:title
-     * @param string                $returnValue   Current returnValue that was processed so far by getData
-     * @param ContentObjectRenderer $parentObject  Parent content object
+     * @param string $getDataString Full content of getData-request e.g. "TSFE:id // field:title // field:uid
+     * @param array $fields Current field-array
+     * @param string $sectionValue Currently examined section value of the getData request e.g. "field:title
+     * @param string $returnValue Current returnValue that was processed so far by getData
+     * @param ContentObjectRenderer $parentObject Parent content object
      *
      * @return string Get data result
      */
@@ -58,10 +58,10 @@ class GetData implements ContentObjectGetDataHookInterface
                 case 'yp_positive':
                     $metaData = $originalFile->_getMetaData();
                     if ($parts[1] == 'xp_positive') {
-                        return (int)(abs($metaData['focus_point_' . substr($parts[1], 0, 1)] + 100 ) / 2 );
+                        return (int)(abs($metaData['focus_point_' . substr($parts[1], 0, 1)] + 100) / 2);
                     } else {
-                        return (int)(abs($metaData['focus_point_' . substr($parts[1], 0, 1)] - 100 ) / 2 );
-                    }       
+                        return (int)(abs($metaData['focus_point_' . substr($parts[1], 0, 1)] - 100) / 2);
+                    }
                 case 'w':
                 case 'h':
                     $fileName = GeneralUtility::getFileAbsFileName($fileObject->getPublicUrl(true));

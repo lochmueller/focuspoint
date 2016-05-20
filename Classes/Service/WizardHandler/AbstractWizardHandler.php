@@ -60,7 +60,8 @@ abstract class AbstractWizardHandler
      *
      * @return string
      */
-    protected function displayableImageUrl($url){
+    protected function displayableImageUrl($url)
+    {
         if (in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'])) {
             $objectManager = new ObjectManager();
             /** @var ImageService $imageService */
@@ -81,7 +82,8 @@ abstract class AbstractWizardHandler
      *
      * @return array
      */
-    protected function cleanupPosition($position) {
+    protected function cleanupPosition($position)
+    {
         return [
             MathUtility::forceIntegerInRange((int)$position[0], -100, 100, 0),
             MathUtility::forceIntegerInRange((int)$position[1], -100, 100, 0)

@@ -6,7 +6,6 @@ namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\MathUtility;
 
 class Group extends AbstractWizardHandler
 {

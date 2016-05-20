@@ -38,7 +38,7 @@ class TestController extends ActionController
 
         $this->view->assignMultiple([
             'fileReferences' => $fileReferences,
-            'customRatio'    => $contentElement['image_ratio']
+            'customRatio' => $contentElement['image_ratio']
         ]);
     }
 }

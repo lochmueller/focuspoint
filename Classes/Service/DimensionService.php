@@ -36,8 +36,8 @@ class DimensionService extends AbstractService
     /**
      * Calc the ratio and check if the crop is landscape or portrait relevant
      *
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      * @param string $ratio In format "1:1"
      *
      * @return int
@@ -56,8 +56,8 @@ class DimensionService extends AbstractService
     /**
      * Calc the focus width and height by the given ratio
      *
-     * @param int    $width
-     * @param int    $height
+     * @param int $width
+     * @param int $height
      * @param string $ratio In format "1:1"
      *
      * @return array
@@ -100,8 +100,15 @@ class DimensionService extends AbstractService
      *
      * @return array
      */
-    public function calculateSourcePosition($cropMode, $width, $height, $focusWidth, $focusHeight, $focusPointX, $focusPointY)
-    {
+    public function calculateSourcePosition(
+        $cropMode,
+        $width,
+        $height,
+        $focusWidth,
+        $focusHeight,
+        $focusPointX,
+        $focusPointY
+    ) {
         if ($cropMode == DimensionService::CROP_PORTRAIT) {
             return array_reverse($this->getShiftedFocusAreaPosition($height, $focusHeight, $focusPointY, true));
         } elseif ($cropMode == DimensionService::CROP_LANDSCAPE) {
@@ -116,9 +123,9 @@ class DimensionService extends AbstractService
     /**
      * Calc the shifted focus area
      *
-     * @param int  $length
-     * @param int  $focusLength
-     * @param int  $focusPosition
+     * @param int $length
+     * @param int $focusLength
+     * @param int $focusPosition
      * @param bool $invertScala
      *
      * @return array
@@ -151,10 +158,10 @@ class DimensionService extends AbstractService
      * get the shifted focus point point position
      * for e.g. Frontend handling of the new created image
      *
-     * @param int    $imgWidth
-     * @param int    $imgHeight
-     * @param int    $focusX
-     * @param int    $focusY
+     * @param int $imgWidth
+     * @param int $imgHeight
+     * @param int $focusX
+     * @param int $focusY
      * @param string $ratio
      *
      * @return array
@@ -169,7 +176,8 @@ class DimensionService extends AbstractService
 
         list($focusWidth, $focusHeight) = $this->getFocusWidthAndHeight($imgWidth, $imgHeight, $ratio);
 
-        list($sourceX, $sourceY) = $this->calculateSourcePosition($imgWidth, $imgHeight, $focusWidth, $focusHeight, $focusX,
+        list($sourceX, $sourceY) = $this->calculateSourcePosition($imgWidth, $imgHeight, $focusWidth, $focusHeight,
+            $focusX,
             $focusY, $ratio);
 
         $newHalfWidth = $focusWidth / 2;
