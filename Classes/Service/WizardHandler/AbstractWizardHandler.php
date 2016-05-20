@@ -65,7 +65,7 @@ abstract class AbstractWizardHandler
         if (in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'])) {
             $objectManager = new ObjectManager();
             /** @var ImageService $imageService */
-            $imageService = $objectManager->get('TYPO3\\CMS\\Extbase\\Service\\ImageService');
+            $imageService = $objectManager->get(ImageService::class);
             $image = $imageService->getImage($url, null, null);
             $processedImage = $imageService->applyProcessingInstructions($image, [
                 'width' => '800',
