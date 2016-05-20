@@ -7,7 +7,7 @@ conf.py:
   copyright: 2015
   project: Focuspoint
   version: 6.2
-  release: 1.5.3
+  release: 1.6.0
   highlight_language: php
   latex_documents:
   - - Index
