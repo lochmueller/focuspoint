@@ -80,7 +80,7 @@ class Group extends AbstractWizardHandler
      */
     public function getPublicUrl()
     {
-        return $this->displayableImageUrl(GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $this->getRelativeFilePath());
+        return $this->displayableImageUrl($this->getRelativeFilePath());
     }
 
     /**

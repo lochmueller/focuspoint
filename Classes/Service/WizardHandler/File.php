@@ -77,7 +77,7 @@ class File extends AbstractWizardHandler
     public function getPublicUrl()
     {
         $fileObject = FileUtility::getFileByMetaData($this->getMataDataUid());
-        return $this->displayableImageUrl($fileObject->getPublicUrl(true));
+        return $this->displayableImageUrl($fileObject->getPublicUrl());
     }
 
     /**

@@ -6,7 +6,11 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Service\ImageService;
 
 /**
  * Abstract wizard handler
@@ -57,9 +61,17 @@ abstract class AbstractWizardHandler
      * @return string
      */
     protected function displayableImageUrl($url){
-        // @todo take care, that tif, tiff and all the other formats
-        // @todo without <img>-support are converted to a readable png
-        return $url;
+        if (in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'])) {
+            $objectManager = new ObjectManager();
+            /** @var ImageService $imageService */
+            $imageService = $objectManager->get('TYPO3\\CMS\\Extbase\\Service\\ImageService');
+            $image = $imageService->getImage($url, null, null);
+            $processedImage = $imageService->applyProcessingInstructions($image, [
+                'width' => '800',
+            ]);
+            $url = $imageService->getImageUri($processedImage);
+        }
+        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ltrim($url, '/');
     }
 
     /**
