@@ -7,9 +7,16 @@
       "HDNET\\Focuspoint\\": "Classes/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "HDNET\\Focuspoint\\Tests\\": "Tests",
+      "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
+    }
+  },
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms-core": "~6.2.14|>=7.4.0,<9.0"
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.2",
+    "typo3/cms": "^7.6.0"
   },
   "type": "typo3-cms-extension",
   "keywords": [
@@ -20,5 +27,22 @@
   "license": "GPL-2.0+",
   "support": {
     "issues": "https://github.com/lochmueller/focuspoint/issues"
+  },
+  "require-dev": {
+    "namelesscoder/typo3-repository-client": "1.1.x-dev",
+    "phpunit/phpunit": "~4.8.0"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web",
+      "Package": {
+        "partOfMinimalUsableSystem": true
+      }
+    }
   }
 }
