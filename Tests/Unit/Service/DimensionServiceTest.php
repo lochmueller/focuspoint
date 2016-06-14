@@ -149,13 +149,12 @@ class DimensionServiceTest extends UnitTestCase
         list($focusWidth, $focusHeight) = $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio);
 
         $this->assertEquals($expected,
-            $this->service->calculateSourcePosition($imageWidth, $imageHeight, $focusWidth, $focusHeight, $focusX,
-                $focusY,
-                $ratio));
+            $this->service->calculateSourcePosition(DimensionService::CROP_LANDSCAPE, $imageWidth, $imageHeight, $focusWidth,
+                $focusHeight, $focusX, $focusY));
     }
 
     /**
-     * @expectedException \LogicException
+     * @expectedException \Exception
      * @expectedExceptionMessage Ratio have to be in the format of e.g. "1:1" or "16:9"
      * @test
      */
