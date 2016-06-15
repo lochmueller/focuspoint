@@ -45,8 +45,11 @@ class WizardService extends AbstractService
         if (GeneralUtility::compat_version('7.6')) {
             /** @var IconFactory $iconFactory */
             $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-            $icon = $iconFactory->getIcon('tcarecords-tx_focuspoint_domain_model_filestandalone-default',
-                Icon::SIZE_SMALL, null);
+            $icon = $iconFactory->getIcon(
+                'tcarecords-tx_focuspoint_domain_model_filestandalone-default',
+                Icon::SIZE_SMALL,
+                null
+            );
             return $icon->render();
         }
         return IconUtility::getSpriteIcon('extensions-focuspoint-focuspoint');

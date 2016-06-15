@@ -176,9 +176,15 @@ class DimensionService extends AbstractService
 
         list($focusWidth, $focusHeight) = $this->getFocusWidthAndHeight($imgWidth, $imgHeight, $ratio);
 
-        list($sourceX, $sourceY) = $this->calculateSourcePosition($imgWidth, $imgHeight, $focusWidth, $focusHeight,
+        list($sourceX, $sourceY) = $this->calculateSourcePosition(
+            $imgWidth,
+            $imgHeight,
+            $focusWidth,
+            $focusHeight,
             $focusX,
-            $focusY, $ratio);
+            $focusY,
+            $ratio
+        );
 
         $newHalfWidth = $focusWidth / 2;
         $newHalfHeight = $focusHeight / 2;
@@ -209,10 +215,16 @@ class DimensionService extends AbstractService
             throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 34627384862);
         }
         return [
-            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int)$ratio[0] : (float)str_replace(',', '.',
-                $ratio[0]),
-            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int)$ratio[1] : (float)str_replace(',', '.',
-                $ratio[1]),
+            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int)$ratio[0] : (float)str_replace(
+                ',',
+                '.',
+                $ratio[0]
+            ),
+            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int)$ratio[1] : (float)str_replace(
+                ',',
+                '.',
+                $ratio[1]
+            ),
         ];
     }
 }

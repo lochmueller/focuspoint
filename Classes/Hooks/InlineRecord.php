@@ -101,9 +101,16 @@ class InlineRecord implements InlineElementHookInterface
             if (GeneralUtility::compat_version('7.0')) {
                 $returnUrlGenerated = BackendUtility::getModuleUrl('record_edit', $returnUrl);
             } else {
-                $returnUrlGenerated = 'alt_doc.php?' . ltrim(GeneralUtility::implodeArrayForUrl('', $returnUrl, '',
-                        true, true),
-                        '&') . BackendUtility::getUrlToken('editRecord');
+                $returnUrlGenerated = 'alt_doc.php?' . ltrim(
+                    GeneralUtility::implodeArrayForUrl(
+                        '',
+                        $returnUrl,
+                        '',
+                        true,
+                        true
+                    ),
+                    '&'
+                ) . BackendUtility::getUrlToken('editRecord');
             }
 
             $wizardArguments = [

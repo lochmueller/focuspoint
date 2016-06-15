@@ -3,7 +3,6 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
-
 use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -33,9 +32,11 @@ class Group extends AbstractWizardHandler
     public function getCurrentPoint()
     {
         $connection = GlobalUtility::getDatabaseConnection();
-        $row = $connection->exec_SELECTgetSingleRow('uid,focus_point_x,focus_point_y',
+        $row = $connection->exec_SELECTgetSingleRow(
+            'uid,focus_point_x,focus_point_y',
             self::TABLE,
-            'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE));
+            'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE)
+        );
 
         if ($row === false) {
             return [0, 0];
@@ -56,9 +57,11 @@ class Group extends AbstractWizardHandler
     public function setCurrentPoint($x, $y)
     {
         $connection = GlobalUtility::getDatabaseConnection();
-        $row = $connection->exec_SELECTgetSingleRow('uid',
+        $row = $connection->exec_SELECTgetSingleRow(
+            'uid',
             self::TABLE,
-            'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE));
+            'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE)
+        );
         $values = [
             'focus_point_x' => $x,
             'focus_point_y' => $y,
@@ -127,7 +130,6 @@ class Group extends AbstractWizardHandler
         $filePath = rtrim($fieldTca['config']['uploadfolder'], '/') . '/' . $p['file'];
         if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
             return null;
-
         }
         return $filePath;
     }

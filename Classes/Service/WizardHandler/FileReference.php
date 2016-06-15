@@ -3,7 +3,6 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
-
 use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -82,8 +81,11 @@ class FileReference extends AbstractWizardHandler
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
         $fileUid = $reference->getOriginalFile()->getUid();
         $row = GlobalUtility::getDatabaseConnection()
-            ->exec_SELECTgetSingleRow('*', 'sys_file_metadata',
-                'file=' . $fileUid);
+            ->exec_SELECTgetSingleRow(
+                '*',
+                'sys_file_metadata',
+                'file=' . $fileUid
+            );
         if ($row) {
             GlobalUtility::getDatabaseConnection()
                 ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $row['uid'], $values);

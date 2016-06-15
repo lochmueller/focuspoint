@@ -17,5 +17,7 @@ $custom = [
     ],
 ];
 
-$GLOBALS['TCA']['sys_file_reference'] = ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['sys_file_reference'],
-    $custom);
+$GLOBALS['TCA']['sys_file_reference'] = ArrayUtility::mergeRecursiveDistinct(
+    $GLOBALS['TCA']['sys_file_reference'],
+    $custom
+);

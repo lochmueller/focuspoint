@@ -52,8 +52,10 @@ class FocuspointController
 
         /** @var StandaloneView $template */
         $template = GeneralUtility::makeInstance(StandaloneView::class);
-        $template->setTemplatePathAndFilename(ExtensionManagementUtility::extPath('focuspoint',
-            'Resources/Private/Templates/Wizard/Focuspoint.html'));
+        $template->setTemplatePathAndFilename(ExtensionManagementUtility::extPath(
+            'focuspoint',
+            'Resources/Private/Templates/Wizard/Focuspoint.html'
+        ));
 
         if (is_object($handler)) {
             ArrayUtility::mergeRecursiveWithOverrule($saveArguments, $handler->getArguments());

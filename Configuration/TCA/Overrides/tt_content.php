@@ -4,8 +4,10 @@
  * Base TCA generation for the table tt_content
  */
 
-$GLOBALS['TCA']['tt_content'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation('focuspoint',
-    'tt_content');
+$GLOBALS['TCA']['tt_content'] = \HDNET\Autoloader\Utility\ModelUtility::getTcaOverrideInformation(
+    'focuspoint',
+    'tt_content'
+);
 
 $custom = [
     'columns' => [
@@ -140,11 +142,16 @@ $custom = [
     ],
     'palettes' => [
         'image_settings' => [
-            'showitem' => str_replace('imageborder;', 'image_ratio,imageborder;',
-                $GLOBALS['TCA']['tt_content']['palettes']['image_settings']['showitem'])
+            'showitem' => str_replace(
+                'imageborder;',
+                'image_ratio,imageborder;',
+                $GLOBALS['TCA']['tt_content']['palettes']['image_settings']['showitem']
+            )
         ],
     ],
 ];
 
-$GLOBALS['TCA']['tt_content'] = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['tt_content'],
-    $custom);
+$GLOBALS['TCA']['tt_content'] = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct(
+    $GLOBALS['TCA']['tt_content'],
+    $custom
+);

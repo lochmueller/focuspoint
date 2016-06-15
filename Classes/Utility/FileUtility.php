@@ -28,7 +28,7 @@ class FileUtility
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      */
-    static public function getFileByMetaData($uid)
+    public static function getFileByMetaData($uid)
     {
         /** @var DatabaseConnection $database */
         $database = $GLOBALS['TYPO3_DB'];
@@ -50,7 +50,7 @@ class FileUtility
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      */
-    static public function getFileByUid($uid)
+    public static function getFileByUid($uid)
     {
         return ResourceFactory::getInstance()
             ->getFileObject($uid);

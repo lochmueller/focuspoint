@@ -85,7 +85,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
      * @return string
      * @throws Exception
      */
-    static public function renderStatic(
+    public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
@@ -93,8 +93,12 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
 
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
-        $arguments['src'] = $service->getCroppedImageSrcForViewHelper($arguments['src'], $arguments['image'],
-            $arguments['treatIdAsReference'], $arguments['ratio']);
+        $arguments['src'] = $service->getCroppedImageSrcForViewHelper(
+            $arguments['src'],
+            $arguments['image'],
+            $arguments['treatIdAsReference'],
+            $arguments['ratio']
+        );
         $arguments['image'] = null;
         $arguments['treatIdAsReference'] = false;
 

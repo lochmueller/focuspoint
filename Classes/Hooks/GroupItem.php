@@ -48,7 +48,8 @@ if (GeneralUtility::compat_version('7.0')) {
             array $additionalParams,
             $parentObject
         ) {
-            $this->dbFileIcons_postProcessCompatibility($params,
+            $this->dbFileIcons_postProcessCompatibility(
+                $params,
                 $selector,
                 $thumbnails,
                 $icons,
@@ -56,7 +57,8 @@ if (GeneralUtility::compat_version('7.0')) {
                 $fName,
                 $uidList,
                 $additionalParams,
-                $parentObject);
+                $parentObject
+            );
         }
 
         protected function dbFileIcons_postProcessCompatibility(
@@ -103,7 +105,8 @@ if (GeneralUtility::compat_version('7.0')) {
             array $additionalParams,
             FormEngine $parentObject
         ) {
-            $this->dbFileIcons_postProcessCompatibility($params,
+            $this->dbFileIcons_postProcessCompatibility(
+                $params,
                 $selector,
                 $thumbnails,
                 $icons,
@@ -111,7 +114,8 @@ if (GeneralUtility::compat_version('7.0')) {
                 $fName,
                 $uidList,
                 $additionalParams,
-                $parentObject);
+                $parentObject
+            );
         }
 
         protected function dbFileIcons_postProcessCompatibility(

@@ -68,8 +68,17 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         }
 
         try {
-            parent::render($src, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight, $treatIdAsReference,
-                $image);
+            parent::render(
+                $src,
+                $width,
+                $height,
+                $minWidth,
+                $minHeight,
+                $maxWidth,
+                $maxHeight,
+                $treatIdAsReference,
+                $image
+            );
         } catch (\Exception $ex) {
             return 'Missing image!';
         }

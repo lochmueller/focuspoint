@@ -89,5 +89,4 @@ abstract class AbstractWizardHandler
             MathUtility::forceIntegerInRange((int)$position[1], -100, 100, 0)
         ];
     }
-
 }

@@ -107,8 +107,12 @@ class FocusCropService extends AbstractService
      */
     public function getCroppedImageSrcByFile(FileInterface $file, $ratio)
     {
-        return $this->getCroppedImageSrcBySrc($file->getPublicUrl(), $ratio, $file->getProperty('focus_point_x'),
-            $file->getProperty('focus_point_y'));
+        return $this->getCroppedImageSrcBySrc(
+            $file->getPublicUrl(),
+            $ratio,
+            $file->getProperty('focus_point_x'),
+            $file->getProperty('focus_point_y')
+        );
     }
 
 
@@ -133,9 +137,11 @@ class FocusCropService extends AbstractService
 
         if ($focusPointX === 0 && $focusPointY === 0) {
             $connection = GlobalUtility::getDatabaseConnection();
-            $row = $connection->exec_SELECTgetSingleRow('uid,focus_point_x,focus_point_y',
+            $row = $connection->exec_SELECTgetSingleRow(
+                'uid,focus_point_x,focus_point_y',
                 Group::TABLE,
-                'relative_file_path = ' . $connection->fullQuoteStr($src, Group::TABLE));
+                'relative_file_path = ' . $connection->fullQuoteStr($src, Group::TABLE)
+            );
             if ($row) {
                 $focusPointX = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
                 $focusPointY = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
@@ -144,9 +150,14 @@ class FocusCropService extends AbstractService
 
         $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
         $tempImageFolder = 'typo3temp/focuscrop/';
-        $tempImageName = $tempImageFolder . $hash . '-fp-' . preg_replace('/[^0-9]/', '-',
-                $ratio) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo($absoluteImageName,
-                PATHINFO_EXTENSION);
+        $tempImageName = $tempImageFolder . $hash . '-fp-' . preg_replace(
+            '/[^0-9]/',
+            '-',
+            $ratio
+        ) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo(
+            $absoluteImageName,
+            PATHINFO_EXTENSION
+        );
         $tempImageName = preg_replace('/--+/', '-', $tempImageName);
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
@@ -168,16 +179,35 @@ class FocusCropService extends AbstractService
         $dimensionService = GeneralUtility::makeInstance(DimensionService::class);
         list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
         $cropMode = $dimensionService->getCropMode($width, $height, $ratio);
-        list($sourceX, $sourceY) = $dimensionService->calculateSourcePosition($cropMode, $width, $height, $focusWidth,
-            $focusHeight, $focusPointX, $focusPointY);
+        list($sourceX, $sourceY) = $dimensionService->calculateSourcePosition(
+            $cropMode,
+            $width,
+            $height,
+            $focusWidth,
+            $focusHeight,
+            $focusPointX,
+            $focusPointY
+        );
 
         // generate image
         if (strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)) == 'png') {
-            $this->createCropImageGifBuilder($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY,
-                $absoluteTempImageName);
+            $this->createCropImageGifBuilder(
+                $absoluteImageName,
+                $focusWidth,
+                $focusHeight,
+                $sourceX,
+                $sourceY,
+                $absoluteTempImageName
+            );
         } else {
-            $this->createCropImageGraphicalFunctions($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY,
-                $absoluteTempImageName);
+            $this->createCropImageGraphicalFunctions(
+                $absoluteImageName,
+                $focusWidth,
+                $focusHeight,
+                $sourceX,
+                $sourceY,
+                $absoluteTempImageName
+            );
         }
         return $tempImageName;
     }
@@ -201,8 +231,10 @@ class FocusCropService extends AbstractService
         $absoluteTempImageName
     ) {
         $size = getimagesize($absoluteImageName);
-        $relativeImagePath = rtrim(PathUtility::getRelativePath(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
-            $absoluteImageName), '/');
+        $relativeImagePath = rtrim(PathUtility::getRelativePath(
+            GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
+            $absoluteImageName
+        ), '/');
         $configuration = [
             'format' => strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
@@ -259,11 +291,23 @@ class FocusCropService extends AbstractService
         // we do not need the alpha layer at all, because the PNG rendered with createCropImageGifBuilder
         ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true, true);
 
-        $graphicalFunctions->imagecopyresized($destinationImage, $sourceImage, 0, 0, $sourceX, $sourceY,
+        $graphicalFunctions->imagecopyresized(
+            $destinationImage,
+            $sourceImage,
+            0,
+            0,
+            $sourceX,
+            $sourceY,
             $focusWidth,
-            $focusHeight, $focusWidth, $focusHeight);
+            $focusHeight,
+            $focusWidth,
+            $focusHeight
+        );
 
-        $graphicalFunctions->ImageWrite($destinationImage, $absoluteTempImageName,
-            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']);
+        $graphicalFunctions->ImageWrite(
+            $destinationImage,
+            $absoluteTempImageName,
+            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']
+        );
     }
 }

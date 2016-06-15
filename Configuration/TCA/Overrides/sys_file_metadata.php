@@ -18,7 +18,9 @@ $custom = [
     ],
 ];
 
-$GLOBALS['TCA']['sys_file_metadata'] = ArrayUtility::mergeRecursiveDistinct($GLOBALS['TCA']['sys_file_metadata'],
-    $custom);
+$GLOBALS['TCA']['sys_file_metadata'] = ArrayUtility::mergeRecursiveDistinct(
+    $GLOBALS['TCA']['sys_file_metadata'],
+    $custom
+);
 
 ExtensionManagementUtility::addToAllTCAtypes('sys_file_metadata', 'focus_point_y,focus_point_x');

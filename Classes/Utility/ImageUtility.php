@@ -9,7 +9,6 @@ namespace HDNET\Focuspoint\Utility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
-
 /**
  * Image Utility
  */
@@ -23,8 +22,11 @@ class ImageUtility
      */
     public static function getAllowedFileExtensions()
     {
-        $configuredExtensions = GeneralUtility::trimExplode(',',
-            strtolower($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']), true);
+        $configuredExtensions = GeneralUtility::trimExplode(
+            ',',
+            strtolower($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']),
+            true
+        );
         $ignoreExtensions = ['pdf', 'ai', 'tga'];
         return array_diff($configuredExtensions, $ignoreExtensions);
     }
