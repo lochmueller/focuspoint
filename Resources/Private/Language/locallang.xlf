@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-06-29T12:22:43Z">
+		<header>
+			<type>misc</type>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="focuspoint.wizard">
+			<source>Focus point wizard</source>
+		</trans-unit>
+		<trans-unit id="focuspoint.wizard.imagesonly">
+			<source>(just for images)</source>
+		</trans-unit>
+		<trans-unit id="plugin.Test">
+			<source>Test Plugin (Focus point crop)</source>
+		</trans-unit>
+		<trans-unit id="sys_file_metadata.focus_point_x">
+			<source>Focus point (X)</source>
+		</trans-unit>
+		<trans-unit id="sys_file_metadata.focus_point_y">
+			<source>Focus point (Y)</source>
+		</trans-unit>
+		<trans-unit id="sys_file_reference.focus_point_x">
+			<source>focus_point_x</source>
+		</trans-unit>
+		<trans-unit id="sys_file_reference.focus_point_y">
+			<source>focus_point_y</source>
+		</trans-unit>
+		<trans-unit id="tt_content.image_ratio">
+			<source>Ratio</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_dimension">
+			<source>Dimension</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_dimension.dimension">
+			<source>Dimension</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_dimension.identifier">
+			<source>Identifier</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_dimension.title">
+			<source>Title</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_filestandalone">
+			<source>fFile standalone</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_filestandalone.focus_point_x">
+			<source>focus_point_x</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_filestandalone.focus_point_y">
+			<source>focus_point_y</source>
+		</trans-unit>
+		<trans-unit id="tx_focuspoint_domain_model_filestandalone.relative_file_path">
+			<source>relative_file_path</source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>
