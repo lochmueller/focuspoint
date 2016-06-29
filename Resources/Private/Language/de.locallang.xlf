@@ -46,6 +46,15 @@
 			<source>Dimension in x:y syntax</source>
 			<target>Dimension in x:y Syntax</target>
 		</trans-unit>
+		<trans-unit id="no.handler" approved="yes">
+			<source>We found no handler to edit this information with the handler. Please contact your system admin...</source>
+			<target>Wir haben keinen Verarbeiter gefunden um dieses Bild zu bearbeiten. Bitte kontaktiere deinen System Administrator...</target>
+		</trans-unit>
+		<trans-unit id="wizard.title" approved="yes">
+			<source>Click the image to set the FocusPoint.</source>
+			<target>Klicke in das Bild um den Focuspunkt zu setzen.</target>
+		</trans-unit>
+
 		<trans-unit id="tx_focuspoint_domain_model_dimension.identifier" approved="yes">
 			<source>Identifier</source>
 			<target>Identifizierer</target>

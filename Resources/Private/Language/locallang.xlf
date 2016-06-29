@@ -33,6 +33,12 @@
 		<trans-unit id="tx_focuspoint_domain_model_dimension">
 			<source>Dimension</source>
 		</trans-unit>
+		<trans-unit id="no.handler">
+			<source>We found no handler to edit this information with the handler. Please contact your system admin...</source>
+		</trans-unit>
+		<trans-unit id="wizard.title">
+			<source>Click the image to set the FocusPoint.</source>
+		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_dimension.dimension">
 			<source>Dimension in x:y syntax</source>
 		</trans-unit>
