@@ -1,8 +1,8 @@
 <?php
 
 use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 $GLOBALS['TCA']['tt_content'] = ModelUtility::getTcaOverrideInformation(
     'focuspoint',
@@ -16,8 +16,7 @@ $dimensions = [
     ]
 ];
 
-/** @var DatabaseConnection $databaseConnection */
-$databaseConnection = $GLOBALS['TYPO3_DB'];
+$databaseConnection = GlobalUtility::getDatabaseConnection();
 $rows = $databaseConnection->exec_SELECTgetRows(
     '*',
     'tx_focuspoint_domain_model_dimension',
