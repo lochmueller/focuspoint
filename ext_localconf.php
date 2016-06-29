@@ -10,6 +10,6 @@ $loader = [
     'SmartObjects',
     'ExtensionTypoScriptSetup',
     'Plugins',
-    'StaticTyposcript',
+    'StaticTyposcript'
 ];
 \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'focuspoint', $loader);

@@ -11,7 +11,7 @@ $loader = [
     'SmartObjects',
     'ExtensionTypoScriptSetup',
     'Plugins',
-    'StaticTyposcript',
+    'StaticTyposcript'
 ];
 \HDNET\Autoloader\Loader::extTables('HDNET', 'focuspoint', $loader);
 

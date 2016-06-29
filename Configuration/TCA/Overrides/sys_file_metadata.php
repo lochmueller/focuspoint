@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Base TCA generation for the table sys_file_metadata
- */
-
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Focuspoint\Utility\TcaUtility;
