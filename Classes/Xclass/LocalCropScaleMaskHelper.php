@@ -82,6 +82,9 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
                 $this->dimensionService->getRatio($ratio);
 
                 $newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
+                if ($newFile === null) {
+                    return parent::process($task);
+                }
                 $file = ResourceFactory::getInstance()
                     ->retrieveFileOrFolderObject($newFile);
 
