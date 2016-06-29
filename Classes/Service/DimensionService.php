@@ -239,6 +239,9 @@ class DimensionService extends AbstractService
     protected function mapDatabaseRatio($ratio)
     {
         $databaseConnection = GlobalUtility::getDatabaseConnection();
+        if (!is_object($databaseConnection)) {
+            return $ratio;
+        }
         $table = 'tx_focuspoint_domain_model_dimension';
         $row = $databaseConnection->exec_SELECTgetSingleRow(
             '*',
