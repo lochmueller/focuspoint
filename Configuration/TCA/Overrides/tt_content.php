@@ -29,8 +29,8 @@ if (!empty($rows)) {
     ];
     foreach ($rows as $row) {
         $dimensions[] = [
-            $row['dimension'] . ' / ' . $row['title'] . '(' . $row['identifier'] . ')',
-            $row['dimension']
+            $row['dimension'] . ' / ' . $row['title'],
+            $row['identifier']
         ];
     }
 }
@@ -39,6 +39,10 @@ if (!empty($rows)) {
 $dimensions = array_merge(
     $dimensions,
     [
+        [
+            'Natural',
+            '--div--'
+        ],
         [
             '1:1 / Square',
             '1:1'

@@ -34,7 +34,7 @@
 			<source>Dimension</source>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_dimension.dimension">
-			<source>Dimension</source>
+			<source>Dimension in x:y syntax</source>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_dimension.identifier">
 			<source>Identifier</source>

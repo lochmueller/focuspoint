@@ -43,8 +43,8 @@
 			<target>Dimension</target>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_dimension.dimension" approved="yes">
-			<source>Dimension</source>
-			<target>Dimension</target>
+			<source>Dimension in x:y syntax</source>
+			<target>Dimension in x:y Syntax</target>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_dimension.identifier" approved="yes">
 			<source>Identifier</source>

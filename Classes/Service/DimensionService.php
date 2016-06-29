@@ -8,6 +8,7 @@
 
 namespace HDNET\Focuspoint\Service;
 
+use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -210,6 +211,7 @@ class DimensionService extends AbstractService
      */
     public function getRatio($ratio)
     {
+        $ratio = $this->mapDatabaseRatio($ratio);
         $ratio = explode(':', $ratio);
         if (sizeof($ratio) !== 2) {
             throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 34627384862);
@@ -226,5 +228,26 @@ class DimensionService extends AbstractService
                 $ratio[1]
             ),
         ];
+    }
+
+    /**
+     * Map the given ratio to the DB table
+     *
+     * @param string $ratio
+     * @return string
+     */
+    protected function mapDatabaseRatio($ratio)
+    {
+        $databaseConnection = GlobalUtility::getDatabaseConnection();
+        $table = 'tx_focuspoint_domain_model_dimension';
+        $row = $databaseConnection->exec_SELECTgetSingleRow(
+            '*',
+            $table,
+            'identifier=' . $databaseConnection->fullQuoteStr($ratio, $table)
+        );
+        if (isset($row['dimension'])) {
+            return $row['dimension'];
+        }
+        return $ratio;
     }
 }
