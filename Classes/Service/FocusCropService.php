@@ -29,6 +29,13 @@ use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 class FocusCropService extends AbstractService
 {
 
+    const SIGNAL_tempImageCropped = 'tempImageCropped';
+
+    /**
+     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     */
+    protected $signalSlotDispatcher;
+
     /**
      * get the image
      *
@@ -209,6 +216,9 @@ class FocusCropService extends AbstractService
                 $absoluteTempImageName
             );
         }
+
+        $this->emitTempImageCropped($tempImageName);
+
         return $tempImageName;
     }
 
@@ -309,5 +319,39 @@ class FocusCropService extends AbstractService
             $absoluteTempImageName,
             $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']
         );
+    }
+
+    /**
+     * Emit tempImageCropped signal
+     *
+     * @param string $tempImageName
+     * @return string
+     */
+    protected function emitTempImageCropped($tempImageName)
+    {
+        $this->getSignalSlotDispatcher()->dispatch(__CLASS__, self::SIGNAL_tempImageCropped, array($tempImageName));
+    }
+
+    /**
+     * Get the SignalSlot dispatcher.
+     *
+     * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     */
+    protected function getSignalSlotDispatcher()
+    {
+        if (!isset($this->signalSlotDispatcher)) {
+            $this->signalSlotDispatcher = $this->getObjectManager()->get(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+        }
+        return $this->signalSlotDispatcher;
+    }
+
+    /**
+     * Gets the ObjectManager.
+     *
+     * @return \TYPO3\CMS\Extbase\Object\ObjectManager
+     */
+    protected function getObjectManager()
+    {
+        return GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
     }
 }
