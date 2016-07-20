@@ -80,7 +80,7 @@ abstract class AbstractWizardHandler
      *
      * @param array $position
      *
-     * @return array
+     * @return integer[]
      */
     protected function cleanupPosition($position)
     {

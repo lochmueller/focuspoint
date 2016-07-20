@@ -14,7 +14,7 @@ class File extends AbstractWizardHandler
     /**
      * Check if the handler can handle the current request
      *
-     * @return true
+     * @return boolean
      */
     public function canHandle()
     {
@@ -39,7 +39,7 @@ class File extends AbstractWizardHandler
     /**
      * Return the current point
      *
-     * @return array
+     * @return integer[]
      */
     public function getCurrentPoint()
     {
