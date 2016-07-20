@@ -215,12 +215,12 @@ class FocusCropService extends AbstractService
     /**
      * Create the crop image (GifBuilder)
      *
-     * @param $absoluteImageName
+     * @param string $absoluteImageName
      * @param $focusWidth
      * @param $focusHeight
-     * @param $sourceX
-     * @param $sourceY
-     * @param $absoluteTempImageName
+     * @param integer $sourceX
+     * @param integer $sourceY
+     * @param string $absoluteTempImageName
      */
     protected function createCropImageGifBuilder(
         $absoluteImageName,
@@ -267,12 +267,12 @@ class FocusCropService extends AbstractService
     /**
      * Create the crop image (GraphicalFunctions)
      *
-     * @param $absoluteImageName
+     * @param string $absoluteImageName
      * @param $focusWidth
      * @param $focusHeight
-     * @param $sourceX
-     * @param $sourceY
-     * @param $absoluteTempImageName
+     * @param integer $sourceX
+     * @param integer $sourceY
+     * @param string $absoluteTempImageName
      */
     protected function createCropImageGraphicalFunctions(
         $absoluteImageName,

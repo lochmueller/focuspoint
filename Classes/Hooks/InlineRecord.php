@@ -144,8 +144,8 @@ class InlineRecord implements InlineElementHookInterface
      * Add a element with the given key in front of the array
      *
      * @param $arr
-     * @param $key
-     * @param $val
+     * @param string $key
+     * @param string $val
      *
      * @return array
      */

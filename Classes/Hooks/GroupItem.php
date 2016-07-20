@@ -61,6 +61,12 @@ if (GeneralUtility::compat_version('7.0')) {
             );
         }
 
+        /**
+         * @param string $selector
+         * @param string $thumbnails
+         * @param string $rightbox
+         * @param string $fName
+         */
         protected function dbFileIcons_postProcessCompatibility(
             array &$params,
             &$selector,
@@ -118,6 +124,12 @@ if (GeneralUtility::compat_version('7.0')) {
             );
         }
 
+        /**
+         * @param string $selector
+         * @param string $thumbnails
+         * @param string $rightbox
+         * @param string $fName
+         */
         protected function dbFileIcons_postProcessCompatibility(
             array &$params,
             &$selector,
