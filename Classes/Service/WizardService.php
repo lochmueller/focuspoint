@@ -21,7 +21,7 @@ class WizardService extends AbstractService
      * Get the wizard button with the given URI
      *
      * @param string|null $uri
-     * @param null $additionalClass
+     * @param string $additionalClass
      * @return string
      */
     public function getWizardButton($uri = null, $additionalClass = null)
