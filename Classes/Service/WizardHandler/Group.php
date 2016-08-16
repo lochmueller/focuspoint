@@ -72,7 +72,6 @@ class Group extends AbstractWizardHandler
         } else {
             $connection->exec_INSERTquery(self::TABLE, $values);
         }
-
     }
 
     /**

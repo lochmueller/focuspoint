@@ -78,7 +78,6 @@ if (GeneralUtility::compat_version('7.0')) {
             array $additionalParams,
             $parentObject
         ) {
-
         }
     }
 } else {
@@ -141,7 +140,6 @@ if (GeneralUtility::compat_version('7.0')) {
             array $additionalParams,
             $parentObject
         ) {
-
         }
     }
 }

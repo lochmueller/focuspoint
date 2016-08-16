@@ -90,7 +90,6 @@ class FileReference extends AbstractWizardHandler
             GlobalUtility::getDatabaseConnection()
                 ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $row['uid'], $values);
         }
-
     }
 
     /**

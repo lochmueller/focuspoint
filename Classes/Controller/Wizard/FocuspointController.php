@@ -12,6 +12,8 @@ use HDNET\Focuspoint\Service\WizardHandler\AbstractWizardHandler;
 use HDNET\Focuspoint\Service\WizardHandler\File;
 use HDNET\Focuspoint\Service\WizardHandler\FileReference;
 use HDNET\Focuspoint\Service\WizardHandler\Group;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -45,7 +47,7 @@ class FocuspointController
         }
         $saveArguments = [
             'save' => 1,
-            'P' => [
+            'P'    => [
                 'returnUrl' => $parameter['P']['returnUrl'],
             ]
         ];
@@ -68,6 +70,20 @@ class FocuspointController
         $template->assign('saveUri', BackendUtility::getModuleUrl('focuspoint', $saveArguments));
 
         return $template->render();
+    }
+
+    /**
+     * Returns the Module menu for the AJAX request
+     *
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     */
+    public function mainAction(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $content = $this->main();
+        $response->getBody()->write($content);
+        return $response;
     }
 
     /**
