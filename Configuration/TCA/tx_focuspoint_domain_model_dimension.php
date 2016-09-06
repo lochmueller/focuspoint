@@ -11,9 +11,19 @@ $custom = [
         'rootLevel' => 1,
     ],
     'columns' => [
+        'title' => [
+            'config' => [
+                'eval' => 'trim,required',
+            ],
+        ],
         'identifier' => [
             'config' => [
                 'eval' => 'alphanum_x,lower,nospace,trim,required,unique',
+            ],
+        ],
+        'dimension' => [
+            'config' => [
+                'eval' => 'trim,nospace,required',
             ],
         ],
     ],
