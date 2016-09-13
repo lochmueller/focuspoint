@@ -1,3 +1,5 @@
+{namespace c=TYPO3\CMS\Core\ViewHelpers}
+
 <f:be.container loadJQuery="0"
 								includeCssFiles="{0: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/css/focuspoint.css\')}', 1: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/demos/demo.css\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/grid/grid.css\')}', 3: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/helper/helper-tool.css\')}', 4: '{f:uri.resource(extensionName: \'focuspoint\', path:\'Css/Helper.css\')}'}"
 								includeJsFiles="{0:'{f:uri.resource(extensionName: \'focuspoint\', path:\'JavaScript/jquery-1.11.3.min.js\')}', 1:'{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.min.js\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.helpertool.js\')}'}">
@@ -34,7 +36,7 @@
 
 		<div id="typo3-docbody">
 			<div id="typo3-inner-docbody">
-				<f:flashMessages class="tx-extbase-flash-message" renderMode="div"/>
+				<f:flashMessages class="tx-extbase-flash-message"/>
 				<f:render section="content"
 									arguments="{filePath: filePath, currentTop:currentTop, currentLeft: currentLeft}"/>
 			</div>
@@ -106,8 +108,9 @@
 </f:section>
 
 <f:section name="iconButtons">
-	<f:be.buttons.icon uri="{saveUri}" icon="actions-document-save-close" title="Save and close"
-										 additionalAttributes="{id: 'saveFocus'}"/>
+	<a href="{saveUri}" id="saveFocus">
+		<c:icon identifier="actions-document-save-close"/>
+	</a>
 </f:section>
 
 <f:section name="menu">
