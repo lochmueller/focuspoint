@@ -158,7 +158,7 @@ class FocusCropService extends AbstractService
         $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
         $tempImageFolder = 'typo3temp/focuscrop/';
         $tempImageName = $tempImageFolder . $hash . '-fp-' . preg_replace(
-            '/[^0-9]/',
+            '/[^0-9a-z-]/',
             '-',
             $ratio
         ) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo(
