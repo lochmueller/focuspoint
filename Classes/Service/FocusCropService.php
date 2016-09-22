@@ -196,26 +196,15 @@ class FocusCropService extends AbstractService
             $focusPointY
         );
 
-        // generate image
-        if (strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)) == 'png') {
-            $this->createCropImageGifBuilder(
-                $absoluteImageName,
-                $focusWidth,
-                $focusHeight,
-                $sourceX,
-                $sourceY,
-                $absoluteTempImageName
-            );
-        } else {
-            $this->createCropImageGraphicalFunctions(
-                $absoluteImageName,
-                $focusWidth,
-                $focusHeight,
-                $sourceX,
-                $sourceY,
-                $absoluteTempImageName
-            );
-        }
+        $cropService = GeneralUtility::makeInstance(CropService::class);
+        $cropService->createImage(
+            $absoluteImageName,
+            $focusWidth,
+            $focusHeight,
+            $sourceX,
+            $sourceY,
+            $absoluteTempImageName
+        );
 
         $this->emitTempImageCropped($tempImageName);
 
