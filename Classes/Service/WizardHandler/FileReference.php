@@ -8,6 +8,9 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
+/**
+ * FileReference
+ */
 class FileReference extends AbstractWizardHandler
 {
 

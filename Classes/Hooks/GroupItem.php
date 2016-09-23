@@ -71,7 +71,6 @@ class GroupItem implements DatabaseFileIconsHookInterface
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance(WizardService::class);
         $icons['R'][] = $wizardService->getWizardButton($wizardUri, 'group-focuspoint');
-
     }
 
     /**

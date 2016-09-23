@@ -18,7 +18,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 
 /**
@@ -32,7 +34,7 @@ class FocusCropService extends AbstractService
     const SIGNAL_tempImageCropped = 'tempImageCropped';
 
     /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @var Dispatcher
      */
     protected $signalSlotDispatcher;
 
@@ -215,22 +217,21 @@ class FocusCropService extends AbstractService
      * Emit tempImageCropped signal
      *
      * @param string $tempImageName
-     * @return string
      */
     protected function emitTempImageCropped($tempImageName)
     {
-        $this->getSignalSlotDispatcher()->dispatch(__CLASS__, self::SIGNAL_tempImageCropped, array($tempImageName));
+        $this->getSignalSlotDispatcher()->dispatch(__CLASS__, self::SIGNAL_tempImageCropped, [$tempImageName]);
     }
 
     /**
      * Get the SignalSlot dispatcher.
      *
-     * @return \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
+     * @return Dispatcher
      */
     protected function getSignalSlotDispatcher()
     {
         if (!isset($this->signalSlotDispatcher)) {
-            $this->signalSlotDispatcher = $this->getObjectManager()->get(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+            $this->signalSlotDispatcher = $this->getObjectManager()->get(Dispatcher::class);
         }
         return $this->signalSlotDispatcher;
     }
@@ -238,10 +239,10 @@ class FocusCropService extends AbstractService
     /**
      * Gets the ObjectManager.
      *
-     * @return \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @return ObjectManager
      */
     protected function getObjectManager()
     {
-        return GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+        return GeneralUtility::makeInstance(ObjectManager::class);
     }
 }

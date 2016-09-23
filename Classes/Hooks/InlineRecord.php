@@ -25,7 +25,7 @@ class InlineRecord implements InlineElementHookInterface
     /**
      * Initializes this hook object.
      *
-     * @param \TYPO3\CMS\Backend\Form\Element\InlineElement $parentObject
+     * @param object $parentObject
      *
      * @return void
      */
@@ -146,8 +146,6 @@ class InlineRecord implements InlineElementHookInterface
      * @param $arr
      * @param string $key
      * @param string $val
-     *
-     * @return array
      */
     protected function arrayUnshiftAssoc(&$arr, $key, $val)
     {
