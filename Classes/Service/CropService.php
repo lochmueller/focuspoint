@@ -163,7 +163,7 @@ class CropService extends AbstractService
         $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
 
         // prevent the problem of large images result in a "Allowed memory size" error
-        // we do not need the alpha layer at all, because the PNG rendered with createCropImageGifBuilder
+        // we do not need the alpha layer at all, because the PNG rendered with cropViaGraphicalFunctions
         ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true, true);
 
         $graphicalFunctions->imagecopyresized(
