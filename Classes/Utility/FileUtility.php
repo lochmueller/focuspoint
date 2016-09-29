@@ -35,7 +35,7 @@ class FileUtility
         $row = $database->exec_SELECTgetSingleRow('file', 'sys_file_metadata', 'uid=' . $uid);
 
         if (!isset($row['file'])) {
-            throw new \Exception('File not found in metadata', 126371253721837);
+            throw new \Exception('File not found in metadata', 1475144028);
         }
 
         return self::getFileByUid((int)$row['file']);

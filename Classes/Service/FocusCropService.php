@@ -103,7 +103,7 @@ class FocusCropService extends AbstractService
         if ($fileReference instanceof CoreFileReference) {
             return $this->getCroppedImageSrcByFile($fileReference->getOriginalFile(), $ratio);
         }
-        throw new \InvalidArgumentException('The given argument is not a valid file reference', 123671283);
+        throw new \InvalidArgumentException('The given argument is not a valid file reference', 1475144027);
     }
 
     /**

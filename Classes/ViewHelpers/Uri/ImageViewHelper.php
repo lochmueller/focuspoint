@@ -109,7 +109,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         $crop = $arguments['crop'];
 
         if (is_null($src) && is_null($image) || !is_null($src) && !is_null($image)) {
-            throw new Exception('You must either specify a string src or a File object.', 1382284105);
+            throw new Exception('You must either specify a string src or a File object.', 1475144029);
         }
 
         $imageService = self::getImageService();

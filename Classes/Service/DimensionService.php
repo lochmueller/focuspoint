@@ -214,7 +214,7 @@ class DimensionService extends AbstractService
         $ratio = $this->mapDatabaseRatio($ratio);
         $ratio = explode(':', $ratio);
         if (sizeof($ratio) !== 2) {
-            throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 34627384862);
+            throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 1475144026);
         }
         return [
             MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int)$ratio[0] : (float)str_replace(
