@@ -76,13 +76,13 @@ class FileList implements FileListEditIconHookInterface
                 $metaData = $cells['__fileOrFolderObject']->_getMetaData();
             }
             if (!isset($metaData['uid'])) {
-                throw new \Exception('No meta data found', 2462378462378);
+                throw new \Exception('No meta data found', 1475144024);
             }
             return (int)$metaData['uid'];
         } else {
             $pattern = '/sys_file_metadata\]\[([0-9]*)\]/';
             if (!preg_match($pattern, $cells['editmetadata'], $matches)) {
-                throw new \Exception('No valid metadata information found', 127846873264328);
+                throw new \Exception('No valid metadata information found', 1475144025);
             }
             return (int)$matches[1];
         }
