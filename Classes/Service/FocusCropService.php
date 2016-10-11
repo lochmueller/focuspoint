@@ -10,7 +10,6 @@ namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Service\WizardHandler\Group;
 use HDNET\Focuspoint\Utility\GlobalUtility;
-use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -19,9 +18,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 
 /**
  * Crop images via focus crop
@@ -116,12 +113,16 @@ class FocusCropService extends AbstractService
      */
     public function getCroppedImageSrcByFile(FileInterface $file, $ratio)
     {
-        return $this->getCroppedImageSrcBySrc(
-            $file->getPublicUrl(),
+        $result = $this->getCroppedImageSrcBySrc(
+            $file->getForLocalProcessing(false),
             $ratio,
             $file->getProperty('focus_point_x'),
             $file->getProperty('focus_point_y')
         );
+        if ($result === null) {
+            return $file->getPublicUrl();
+        }
+        return $result;
     }
 
 
@@ -141,6 +142,8 @@ class FocusCropService extends AbstractService
         if (!is_file($absoluteImageName)) {
             return null;
         }
+        $docRoot = rtrim(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), '/') . '/';
+        $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
         $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
         $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
 
@@ -149,7 +152,7 @@ class FocusCropService extends AbstractService
             $row = $connection->exec_SELECTgetSingleRow(
                 'uid,focus_point_x,focus_point_y',
                 Group::TABLE,
-                'relative_file_path = ' . $connection->fullQuoteStr($src, Group::TABLE)
+                'relative_file_path = ' . $connection->fullQuoteStr($relativeSrc, Group::TABLE)
             );
             if ($row) {
                 $focusPointX = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
