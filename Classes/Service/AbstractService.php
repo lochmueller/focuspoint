@@ -15,7 +15,7 @@ use TYPO3\CMS\Core\SingletonInterface;
  *
  * @author Tim Lochmüller
  */
-class AbstractService implements SingletonInterface
+abstract class AbstractService implements SingletonInterface
 {
 
 }
