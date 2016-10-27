@@ -15,7 +15,7 @@
   },
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms-core": ">7.6.0||<9.0.0||dev-master",
+    "typo3/cms-core": "7.6.0-8.99.99||dev-master",
     "lochmueller/autoloader": "~2.0.0"
   },
   "type": "typo3-cms-extension",
