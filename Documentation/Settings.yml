@@ -4,10 +4,10 @@
 
 ---
 conf.py:
-  copyright: 2015
+  copyright: 2016
   project: Focuspoint
-  version: 1.6.1
-  release: 1.6.1
+  version: 2.1.0
+  release: 2.1.0
   highlight_language: php
   latex_documents:
   - - Index
