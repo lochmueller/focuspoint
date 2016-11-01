@@ -37,6 +37,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
      * @param integer $maxWidth maximum width of the image
      * @param integer $maxHeight maximum height of the image
      * @param boolean $treatIdAsReference given src argument is a sys_file_reference record
+     * @param string|boolean $crop overrule cropping of image (setting to FALSE disables the cropping set in FileReference)
+     * @param boolean $absolute Force absolute URL
      * @param string $ratio
      *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
@@ -52,6 +54,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         $maxWidth = null,
         $maxHeight = null,
         $treatIdAsReference = false,
+        $crop = null,
+        $absolute = false,
         $ratio = '1:1'
     ) {
 
@@ -66,7 +70,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
                 'maxWidth' => $maxWidth,
                 'maxHeight' => $maxHeight,
                 'treatIdAsReference' => $treatIdAsReference,
-                'crop' => null,
+                'crop' => $crop,
+                'absolute' => $absolute,
                 'ratio' => $ratio, // added ratio
             ], $this->buildRenderChildrenClosure(), $this->renderingContext);
         }
@@ -74,7 +79,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
         $src = $service->getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio);
-        return parent::render($src, null, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight, false);
+        return parent::render($src, null, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight, false, $crop, $absolute);
     }
 
     /**
