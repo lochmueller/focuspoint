@@ -22,6 +22,16 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 {
 
     /**
+     * Initialize ViewHelper arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('ratio', 'string', 'Ratio of the image', false, '1:1');
+        $this->registerArgument('realCrop', 'boolean', 'Crop the image in real', false, true);
+    }
+
+    /**
      * Resize a given image (if required) and renders the respective img tag
      *
      * @see http://typo3.org/documentation/document-library/references/doc_core_tsref/4.2.0/view/1/5/#id4164427
@@ -35,8 +45,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
      * @param integer $maxHeight maximum height of the image
      * @param boolean $treatIdAsReference given src argument is a sys_file_reference record
      * @param FileInterface|AbstractFileFolder $image a FAL object
-     * @param string $ratio
-     * @param bool $realCrop
+     * @param string|bool $crop overrule cropping of image (setting to FALSE disables the cropping set in FileReference)
+     * @param bool $absolute Force absolute URL
      *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      * @return string Rendered tag
@@ -51,20 +61,20 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         $maxHeight = null,
         $treatIdAsReference = false,
         $image = null,
-        $ratio = '1:1',
-        $realCrop = true
+        $crop = null,
+        $absolute = false
     ) {
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
         try {
             $internalImage = $service->getViewHelperImage($src, $image, $treatIdAsReference);
-            if ($realCrop) {
-                $src = $service->getCroppedImageSrcByFile($internalImage, $ratio);
+            if ($this->arguments['realCrop']) {
+                $src = $service->getCroppedImageSrcByFile($internalImage, $this->arguments['ratio']);
                 $treatIdAsReference = false;
                 $image = null;
             }
         } catch (\Exception $ex) {
-            $realCrop = true;
+            $this->arguments['realCrop'] = true;
         }
 
         try {
@@ -77,13 +87,15 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
                 $maxWidth,
                 $maxHeight,
                 $treatIdAsReference,
-                $image
+                $image,
+                $crop,
+                $absolute
             );
         } catch (\Exception $ex) {
             return 'Missing image!';
         }
 
-        if ($realCrop) {
+        if ($this->arguments['realCrop']) {
             return $this->tag->render();
         }
 

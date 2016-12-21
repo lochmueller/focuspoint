@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
 
@@ -22,6 +23,15 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
  */
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
 {
+
+    /**
+     * Initialize ViewHelper arguments
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('ratio', 'string', 'Ratio of the image', false, '1:1');
+    }
 
     /**
      * Resize the image (if required) and returns its path. If the image was not changed, the path will be equal to $src
@@ -39,7 +49,6 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
      * @param boolean $treatIdAsReference given src argument is a sys_file_reference record
      * @param string|boolean $crop overrule cropping of image (setting to FALSE disables the cropping set in FileReference)
      * @param boolean $absolute Force absolute URL
-     * @param string $ratio
      *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
      * @return string path to the image
@@ -55,8 +64,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         $maxHeight = null,
         $treatIdAsReference = false,
         $crop = null,
-        $absolute = false,
-        $ratio = '1:1'
+        $absolute = false
     ) {
         return self::renderStatic([
             'src' => $src,
@@ -70,7 +78,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
             'treatIdAsReference' => $treatIdAsReference,
             'crop' => $crop,
             'absolute' => $absolute,
-            'ratio' => $ratio, // added ratio
+            'ratio' => $this->arguments['ratio'],
         ], $this->buildRenderChildrenClosure(), $this->renderingContext);
     }
 
@@ -99,33 +107,6 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         $arguments['image'] = null;
         $arguments['treatIdAsReference'] = false;
 
-        $src = $arguments['src'];
-        $image = $arguments['image'];
-
-        $treatIdAsReference = $arguments['treatIdAsReference'];
-        $crop = $arguments['crop'];
-
-        if (is_null($src) && is_null($image) || !is_null($src) && !is_null($image)) {
-            throw new Exception('You must either specify a string src or a File object.', 1475144029);
-        }
-
-        $imageService = self::getImageService();
-        $image = $imageService->getImage($src, $image, $treatIdAsReference);
-
-        if ($crop === null) {
-            $crop = $image instanceof FileReference ? $image->getProperty('crop') : null;
-        }
-
-        $processingInstructions = [
-            'width' => $arguments['width'],
-            'height' => $arguments['height'],
-            'minWidth' => $arguments['minWidth'],
-            'minHeight' => $arguments['minHeight'],
-            'maxWidth' => $arguments['maxWidth'],
-            'maxHeight' => $arguments['maxHeight'],
-            'crop' => $crop,
-        ];
-        $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
-        return $imageService->getImageUri($processedImage);
+        return \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
     }
 }
