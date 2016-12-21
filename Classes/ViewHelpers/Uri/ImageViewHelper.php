@@ -58,28 +58,20 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         $absolute = false,
         $ratio = '1:1'
     ) {
-
-        if (GeneralUtility::compat_version('7.0')) {
-            return self::renderStatic([
-                'src' => $src,
-                'image' => $image,
-                'width' => $width,
-                'height' => $height,
-                'minWidth' => $minWidth,
-                'minHeight' => $minHeight,
-                'maxWidth' => $maxWidth,
-                'maxHeight' => $maxHeight,
-                'treatIdAsReference' => $treatIdAsReference,
-                'crop' => $crop,
-                'absolute' => $absolute,
-                'ratio' => $ratio, // added ratio
-            ], $this->buildRenderChildrenClosure(), $this->renderingContext);
-        }
-
-        /** @var FocusCropService $service */
-        $service = GeneralUtility::makeInstance(FocusCropService::class);
-        $src = $service->getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio);
-        return parent::render($src, null, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight, false, $crop, $absolute);
+        return self::renderStatic([
+            'src' => $src,
+            'image' => $image,
+            'width' => $width,
+            'height' => $height,
+            'minWidth' => $minWidth,
+            'minHeight' => $minHeight,
+            'maxWidth' => $maxWidth,
+            'maxHeight' => $maxHeight,
+            'treatIdAsReference' => $treatIdAsReference,
+            'crop' => $crop,
+            'absolute' => $absolute,
+            'ratio' => $ratio, // added ratio
+        ], $this->buildRenderChildrenClosure(), $this->renderingContext);
     }
 
     /**
