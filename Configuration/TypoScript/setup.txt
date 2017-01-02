@@ -4,7 +4,7 @@ page {
 	includeJSFooter.focuspoint.disableCompression = 1
 
 	jsFooterInline.1001 = TEXT
-	jsFooterInline.1001.value = $(document).ready(function(){ $('.focuspoint').focusPoint(); });
+	jsFooterInline.1001.value = jQuery(document).ready(function(){ var focusImages = jQuery('.focuspoint'); if(focusImages.length) { focusImages.focusPoint(); } });
 
 	cssInline.1001 = TEXT
 	cssInline.1001.value = #pageBackground {width:100%;height:100%;overflow:hidden;position:absolute;}
