@@ -160,17 +160,10 @@ class FocusCropService extends AbstractService
             }
         }
 
-        $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
         $tempImageFolder = 'typo3temp/focuscrop/';
-        $tempImageName = $tempImageFolder . $hash . '-fp-' . preg_replace(
-            '/[^0-9a-z-]/',
-            '-',
-            $ratio
-        ) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo(
-            $absoluteImageName,
-            PATHINFO_EXTENSION
-        );
-        $tempImageName = preg_replace('/--+/', '-', $tempImageName);
+        $tempImageName = $this->generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY);
+        $tempImageName = $tempImageFolder . $tempImageName;
+
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
         if (is_file($absoluteTempImageName)) {
@@ -247,5 +240,42 @@ class FocusCropService extends AbstractService
     protected function getObjectManager()
     {
         return GeneralUtility::makeInstance(ObjectManager::class);
+    }
+
+    /**
+     *
+     * @param $absoluteImageName
+     * @param $ratio
+     * @param $focusPointX
+     * @param $focusPointY
+     * @return array
+     */
+    protected function generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY)
+    {
+        $name = '';
+
+        list($name) = $this->getSignalSlotDispatcher()->dispatch(__CLASS__, __FUNCTION__, [
+            $name,
+            $absoluteImageName,
+            $ratio,
+            $focusPointX,
+            $focusPointY,
+        ]);
+
+        if ($name) {
+            return $name;
+        }
+
+        $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
+        $name = $hash . '-fp-' . preg_replace(
+                '/[^0-9a-z-]/',
+                '-',
+                $ratio
+            ) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo(
+                $absoluteImageName,
+                PATHINFO_EXTENSION
+            );
+        $name = preg_replace('/--+/', '-', $name);
+        return $name;
     }
 }
