@@ -50,10 +50,7 @@ class FocusCropService extends AbstractService
     {
         $resourceFactory = ResourceFactory::getInstance();
         if ($image instanceof FileReference) {
-            $image = $image->getOriginalResource();
-        }
-        if ($image instanceof CoreFileReference) {
-            return $image->getOriginalFile();
+            return $image->getOriginalResource();
         }
         if (!MathUtility::canBeInterpretedAsInteger($src)) {
             return $resourceFactory->retrieveFileOrFolderObject($src);
