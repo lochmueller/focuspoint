@@ -157,7 +157,19 @@ class FocusCropService extends AbstractService
             }
         }
 
-        $tempImageFolder = 'typo3temp/focuscrop/';
+        $file = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->retrieveFileOrFolderObject($src);
+        if (is_object($file)) {
+            $processedFolder = $file->getStorage()->getProcessingFolder($file);
+            if (!$processedFolder->hasFolder('focuscrop')) {
+                $fcFolder = $processedFolder->createFolder('focuscrop');
+            } else {
+                $fcFolder = $processedFolder->getSubfolder('focuscrop');
+            }
+            $tempImageFolder = $fcFolder->getPublicUrl();
+        } else {
+            $tempImageFolder = 'typo3temp/focuscrop/';
+        }
+
         $tempImageName = $this->generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY);
         $tempImageName = $tempImageFolder . $tempImageName;
 
