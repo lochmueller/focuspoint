@@ -36,6 +36,11 @@ class FocusCropService extends AbstractService
     protected $signalSlotDispatcher;
 
     /**
+     * @var string
+     */
+    protected $tempImageFolder;
+
+    /**
      * get the image
      *
      * @param $src
@@ -157,19 +162,7 @@ class FocusCropService extends AbstractService
             }
         }
 
-        $file = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->retrieveFileOrFolderObject($src);
-        if (is_object($file)) {
-            $processedFolder = $file->getStorage()->getProcessingFolder($file);
-            if (!$processedFolder->hasFolder('focuscrop')) {
-                $fcFolder = $processedFolder->createFolder('focuscrop');
-            } else {
-                $fcFolder = $processedFolder->getSubfolder('focuscrop');
-            }
-            $tempImageFolder = $fcFolder->getPublicUrl();
-        } else {
-            $tempImageFolder = 'typo3temp/focuscrop/';
-        }
-
+        $tempImageFolder = $this->getTempImageFolder();
         $tempImageName = $this->generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY);
         $tempImageName = $tempImageFolder . $tempImageName;
 
@@ -286,5 +279,24 @@ class FocusCropService extends AbstractService
             );
         $name = preg_replace('/--+/', '-', $name);
         return $name;
+    }
+
+    /**
+     * Return the folder for generated images
+     *
+     * @return string Path relative to PATH_site
+     */
+    protected function getTempImageFolder()
+    {
+        if ($this->tempImageFolder === null) {
+            $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
+            if (isset($extConf['tempImageFolder'])) {
+                $this->tempImageFolder = $extConf['tempImageFolder'];
+            } else {
+                $this->tempImageFolder = 'typo3temp/focuscrop/';
+            }
+        }
+
+        return $this->tempImageFolder;
     }
 }
