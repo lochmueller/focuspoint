@@ -1,0 +1,2 @@
+# cat=basic/enable; type=string; label=Directory for generated files
+tempImageFolder = typo3temp/focuscrop/
