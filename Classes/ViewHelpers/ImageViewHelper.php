@@ -28,6 +28,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         parent::initializeArguments();
         $this->registerArgument('ratio', 'string', 'Ratio of the image', false, '1:1');
         $this->registerArgument('realCrop', 'boolean', 'Crop the image in real', false, true);
+        $this->registerArgument('additionalClassDiv', 'string', 'Additional class for focus point div', false, '');
     }
 
     /**
@@ -104,7 +105,12 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
             $focusPointY = $internalImage->getProperty('focus_point_y');
             $focusPointX = $internalImage->getProperty('focus_point_x');
 
-            $focusTag = '<div class="focuspoint" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
+            $additionalClassDiv = 'focuspoint';
+            if (!empty($this->arguments['additionalClassDiv'])) {
+                $additionalClassDiv .= ' ' . $this->arguments['additionalClassDiv'];
+            }
+
+            $focusTag = '<div class="' . $additionalClassDiv . '" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
             return $focusTag . $this->tag->render() . '</div>';
         }  else {
             return 'Missing internal image!';
