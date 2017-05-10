@@ -20,7 +20,6 @@ use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
  */
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 {
-
     /**
      * Initialize ViewHelper arguments
      */
@@ -66,6 +65,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
     ) {
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
+        $internalImage = null;
         try {
             $internalImage = $service->getViewHelperImage($src, $image, $treatIdAsReference);
             if ($this->arguments['realCrop']) {
@@ -100,10 +100,14 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         }
 
         // Ratio calculation
-        $focusPointY = $internalImage->getProperty('focus_point_y');
-        $focusPointX = $internalImage->getProperty('focus_point_x');
+        if ($internalImage !== null) {
+            $focusPointY = $internalImage->getProperty('focus_point_y');
+            $focusPointX = $internalImage->getProperty('focus_point_x');
 
-        $focusTag = '<div class="focuspoint" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
-        return $focusTag . $this->tag->render() . '</div>';
+            $focusTag = '<div class="focuspoint" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
+            return $focusTag . $this->tag->render() . '</div>';
+        }  else {
+            return 'Missing internal image!';
+        }
     }
 }
