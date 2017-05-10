@@ -1,6 +1,4 @@
 <?php
-
-
 if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
@@ -15,8 +13,14 @@ $loader = [
 ];
 \HDNET\Autoloader\Loader::extTables('HDNET', 'focuspoint', $loader);
 
-$icons = [
-    'focuspoint' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('focuspoint') . 'ext_icon.png',
-];
+/** @var \TYPO3\CMS\Core\Imaging\IconRegistry $iconRegistry */
+$iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+$iconRegistry->registerIcon(
+    'tcarecords-tx_focuspoint_domain_model_filestandalone-default',
+    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    [
+        'source' => 'EXT:focuspoint/ext_icon.png'
+    ]
+);
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['focuspoint_test'] = 'image,image_ratio';
