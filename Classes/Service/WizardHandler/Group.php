@@ -129,7 +129,13 @@ class Group extends AbstractWizardHandler
         }
         $fieldTca = $tableTca['columns'][$p['field']];
 
-        $filePath = rtrim($fieldTca['config']['uploadfolder'], '/') . '/' . $p['file'];
+        $uploadFolder = isset($fieldTca['config']['uploadfolder']) ? $fieldTca['config']['uploadfolder'] : '';
+        $baseFolder = '';
+        if (trim($uploadFolder, '/') !== '') {
+            $baseFolder = rtrim($uploadFolder, '/') . '/';
+        }
+
+        $filePath = $baseFolder . $p['file'];
         if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
             return null;
         }
