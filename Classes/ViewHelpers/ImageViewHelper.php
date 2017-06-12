@@ -112,7 +112,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 
             $focusTag = '<div class="' . $additionalClassDiv . '" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
             return $focusTag . $this->tag->render() . '</div>';
-        }  else {
+        } else {
             return 'Missing internal image!';
         }
     }
