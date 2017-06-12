@@ -63,7 +63,7 @@ class GroupItem implements DatabaseFileIconsHookInterface
             'P' => [
                 'table' => $matches['1'],
                 'field' => $matches['3'],
-                'returnUrl' => $parentObject->returnUrl,
+                'returnUrl' => isset($parentObject->returnUrl) ? $parentObject->returnUrl : GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
             ],
         ];
         $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);

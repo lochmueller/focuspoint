@@ -3,7 +3,11 @@ define('TYPO3/CMS/Focuspoint/GroupSelect', ['jquery'], function ($, document) {
 
         $('a.group-focuspoint').click(function (e) {
             e.preventDefault();
-            var selectBox = $(this).parentsUntil('.t3-form-field-item').find('select');
+            var selectItemClass = '.t3-form-field-item';
+            if ($(selectItemClass).length === 0) {
+                selectItemClass = '.t3js-formengine-field-item';
+            }
+            var selectBox = $(this).parentsUntil(selectItemClass).find('select');
             var selection = selectBox.val();
             if (selection === null) {
                 alert('You have to selection one single image in the list of images!');
