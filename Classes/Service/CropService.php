@@ -109,9 +109,13 @@ class CropService extends AbstractService
             GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
             $absoluteImageName
         ), '/');
+        // We need to pass maxWidth and maxHeight, which would otherwise fall back to 2000px, see:
+        // https://github.com/TYPO3/TYPO3.CMS/blob/TYPO3_7-6/typo3/sysext/frontend/Classes/Imaging/GifBuilder.php#L367-L368
         $configuration = [
             'format' => strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
+            'maxWidth' => $size[0],
+            'maxHeight' => $size[1],
             'transparentBackground' => '1',
             '10' => 'IMAGE',
             '10.' => [
