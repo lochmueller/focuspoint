@@ -54,6 +54,9 @@ class FocusCropService extends AbstractService
     public function getViewHelperImage($src, $image, $treatIdAsReference)
     {
         $resourceFactory = ResourceFactory::getInstance();
+        if ($image instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+            return $image;
+        }
         if ($image instanceof FileReference) {
             return $image->getOriginalResource();
         }
