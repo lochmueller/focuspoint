@@ -22,7 +22,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'hdnet.de',
     'constraints' => [
         'depends' => [
-            'php' => '5.5.0-0.0.0',
+            'php' => '7.0.0-0.0.0',
             'typo3' => '7.6.0-8.99.99',
             'autoloader' => '2.1.0-0.0.0',
         ],
