@@ -115,6 +115,7 @@ class FocusCropService extends AbstractService
      */
     public function getCroppedImageSrcByFile(FileInterface $file, $ratio)
     {
+      if ($file instanceof FileInterface) {
         $result = $this->getCroppedImageSrcBySrc(
             $file->getForLocalProcessing(false),
             $ratio,
@@ -125,6 +126,7 @@ class FocusCropService extends AbstractService
             return $file->getPublicUrl();
         }
         return $result;
+      }
     }
 
 
