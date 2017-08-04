@@ -79,13 +79,26 @@ class InlineRecord implements InlineElementHookInterface
             return;
         }
 
-        if (!GeneralUtility::isFirstPartOfStr($childRecord['uid_local'], 'sys_file_')) {
-            return;
-        }
+        if (is_array($childRecord['uid_local'])) {
+            // Handling for TYPO3 > 8.x
+            foreach ($childRecord['uid_local'] as $item) {
+                if ($item['table'] !== 'sys_file') {
+                    return;
+                }
+                if (!MathUtility::canBeInterpretedAsInteger($childRecord['uid'])) {
+                    return;
+                }
+            }
+        } else {
+            // Handling for TYPO3 < 8.x
+            if (!GeneralUtility::isFirstPartOfStr($childRecord['uid_local'], 'sys_file_')) {
+                return;
+            }
 
-        $parts = BackendUtility::splitTable_Uid($childRecord['uid_local']);
-        if (!isset($parts[1])) {
-            return;
+            $parts = BackendUtility::splitTable_Uid($childRecord['uid_local']);
+            if (!isset($parts[1])) {
+                return;
+            }
         }
 
         $table = $childRecord['tablenames'];
