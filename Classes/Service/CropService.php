@@ -11,6 +11,7 @@ namespace HDNET\Focuspoint\Service;
 use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
@@ -49,6 +50,8 @@ class CropService extends AbstractService
             $function = 'cropViaGifBuilder';
         }
 
+        $function = 'cropViaImageMagick';
+
         $this->$function(
             $absoluteImageName,
             $focusWidth,
@@ -78,10 +81,12 @@ class CropService extends AbstractService
         $sourceY,
         $absoluteTempImageName
     ) {
+        $quality = MathUtility::forceIntegerInRange($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'], 10, 100, 75);
+
         $cropCommand = $focusWidth . 'x' . $focusHeight . '+' . $sourceX . '+' . $sourceY;
         $command = CommandUtility::imageMagickCommand(
             'convert',
-            $absoluteImageName . ' -crop ' . $cropCommand . '  +repage ' . $absoluteTempImageName
+            '-quality ' . $quality.' '.$absoluteImageName . ' -crop ' . $cropCommand . '  +repage ' . $absoluteTempImageName
         );
         CommandUtility::exec($command, $out);
     }
