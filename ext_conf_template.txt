@@ -1,2 +1,5 @@
 # cat=basic/enable; type=string; label=Directory for generated files
 tempImageFolder = typo3temp/focuscrop/
+
+# cat=basic/enable; type=string; label=Crop configuration: In the format of lowercase file extensions as CSV, colon function name (GifBuilder, GraphicalFunctions, ImageMagick) semicolon next. The star is the wildcard and the generic fallback is always GraphicalFunctions
+imageFunctionConfiguration = png:GifBuilder;*:GraphicalFunctions

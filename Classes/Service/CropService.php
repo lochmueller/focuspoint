@@ -1,7 +1,6 @@
 <?php
 /**
  * Crop images.
- *
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -38,17 +37,8 @@ class CropService extends AbstractService
         $absoluteTempImageName
     ) {
         $fileExtension = strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
-
-        // @todo otpion for the default crop mechanism
-        // cropViaImageMagick
-
-        $function = 'cropViaGraphicalFunctions';
-        if ('png' === $fileExtension) {
-            $function = 'cropViaGifBuilder';
-        }
-
-        $function = 'cropViaImageMagick';
-
+        $function = $this->getFunctionName($fileExtension);
+        $function = 'cropVia' . $function;
         $this->$function(
             $absoluteImageName,
             $focusWidth,
@@ -57,6 +47,38 @@ class CropService extends AbstractService
             $sourceY,
             $absoluteTempImageName
         );
+    }
+
+    /**
+     * Get the graphical function by file extension.
+     *
+     * @param string $fileExtension
+     *
+     * @return string
+     */
+    protected function getFunctionName($fileExtension)
+    {
+        $validFunctions = [
+            'GraphicalFunctions',
+            'GifBuilder',
+            'ImageMagick',
+        ];
+        $configuration = isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) ? unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) : [];
+        $functionConfiguration = $configuration['imageFunctionConfiguration'] ?? 'png:cropViaGifBuilder;*:GraphicalFunctions';
+        $parts = GeneralUtility::trimExplode(';', $functionConfiguration, true);
+        foreach ($parts as $part) {
+            list($extensions, $function) = GeneralUtility::trimExplode(':', $part, true);
+            if (!in_array($function, $validFunctions)) {
+                continue;
+            }
+
+            $extensions = GeneralUtility::trimExplode(',', $extensions, true);
+            if (in_array($fileExtension, $extensions) || in_array('*', $extensions)) {
+                return $function;
+            }
+        }
+
+        return $validFunctions[0];
     }
 
     /**
