@@ -1,7 +1,6 @@
 <?php
 /**
  * Calc dimensions for focus point cropping.
- *
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -11,7 +10,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Calc dimensions for focus point cropping.
- *
  */
 class DimensionService extends AbstractService
 {

@@ -1,7 +1,6 @@
 <?php
 /**
  * Test controller.
- *
  */
 
 namespace HDNET\Focuspoint\Controller;
@@ -10,7 +9,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Test controller.
- *
  */
 class TestController extends ActionController
 {

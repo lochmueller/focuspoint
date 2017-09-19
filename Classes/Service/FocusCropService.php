@@ -1,7 +1,6 @@
 <?php
 /**
  * Crop images via focus crop.
- *
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -20,7 +19,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Crop images via focus crop.
- *
  */
 class FocusCropService extends AbstractService
 {

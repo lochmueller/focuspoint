@@ -1,7 +1,6 @@
 <?php
 /**
  * File standalone.
- *
  */
 
 namespace HDNET\Focuspoint\Domain\Model;

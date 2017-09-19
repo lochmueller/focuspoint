@@ -1,7 +1,6 @@
 <?php
 /**
  * Hook into the inline icons.
- *
  */
 
 namespace HDNET\Focuspoint\Hooks;

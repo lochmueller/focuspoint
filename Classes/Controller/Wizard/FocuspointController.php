@@ -1,7 +1,6 @@
 <?php
 /**
  * Wizard controller.
- *
  */
 
 namespace HDNET\Focuspoint\Controller\Wizard;
@@ -21,7 +20,6 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Wizard controller.
- *
  */
 class FocuspointController
 {

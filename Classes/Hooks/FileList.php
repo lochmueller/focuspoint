@@ -1,7 +1,6 @@
 <?php
 /**
  * Extends the file list.
- *
  */
 
 namespace HDNET\Focuspoint\Hooks;

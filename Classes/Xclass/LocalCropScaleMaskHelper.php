@@ -1,7 +1,6 @@
 <?php
 /**
  * Local crop scale mask helper (overwrite).
- *
  */
 
 namespace HDNET\Focuspoint\Xclass;
@@ -17,7 +16,6 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * Local crop scale mask helper (overwrite).
- *
  */
 class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\LocalCropScaleMaskHelper
 {

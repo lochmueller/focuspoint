@@ -2,7 +2,6 @@
 
 /**
  * Get the URI of the cropped image.
- *
  */
 
 namespace HDNET\Focuspoint\ViewHelpers\Uri;

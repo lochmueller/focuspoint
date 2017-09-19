@@ -1,7 +1,6 @@
 <?php
 /**
  * Get data for focuspoint.
- *
  */
 
 namespace HDNET\Focuspoint\Hooks;

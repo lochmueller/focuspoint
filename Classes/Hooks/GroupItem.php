@@ -4,7 +4,6 @@
  *
  * NOTE: In 7.0 the interface is changed, becuse the $parentObject do not use a type hint anymore
  * That is the reason of the DIRTY abstract class in front of the concrete implementation
- *
  */
 
 namespace HDNET\Focuspoint\Hooks;

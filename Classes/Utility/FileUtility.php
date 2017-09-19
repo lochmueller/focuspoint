@@ -1,7 +1,6 @@
 <?php
 /**
  * Utility functions for files.
- *
  */
 
 namespace HDNET\Focuspoint\Utility;
@@ -11,7 +10,6 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 
 /**
  * Utility functions for files.
- *
  */
 class FileUtility
 {

@@ -1,7 +1,6 @@
 <?php
 /**
  * TcaService.
- *
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -11,7 +10,6 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /**
  * TcaService.
- *
  */
 class TcaService extends AbstractService
 {

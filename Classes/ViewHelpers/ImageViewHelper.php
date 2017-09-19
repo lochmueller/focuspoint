@@ -1,7 +1,6 @@
 <?php
 /**
  * Override the ViewHelper with ratio.
- *
  */
 
 namespace HDNET\Focuspoint\ViewHelpers;
@@ -13,7 +12,6 @@ use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
 
 /**
  * Override the ViewHelper with ratio.
- *
  */
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 {

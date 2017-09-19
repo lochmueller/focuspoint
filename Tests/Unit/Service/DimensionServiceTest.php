@@ -1,7 +1,6 @@
 <?php
 /**
  * @todo    General file information
- *
  */
 
 namespace HDNET\Focuspoint\Tests\Unit\Service;
