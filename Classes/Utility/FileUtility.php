@@ -1,9 +1,7 @@
 <?php
 /**
- * Utility functions for files
+ * Utility functions for files.
  *
- * @package Focuspoint\Utility
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Utility;
@@ -12,19 +10,18 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 
 /**
- * Utility functions for files
+ * Utility functions for files.
  *
- * @author Tim Lochmüller
  */
 class FileUtility
 {
-
     /**
-     * Get the file object of the given cell information
+     * Get the file object of the given cell information.
      *
      * @param int $uid
      *
      * @return \TYPO3\CMS\Core\Resource\File
+     *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      */
@@ -38,15 +35,16 @@ class FileUtility
             throw new \Exception('File not found in metadata', 1475144028);
         }
 
-        return self::getFileByUid((int)$row['file']);
+        return self::getFileByUid((int) $row['file']);
     }
 
     /**
-     * Get the file object of the given cell information
+     * Get the file object of the given cell information.
      *
      * @param int $uid
      *
      * @return \TYPO3\CMS\Core\Resource\File
+     *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      */

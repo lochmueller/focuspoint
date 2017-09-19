@@ -1,9 +1,7 @@
 <?php
 /**
- * Local crop scale mask helper (overwrite)
+ * Local crop scale mask helper (overwrite).
  *
- * @package Focuspoint\Xclass
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Xclass;
@@ -18,36 +16,34 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
- * Local crop scale mask helper (overwrite)
+ * Local crop scale mask helper (overwrite).
  *
- * @author Tim Lochmüller
  */
 class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\LocalCropScaleMaskHelper
 {
-
     /**
-     * If set to true, the pocess is running and no addinal calculation are needed
+     * If set to true, the pocess is running and no addinal calculation are needed.
      *
      * @var bool
      */
     protected static $deepCheck = false;
 
     /**
-     * Dimension service
+     * Dimension service.
      *
      * @var DimensionService
      */
     protected $dimensionService;
 
     /**
-     * focus crop service
+     * focus crop service.
      *
      * @var FocusCropService
      */
     protected $focusCropService;
 
     /**
-     * Build up the object
+     * Build up the object.
      *
      * @param LocalImageProcessor $processor
      */
@@ -59,11 +55,11 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     }
 
     /**
-     * Processing the focus point crop (fallback to LocalCropScaleMaskHelper)
+     * Processing the focus point crop (fallback to LocalCropScaleMaskHelper).
      *
      * @param TaskInterface $task
      *
-     * @return array|NULL
+     * @return array|null
      */
     public function process(TaskInterface $task)
     {
@@ -76,13 +72,13 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 
         $sourceFile = $task->getSourceFile();
         try {
-            if (self::$deepCheck === false) {
+            if (false === self::$deepCheck) {
                 self::$deepCheck = true;
                 $ratio = $this->getCurrentRatioConfiguration();
                 $this->dimensionService->getRatio($ratio);
 
                 $newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
-                if ($newFile === null) {
+                if (null === $newFile) {
                     return parent::process($task);
                 }
                 $file = ResourceFactory::getInstance()
@@ -103,21 +99,22 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     }
 
     /**
-     * Find the current ratio configuration
+     * Find the current ratio configuration.
      *
-     * @return string|NULL
+     * @return string|null
      */
     protected function getCurrentRatioConfiguration()
     {
         $currentRecord = $GLOBALS['TSFE']->currentRecord;
         $parts = GeneralUtility::trimExplode(':', $currentRecord);
-        if (sizeof($parts) !== 2) {
+        if (2 !== sizeof($parts)) {
             return null;
         }
-        if ($parts[0] !== 'tt_content') {
+        if ('tt_content' !== $parts[0]) {
             return null;
         }
-        $record = BackendUtility::getRecord($parts[0], (int)$parts[1]);
+        $record = BackendUtility::getRecord($parts[0], (int) $parts[1]);
+
         return isset($record['image_ratio']) ? trim($record['image_ratio']) : null;
     }
 }

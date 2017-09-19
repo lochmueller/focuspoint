@@ -1,9 +1,7 @@
 <?php
 /**
- * Test controller
+ * Test controller.
  *
- * @package Focuspoint\Controller
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Controller;
@@ -11,15 +9,13 @@ namespace HDNET\Focuspoint\Controller;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * Test controller
+ * Test controller.
  *
- * @author Tim Lochmüller
  */
 class TestController extends ActionController
 {
-
     /**
-     * File repository
+     * File repository.
      *
      * @var \TYPO3\CMS\Core\Resource\FileRepository
      * @inject
@@ -27,7 +23,7 @@ class TestController extends ActionController
     protected $fileRepository;
 
     /**
-     * Test action
+     * Test action.
      *
      * @plugin Test
      */
@@ -38,7 +34,7 @@ class TestController extends ActionController
 
         $this->view->assignMultiple([
             'fileReferences' => $fileReferences,
-            'customRatio' => $contentElement['image_ratio']
+            'customRatio' => $contentElement['image_ratio'],
         ]);
     }
 }

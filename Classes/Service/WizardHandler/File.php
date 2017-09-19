@@ -1,6 +1,5 @@
 <?php
 
-
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use HDNET\Focuspoint\Utility\FileUtility;
@@ -9,24 +8,24 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * File
+ * File.
  */
 class File extends AbstractWizardHandler
 {
-
     /**
-     * Check if the handler can handle the current request
+     * Check if the handler can handle the current request.
      *
-     * @return boolean
+     * @return bool
      */
     public function canHandle()
     {
         $uid = $this->getMataDataUid();
-        return $uid !== null;
+
+        return null !== $uid;
     }
 
     /**
-     * get the arguments for same request call
+     * get the arguments for same request call.
      *
      * @return array
      */
@@ -34,15 +33,15 @@ class File extends AbstractWizardHandler
     {
         return [
             'P' => [
-                'metaUid' => $this->getMataDataUid()
+                'metaUid' => $this->getMataDataUid(),
             ],
         ];
     }
 
     /**
-     * Return the current point
+     * Return the current point.
      *
-     * @return integer[]
+     * @return int[]
      */
     public function getCurrentPoint()
     {
@@ -52,42 +51,43 @@ class File extends AbstractWizardHandler
                 'sys_file_metadata',
                 'uid=' . $this->getMataDataUid()
             );
+
         return $this->cleanupPosition([
             $row['focus_point_x'],
-            $row['focus_point_y']
+            $row['focus_point_y'],
         ]);
     }
 
     /**
-     * Set the point (between -100 and 100)
+     * Set the point (between -100 and 100).
      *
      * @param int $x
      * @param int $y
-     * @return void
      */
     public function setCurrentPoint($x, $y)
     {
         $values = [
             'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100, 0),
-            'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0)
+            'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
         GlobalUtility::getDatabaseConnection()
             ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $this->getMataDataUid(), $values);
     }
 
     /**
-     * Get the public URL for the current handler
+     * Get the public URL for the current handler.
      *
      * @return string
      */
     public function getPublicUrl()
     {
         $fileObject = FileUtility::getFileByMetaData($this->getMataDataUid());
+
         return $this->displayableImageUrl($fileObject->getPublicUrl());
     }
 
     /**
-     * Fetch the meta data UID
+     * Fetch the meta data UID.
      *
      * @return int|null
      */
@@ -99,11 +99,12 @@ class File extends AbstractWizardHandler
         }
         $p = $parameter['P'];
         if (isset($p['metaUid']) && MathUtility::canBeInterpretedAsInteger($p['metaUid'])) {
-            return (int)$p['metaUid'];
+            return (int) $p['metaUid'];
         }
-        if (isset($p['table']) && $p['table'] == 'sys_file_metadata' && isset($p['uid']) && MathUtility::canBeInterpretedAsInteger($p['uid'])) {
-            return (int)$p['uid'];
+        if (isset($p['table']) && 'sys_file_metadata' == $p['table'] && isset($p['uid']) && MathUtility::canBeInterpretedAsInteger($p['uid'])) {
+            return (int) $p['uid'];
         }
+
         return null;
     }
 }

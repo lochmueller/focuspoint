@@ -1,24 +1,20 @@
 <?php
 /**
- * Content
+ * Content.
  *
- * @package Focuspoint\Domain\Model
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Domain\Model;
 
 /**
- * Content
+ * Content.
  *
- * @author Tim Lochmüller
  * @db     tt_content
  */
 class Content extends AbstractModel
 {
-
     /**
-     * Image ratio
+     * Image ratio.
      *
      * @var string
      * @db
@@ -26,7 +22,7 @@ class Content extends AbstractModel
     protected $imageRatio;
 
     /**
-     * Get image ratio
+     * Get image ratio.
      *
      * @return string
      */
@@ -36,7 +32,7 @@ class Content extends AbstractModel
     }
 
     /**
-     * Set image ratio
+     * Set image ratio.
      *
      * @param string $imageRatio
      */

@@ -1,9 +1,7 @@
 <?php
 /**
- * TCA functions
+ * TCA functions.
  *
- * @package Focuspoint\Utility
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Utility;
@@ -11,15 +9,13 @@ namespace HDNET\Focuspoint\Utility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
- * TCA functions
+ * TCA functions.
  *
- * @author Tim Lochmüller
  */
 class TcaUtility
 {
-
     /**
-     * Get field configuration
+     * Get field configuration.
      *
      * @return array
      */
@@ -32,7 +28,7 @@ class TcaUtility
                 'eval' => 'trim,int',
                 'range' => [
                     'lower' => -100,
-                    'upper' => 100
+                    'upper' => 100,
                 ],
                 'wizards' => [
                     '_DISTANCE' => '10',
@@ -40,7 +36,7 @@ class TcaUtility
                         'type' => 'script',
                         'icon' => ExtensionManagementUtility::extRelPath('focuspoint') . 'ext_icon.png',
                         'module' => [
-                            'name' => 'focuspoint'
+                            'name' => 'focuspoint',
                         ],
                     ],
                     'slider' => [

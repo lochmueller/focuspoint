@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Dimension
+ * Dimension.
  */
 
 namespace HDNET\Focuspoint\Domain\Model;
 
 /**
- * Dimension
+ * Dimension.
+ *
  * @db
  * @smartExclude EnableFields,Language
  */
 class Dimension extends AbstractModel
 {
-
     /**
-     * Title
+     * Title.
      *
      * @var string
      * @db
@@ -23,7 +23,7 @@ class Dimension extends AbstractModel
     protected $title;
 
     /**
-     * Identifier
+     * Identifier.
      *
      * @var string
      * @db
@@ -31,7 +31,7 @@ class Dimension extends AbstractModel
     protected $identifier;
 
     /**
-     * Dimension
+     * Dimension.
      *
      * @var string
      * @db

@@ -1,36 +1,34 @@
 <?php
 
-
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Group
+ * Group.
  */
 class Group extends AbstractWizardHandler
 {
-
     /**
-     * The table name
+     * The table name.
      */
     const TABLE = 'tx_focuspoint_domain_model_filestandalone';
 
     /**
-     * Check if the handler can handle the current request
+     * Check if the handler can handle the current request.
      *
-     * @return boolean
+     * @return bool
      */
     public function canHandle()
     {
-        return $this->getRelativeFilePath() !== null;
+        return null !== $this->getRelativeFilePath();
     }
 
     /**
-     * Return the current point
+     * Return the current point.
      *
-     * @return integer[]
+     * @return int[]
      */
     public function getCurrentPoint()
     {
@@ -41,21 +39,21 @@ class Group extends AbstractWizardHandler
             'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE)
         );
 
-        if ($row === false) {
+        if (false === $row) {
             return [0, 0];
         }
+
         return $this->cleanupPosition([
             $row['focus_point_x'],
-            $row['focus_point_y']
+            $row['focus_point_y'],
         ]);
     }
 
     /**
-     * Set the point (between -100 and 100)
+     * Set the point (between -100 and 100).
      *
      * @param int $x
      * @param int $y
-     * @return void
      */
     public function setCurrentPoint($x, $y)
     {
@@ -68,7 +66,7 @@ class Group extends AbstractWizardHandler
         $values = [
             'focus_point_x' => $x,
             'focus_point_y' => $y,
-            'relative_file_path' => $this->getRelativeFilePath()
+            'relative_file_path' => $this->getRelativeFilePath(),
         ];
         if ($row) {
             $connection->exec_UPDATEquery(self::TABLE, 'uid=' . $row['uid'], $values);
@@ -78,7 +76,7 @@ class Group extends AbstractWizardHandler
     }
 
     /**
-     * Get the public URL for the current handler
+     * Get the public URL for the current handler.
      *
      * @return string
      */
@@ -88,7 +86,7 @@ class Group extends AbstractWizardHandler
     }
 
     /**
-     * get the arguments for same request call
+     * get the arguments for same request call.
      *
      * @return array
      */
@@ -96,6 +94,7 @@ class Group extends AbstractWizardHandler
     {
         $parameter = GeneralUtility::_GET();
         $p = $parameter['P'];
+
         return [
             'P' => [
                 'table' => $p['table'],
@@ -106,7 +105,7 @@ class Group extends AbstractWizardHandler
     }
 
     /**
-     * get the file name
+     * get the file name.
      *
      * @return null|string
      */
@@ -129,9 +128,9 @@ class Group extends AbstractWizardHandler
         }
         $fieldTca = $tableTca['columns'][$p['field']];
 
-        $uploadFolder = isset($fieldTca['config']['uploadfolder']) ? $fieldTca['config']['uploadfolder'] : '';
+        $uploadFolder = $fieldTca['config']['uploadfolder'] ?? '';
         $baseFolder = '';
-        if (trim($uploadFolder, '/') !== '') {
+        if ('' !== trim($uploadFolder, '/')) {
             $baseFolder = rtrim($uploadFolder, '/') . '/';
         }
 
@@ -139,6 +138,7 @@ class Group extends AbstractWizardHandler
         if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
             return null;
         }
+
         return $filePath;
     }
 }

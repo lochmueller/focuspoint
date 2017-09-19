@@ -1,9 +1,7 @@
 <?php
 /**
- * Extends the file list
+ * Extends the file list.
  *
- * @package Focuspoint\Hooks
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Hooks;
@@ -17,21 +15,17 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
 
 /**
- * Extends the file list
+ * Extends the file list.
  *
- * @author Tim Lochmüller
  * @hook   TYPO3_CONF_VARS|SC_OPTIONS|fileList|editIconsHook
  */
 class FileList implements FileListEditIconHookInterface
 {
-
     /**
-     * Modifies edit icon array
+     * Modifies edit icon array.
      *
-     * @param array $cells Array of edit icons
+     * @param array                        $cells        Array of edit icons
      * @param \TYPO3\CMS\Filelist\FileList $parentObject Parent object
-     *
-     * @return void
      */
     public function manipulateEditIcons(&$cells, &$parentObject)
     {
@@ -43,11 +37,13 @@ class FileList implements FileListEditIconHookInterface
             $file = FileUtility::getFileByMetaData($metaUid);
         } catch (\Exception $ex) {
             $cells['focuspoint'] = $wizardService->getWizardButton();
+
             return;
         }
 
         if (!ImageUtility::isValidFileExtension($file->getExtension())) {
             $cells['focuspoint'] = $wizardService->getWizardButton();
+
             return;
         }
 
@@ -62,11 +58,12 @@ class FileList implements FileListEditIconHookInterface
     }
 
     /**
-     * Get the file object of the given cell information
+     * Get the file object of the given cell information.
      *
      * @param array $cells
      *
      * @return int
+     *
      * @throws \Exception
      */
     protected function getFileMetaUidByCells($cells)
@@ -77,6 +74,7 @@ class FileList implements FileListEditIconHookInterface
         if (!isset($metaData['uid'])) {
             throw new \Exception('No meta data found', 1475144024);
         }
-        return (int)$metaData['uid'];
+
+        return (int) $metaData['uid'];
     }
 }

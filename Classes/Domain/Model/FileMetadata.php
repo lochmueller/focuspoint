@@ -1,24 +1,20 @@
 <?php
 /**
- * File metadata
+ * File metadata.
  *
- * @package Focuspoint\Domain\Model
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Domain\Model;
 
 /**
- * File metadata
+ * File metadata.
  *
- * @author Tim Lochmüller
  * @db     sys_file_metadata
  */
 class FileMetadata extends AbstractModel
 {
-
     /**
-     * Focus point Y
+     * Focus point Y.
      *
      * @var int
      * @db
@@ -26,7 +22,7 @@ class FileMetadata extends AbstractModel
     protected $focusPointY;
 
     /**
-     * Focus point X
+     * Focus point X.
      *
      * @var int
      * @db
@@ -34,7 +30,7 @@ class FileMetadata extends AbstractModel
     protected $focusPointX;
 
     /**
-     * Get Y
+     * Get Y.
      *
      * @return int
      */
@@ -44,7 +40,7 @@ class FileMetadata extends AbstractModel
     }
 
     /**
-     * Set Y
+     * Set Y.
      *
      * @param int $focusPointY
      */
@@ -54,7 +50,7 @@ class FileMetadata extends AbstractModel
     }
 
     /**
-     * Get X
+     * Get X.
      *
      * @return int
      */
@@ -64,7 +60,7 @@ class FileMetadata extends AbstractModel
     }
 
     /**
-     * Set X
+     * Set X.
      *
      * @param int $focusPointX
      */

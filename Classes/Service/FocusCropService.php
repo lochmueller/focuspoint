@@ -1,9 +1,7 @@
 <?php
 /**
- * Crop images via focus crop
+ * Crop images via focus crop.
  *
- * @package Focuspoint\Service
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -21,13 +19,11 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
- * Crop images via focus crop
+ * Crop images via focus crop.
  *
- * @author Tim Lochmüller
  */
 class FocusCropService extends AbstractService
 {
-
     const SIGNAL_tempImageCropped = 'tempImageCropped';
 
     /**
@@ -41,13 +37,14 @@ class FocusCropService extends AbstractService
     protected $tempImageFolder;
 
     /**
-     * get the image
+     * get the image.
      *
      * @param $src
      * @param $image
      * @param $treatIdAsReference
      *
      * @return \TYPO3\CMS\Core\Resource\File|FileInterface|CoreFileReference|\TYPO3\CMS\Core\Resource\Folder
+     *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
      */
@@ -67,11 +64,12 @@ class FocusCropService extends AbstractService
             return $resourceFactory->getFileObject($src);
         }
         $image = $resourceFactory->getFileReferenceObject($src);
+
         return $image->getOriginalFile();
     }
 
     /**
-     * Helper function for view helpers
+     * Helper function for view helpers.
      *
      * @param $src
      * @param $image
@@ -86,11 +84,12 @@ class FocusCropService extends AbstractService
     public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio)
     {
         $file = $this->getViewHelperImage($src, $image, $treatIdAsReference);
+
         return $this->getCroppedImageSrcByFile($file, $ratio);
     }
 
     /**
-     * Get the cropped image
+     * Get the cropped image.
      *
      * @param string $fileReference
      * @param string $ratio
@@ -109,10 +108,10 @@ class FocusCropService extends AbstractService
     }
 
     /**
-     * Get the cropped image by File Object
+     * Get the cropped image by File Object.
      *
      * @param FileInterface $file
-     * @param string $ratio
+     * @param string        $ratio
      *
      * @return string The new filename
      */
@@ -124,20 +123,20 @@ class FocusCropService extends AbstractService
             $file->getProperty('focus_point_x'),
             $file->getProperty('focus_point_y')
         );
-        if ($result === null) {
+        if (null === $result) {
             return $file->getPublicUrl();
         }
+
         return $result;
     }
 
-
     /**
-     * Get the cropped image by src
+     * Get the cropped image by src.
      *
-     * @param string $src Relative file name
+     * @param string $src   Relative file name
      * @param string $ratio
-     * @param int $x
-     * @param int $y
+     * @param int    $x
+     * @param int    $y
      *
      * @return string The new filename
      */
@@ -149,10 +148,10 @@ class FocusCropService extends AbstractService
         }
         $docRoot = rtrim(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), '/') . '/';
         $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
-        $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
-        $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
+        $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
+        $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
 
-        if ($focusPointX === 0 && $focusPointY === 0) {
+        if (0 === $focusPointX && 0 === $focusPointY) {
             $connection = GlobalUtility::getDatabaseConnection();
             $row = $connection->exec_SELECTgetSingleRow(
                 'uid,focus_point_x,focus_point_y',
@@ -160,8 +159,8 @@ class FocusCropService extends AbstractService
                 'relative_file_path = ' . $connection->fullQuoteStr($relativeSrc, Group::TABLE)
             );
             if ($row) {
-                $focusPointX = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
-                $focusPointY = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
+                $focusPointX = MathUtility::forceIntegerInRange((int) $row['focus_point_x'], -100, 100, 0);
+                $focusPointY = MathUtility::forceIntegerInRange((int) $row['focus_point_y'], -100, 100, 0);
             }
         }
 
@@ -215,7 +214,7 @@ class FocusCropService extends AbstractService
     }
 
     /**
-     * Emit tempImageCropped signal
+     * Emit tempImageCropped signal.
      *
      * @param string $tempImageName
      */
@@ -234,6 +233,7 @@ class FocusCropService extends AbstractService
         if (!isset($this->signalSlotDispatcher)) {
             $this->signalSlotDispatcher = $this->getObjectManager()->get(Dispatcher::class);
         }
+
         return $this->signalSlotDispatcher;
     }
 
@@ -248,11 +248,11 @@ class FocusCropService extends AbstractService
     }
 
     /**
-     *
      * @param $absoluteImageName
      * @param $ratio
      * @param $focusPointX
      * @param $focusPointY
+     *
      * @return array
      */
     protected function generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY)
@@ -281,17 +281,18 @@ class FocusCropService extends AbstractService
             PATHINFO_EXTENSION
         );
         $name = preg_replace('/--+/', '-', $name);
+
         return $name;
     }
 
     /**
-     * Return the folder for generated images
+     * Return the folder for generated images.
      *
      * @return string Path relative to PATH_site
      */
     protected function getTempImageFolder()
     {
-        if ($this->tempImageFolder === null) {
+        if (null === $this->tempImageFolder) {
             $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
             if (isset($extConf['tempImageFolder'])) {
                 $this->tempImageFolder = $extConf['tempImageFolder'];

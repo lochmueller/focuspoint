@@ -1,10 +1,8 @@
 <?php
 
 /**
- * Get the URI of the cropped image
+ * Get the URI of the cropped image.
  *
- * @package Focuspoint\Service
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\ViewHelpers\Uri;
@@ -17,13 +15,12 @@ use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
 
 /**
- * Get the URI of the cropped image
+ * Get the URI of the cropped image.
  */
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
 {
-
     /**
-     * Initialize ViewHelper arguments
+     * Initialize ViewHelper arguments.
      */
     public function initializeArguments()
     {
@@ -32,23 +29,24 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     }
 
     /**
-     * Resize the image (if required) and returns its path. If the image was not changed, the path will be equal to $src
+     * Resize the image (if required) and returns its path. If the image was not changed, the path will be equal to $src.
      *
      * @see http://typo3.org/documentation/document-library/references/doc_core_tsref/4.2.0/view/1/5/#id4164427
      *
-     * @param string $src
+     * @param string                           $src
      * @param FileInterface|AbstractFileFolder $image
-     * @param string $width width of the image. This can be a numeric value representing the fixed width of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
-     * @param string $height height of the image. This can be a numeric value representing the fixed height of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
-     * @param integer $minWidth minimum width of the image
-     * @param integer $minHeight minimum height of the image
-     * @param integer $maxWidth maximum width of the image
-     * @param integer $maxHeight maximum height of the image
-     * @param boolean $treatIdAsReference given src argument is a sys_file_reference record
-     * @param string|boolean $crop overrule cropping of image (setting to FALSE disables the cropping set in FileReference)
-     * @param boolean $absolute Force absolute URL
+     * @param string                           $width              width of the image. This can be a numeric value representing the fixed width of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
+     * @param string                           $height             height of the image. This can be a numeric value representing the fixed height of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.
+     * @param int                              $minWidth           minimum width of the image
+     * @param int                              $minHeight          minimum height of the image
+     * @param int                              $maxWidth           maximum width of the image
+     * @param int                              $maxHeight          maximum height of the image
+     * @param bool                             $treatIdAsReference given src argument is a sys_file_reference record
+     * @param string|bool                      $crop               overrule cropping of image (setting to FALSE disables the cropping set in FileReference)
+     * @param bool                             $absolute           Force absolute URL
      *
      * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+     *
      * @return string path to the image
      */
     public function render(
@@ -81,11 +79,12 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param callable|\Closure $renderChildrenClosure
+     * @param array                     $arguments
+     * @param callable|\Closure         $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
      *
      * @return string
+     *
      * @throws Exception
      */
     public static function renderStatic(
@@ -93,7 +92,6 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
         $arguments['src'] = $service->getCroppedImageSrcForViewHelper(

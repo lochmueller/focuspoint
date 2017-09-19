@@ -2,7 +2,6 @@
 /**
  * @todo    General file information
  *
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Tests\Unit\Service;
@@ -16,14 +15,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class DimensionServiceTest extends UnitTestCase
 {
-
     /**
      * @var DimensionService
      */
     protected $service;
 
     /**
-     * Build up
+     * Build up.
      */
     protected function setUp()
     {
@@ -79,13 +77,13 @@ class DimensionServiceTest extends UnitTestCase
     /**
      * @dataProvider providerFocusBoxSize
      *
-     * @param int $focusX
-     * @param int $focusY
+     * @param int    $focusX
+     * @param int    $focusY
      * @param string $ratio
-     * @param int $imageWidth
-     * @param int $imageHeight
-     * @param int $expectedWidth
-     * @param int $expectedHeight
+     * @param int    $imageWidth
+     * @param int    $imageHeight
+     * @param int    $expectedWidth
+     * @param int    $expectedHeight
      *
      * @test
      */
@@ -128,19 +126,18 @@ class DimensionServiceTest extends UnitTestCase
      * @depends      testFocusBoxSize
      * @dataProvider providerFocusSourcePoint
      *
-     * @param int $focusX
-     * @param int $focusY
+     * @param int    $focusX
+     * @param int    $focusY
      * @param string $ratio
-     * @param int $imageWidth
-     * @param int $imageHeight
-     * @param int $expectedX
-     * @param int $expectedY
+     * @param int    $imageWidth
+     * @param int    $imageHeight
+     * @param int    $expectedX
+     * @param int    $expectedY
      *
      * @test
      */
     public function testFocusSourcePoint($focusX, $focusY, $ratio, $imageWidth, $imageHeight, $expectedX, $expectedY)
     {
-
         $expected = [
             $expectedX,
             $expectedY,
@@ -148,9 +145,18 @@ class DimensionServiceTest extends UnitTestCase
 
         list($focusWidth, $focusHeight) = $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio);
 
-        $this->assertEquals($expected,
-            $this->service->calculateSourcePosition(DimensionService::CROP_LANDSCAPE, $imageWidth, $imageHeight, $focusWidth,
-                $focusHeight, $focusX, $focusY));
+        $this->assertEquals(
+            $expected,
+            $this->service->calculateSourcePosition(
+                DimensionService::CROP_LANDSCAPE,
+                $imageWidth,
+                $imageHeight,
+                $focusWidth,
+                $focusHeight,
+                $focusX,
+                $focusY
+            )
+        );
     }
 
     /**

@@ -1,9 +1,7 @@
 <?php
 /**
- * Calc dimensions for focus point cropping
+ * Calc dimensions for focus point cropping.
  *
- * @package Focuspoint\Service
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -12,34 +10,32 @@ use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * Calc dimensions for focus point cropping
+ * Calc dimensions for focus point cropping.
  *
- * @author Tim Lochmüller
  */
 class DimensionService extends AbstractService
 {
-
     /**
-     * Crop mode. Not necessary
+     * Crop mode. Not necessary.
      */
     const CROP_NONE = 0;
 
     /**
-     * Crop in landscape
+     * Crop in landscape.
      */
     const CROP_LANDSCAPE = 1;
 
     /**
-     * Crop in portrait
+     * Crop in portrait.
      */
     const CROP_PORTRAIT = 2;
 
     /**
-     * Calc the ratio and check if the crop is landscape or portrait relevant
+     * Calc the ratio and check if the crop is landscape or portrait relevant.
      *
-     * @param int $width
-     * @param int $height
-     * @param string $ratio In format "1:1"
+     * @param int    $width
+     * @param int    $height
+     * @param string $ratio  In format "1:1"
      *
      * @return int
      */
@@ -51,22 +47,23 @@ class DimensionService extends AbstractService
         if ($widthDiff == $heightDiff) {
             return self::CROP_NONE;
         }
+
         return $widthDiff > $heightDiff ? self::CROP_LANDSCAPE : self::CROP_PORTRAIT;
     }
 
     /**
-     * Calc the focus width and height by the given ratio
+     * Calc the focus width and height by the given ratio.
      *
-     * @param int $width
-     * @param int $height
-     * @param string $ratio In format "1:1"
+     * @param int    $width
+     * @param int    $height
+     * @param string $ratio  In format "1:1"
      *
      * @return array
      */
     public function getFocusWidthAndHeight($width, $height, $ratio)
     {
-        $width = (int)$width;
-        $height = (int)$height;
+        $width = (int) $width;
+        $height = (int) $height;
         $ratio = $this->getRatio($ratio);
         $widthDiff = $width / $ratio[0];
         $heightDiff = $height / $ratio[1];
@@ -74,22 +71,23 @@ class DimensionService extends AbstractService
         if ($widthDiff < $heightDiff) {
             return [
                 $width,
-                (int)ceil($widthDiff / $heightDiff * $height)
+                (int) ceil($widthDiff / $heightDiff * $height),
             ];
         } elseif ($widthDiff > $heightDiff) {
             return [
-                (int)ceil($heightDiff / $widthDiff * $width),
-                $height
+                (int) ceil($heightDiff / $widthDiff * $width),
+                $height,
             ];
         }
+
         return [
             $width,
-            $height
+            $height,
         ];
     }
 
     /**
-     * Calculate the source X and Y position
+     * Calculate the source X and Y position.
      *
      * @param int $cropMode
      * @param int $width
@@ -110,23 +108,24 @@ class DimensionService extends AbstractService
         $focusPointX,
         $focusPointY
     ) {
-        if ($cropMode == DimensionService::CROP_PORTRAIT) {
+        if (self::CROP_PORTRAIT == $cropMode) {
             return array_reverse($this->getShiftedFocusAreaPosition($height, $focusHeight, $focusPointY, true));
-        } elseif ($cropMode == DimensionService::CROP_LANDSCAPE) {
+        } elseif (self::CROP_LANDSCAPE == $cropMode) {
             return $this->getShiftedFocusAreaPosition($width, $focusWidth, $focusPointX);
         }
+
         return [
             0,
-            0
+            0,
         ];
     }
 
     /**
-     * Calc the shifted focus area
+     * Calc the shifted focus area.
      *
-     * @param int $length
-     * @param int $focusLength
-     * @param int $focusPosition
+     * @param int  $length
+     * @param int  $focusLength
+     * @param int  $focusPosition
      * @param bool $invertScala
      *
      * @return array
@@ -134,12 +133,12 @@ class DimensionService extends AbstractService
     protected function getShiftedFocusAreaPosition($length, $focusLength, $focusPosition, $invertScala = false)
     {
         $halfWidth = $length / 2;
-        $pixelPosition = (int)floor($halfWidth * $focusPosition / 100 + $halfWidth);
+        $pixelPosition = (int) floor($halfWidth * $focusPosition / 100 + $halfWidth);
         if ($invertScala) {
             $pixelPosition = $length - $pixelPosition;
         }
-        $crop1 = (int)($pixelPosition - floor($focusLength / 2));
-        $crop2 = (int)($crop1 + $focusLength);
+        $crop1 = (int) ($pixelPosition - floor($focusLength / 2));
+        $crop2 = (int) ($crop1 + $focusLength);
         if ($crop1 < 0) {
             $crop1 -= $crop1;
         } elseif ($crop2 > $length) {
@@ -149,20 +148,21 @@ class DimensionService extends AbstractService
 
         $sourceX = $crop1;
         $sourceY = 0;
+
         return [
             $sourceX,
-            $sourceY
+            $sourceY,
         ];
     }
 
     /**
      * get the shifted focus point point position
-     * for e.g. Frontend handling of the new created image
+     * for e.g. Frontend handling of the new created image.
      *
-     * @param int $imgWidth
-     * @param int $imgHeight
-     * @param int $focusX
-     * @param int $focusY
+     * @param int    $imgWidth
+     * @param int    $imgHeight
+     * @param int    $focusX
+     * @param int    $focusY
      * @param string $ratio
      *
      * @return array
@@ -195,34 +195,36 @@ class DimensionService extends AbstractService
 
         $newFocusX = ($newRealFocusX - $newHalfWidth) * 100 / ($newHalfWidth);
         $newFocusY = ($newHalfHeight - $newRealFocusY) * 100 / ($newHalfHeight);
-        $newFocusX = (int)round($newFocusX, 0);
-        $newFocusY = (int)round($newFocusY, 0);
+        $newFocusX = (int) round($newFocusX, 0);
+        $newFocusY = (int) round($newFocusY, 0);
 
         return [$newFocusX, $newFocusY];
     }
 
     /**
-     * Check the ratio and create an array
+     * Check the ratio and create an array.
      *
      * @param string $ratio
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function getRatio($ratio)
     {
         $ratio = $this->mapDatabaseRatio($ratio);
         $ratio = explode(':', $ratio);
-        if (sizeof($ratio) !== 2) {
+        if (2 !== sizeof($ratio)) {
             throw new \Exception('Ratio have to be in the format of e.g. "1:1" or "16:9"', 1475144026);
         }
+
         return [
-            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int)$ratio[0] : (float)str_replace(
+            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int) $ratio[0] : (float) str_replace(
                 ',',
                 '.',
                 $ratio[0]
             ),
-            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int)$ratio[1] : (float)str_replace(
+            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int) $ratio[1] : (float) str_replace(
                 ',',
                 '.',
                 $ratio[1]
@@ -231,9 +233,10 @@ class DimensionService extends AbstractService
     }
 
     /**
-     * Map the given ratio to the DB table
+     * Map the given ratio to the DB table.
      *
      * @param string $ratio
+     *
      * @return string
      */
     protected function mapDatabaseRatio($ratio)
@@ -251,6 +254,7 @@ class DimensionService extends AbstractService
         if (isset($row['dimension'])) {
             return $row['dimension'];
         }
+
         return $ratio;
     }
 }

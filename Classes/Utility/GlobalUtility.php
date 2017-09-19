@@ -1,9 +1,7 @@
 <?php
 /**
- * Access global variables
+ * Access global variables.
  *
- * @package Focuspoint\Utility
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Utility;
@@ -11,15 +9,13 @@ namespace HDNET\Focuspoint\Utility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
- * Access global variables
+ * Access global variables.
  *
- * @author Tim Lochmüller
  */
 class GlobalUtility
 {
-
     /**
-     * Get database connection
+     * Get database connection.
      *
      * @return DatabaseConnection
      */

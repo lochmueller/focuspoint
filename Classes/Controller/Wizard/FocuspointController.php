@@ -1,9 +1,7 @@
 <?php
 /**
- * Wizard controller
+ * Wizard controller.
  *
- * @package Focuspoint\Controller\Wizard
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Controller\Wizard;
@@ -22,17 +20,16 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
- * Wizard controller
+ * Wizard controller.
  *
- * @author Tim Lochmüller
  */
 class FocuspointController
 {
-
     /**
-     * Main action
+     * Main action.
      *
      * @throws \Exception
+     *
      * @return string
      */
     public function main()
@@ -47,9 +44,9 @@ class FocuspointController
         }
         $saveArguments = [
             'save' => 1,
-            'P'    => [
+            'P' => [
                 'returnUrl' => $parameter['P']['returnUrl'],
-            ]
+            ],
         ];
 
         /** @var StandaloneView $template */
@@ -73,21 +70,23 @@ class FocuspointController
     }
 
     /**
-     * Returns the Module menu for the AJAX request
+     * Returns the Module menu for the AJAX request.
      *
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
+     * @param ResponseInterface      $response
+     *
      * @return ResponseInterface
      */
     public function mainAction(ServerRequestInterface $request, ResponseInterface $response)
     {
         $content = $this->main();
         $response->getBody()->write($content);
+
         return $response;
     }
 
     /**
-     * Get the current handler
+     * Get the current handler.
      *
      * @return AbstractWizardHandler|null
      */
@@ -99,11 +98,12 @@ class FocuspointController
                 return $handler;
             }
         }
+
         return null;
     }
 
     /**
-     * Get the wizard handler
+     * Get the wizard handler.
      *
      * @return array
      */

@@ -1,9 +1,7 @@
 <?php
 /**
- * Crop images
+ * Crop images.
  *
- * @package Focuspoint\Service
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Service;
@@ -17,19 +15,18 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 
 /**
- * Crop images
+ * Crop images.
  */
 class CropService extends AbstractService
 {
-
     /**
-     * Create the crop version of the image
+     * Create the crop version of the image.
      *
      * @param string $absoluteImageName
-     * @param int $focusWidth
-     * @param int $focusHeight
-     * @param int $sourceX
-     * @param int $sourceY
+     * @param int    $focusWidth
+     * @param int    $focusHeight
+     * @param int    $sourceX
+     * @param int    $sourceY
      * @param string $absoluteTempImageName
      */
     public function createImage(
@@ -46,7 +43,7 @@ class CropService extends AbstractService
         // cropViaImageMagick
 
         $function = 'cropViaGraphicalFunctions';
-        if ($fileExtension === 'png') {
+        if ('png' === $fileExtension) {
             $function = 'cropViaGifBuilder';
         }
 
@@ -62,15 +59,14 @@ class CropService extends AbstractService
         );
     }
 
-
     /**
-     * Create the crop image (ImageMagikc/Gm)
+     * Create the crop image (ImageMagikc/Gm).
      *
      * @param string $absoluteImageName
-     * @param int $focusWidth
-     * @param int $focusHeight
-     * @param int $sourceX
-     * @param int $sourceY
+     * @param int    $focusWidth
+     * @param int    $focusHeight
+     * @param int    $sourceX
+     * @param int    $sourceY
      * @param string $absoluteTempImageName
      */
     protected function cropViaImageMagick(
@@ -86,19 +82,19 @@ class CropService extends AbstractService
         $cropCommand = $focusWidth . 'x' . $focusHeight . '+' . $sourceX . '+' . $sourceY;
         $command = CommandUtility::imageMagickCommand(
             'convert',
-            '-quality ' . $quality.' '.$absoluteImageName . ' -crop ' . $cropCommand . '  +repage ' . $absoluteTempImageName
+            '-quality ' . $quality . ' ' . $absoluteImageName . ' -crop ' . $cropCommand . '  +repage ' . $absoluteTempImageName
         );
         CommandUtility::exec($command, $out);
     }
 
     /**
-     * Create the crop image (GifBuilder)
+     * Create the crop image (GifBuilder).
      *
      * @param string $absoluteImageName
-     * @param int $focusWidth
-     * @param int $focusHeight
-     * @param int $sourceX
-     * @param int $sourceY
+     * @param int    $focusWidth
+     * @param int    $focusHeight
+     * @param int    $sourceX
+     * @param int    $sourceY
      * @param string $absoluteTempImageName
      */
     protected function cropViaGifBuilder(
@@ -147,15 +143,14 @@ class CropService extends AbstractService
         $gifBuilder->destroy();
     }
 
-
     /**
-     * Create the crop image (GraphicalFunctions)
+     * Create the crop image (GraphicalFunctions).
      *
      * @param string $absoluteImageName
-     * @param int $focusWidth
-     * @param int $focusHeight
-     * @param int $sourceX
-     * @param int $sourceY
+     * @param int    $focusWidth
+     * @param int    $focusHeight
+     * @param int    $sourceX
+     * @param int    $sourceY
      * @param string $absoluteTempImageName
      */
     protected function cropViaGraphicalFunctions(

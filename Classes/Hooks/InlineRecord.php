@@ -1,9 +1,7 @@
 <?php
 /**
- * Hook into the inline icons
+ * Hook into the inline icons.
  *
- * @package Focuspoint\Hooks
- * @author  Tim Lochmüller
  */
 
 namespace HDNET\Focuspoint\Hooks;
@@ -15,20 +13,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * Hook into the inline icons
+ * Hook into the inline icons.
  *
- * @author Tim Lochmüller
  * @hook   TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tceforms_inline.php|tceformsInlineHook
  */
 class InlineRecord implements InlineElementHookInterface
 {
-
     /**
      * Initializes this hook object.
      *
      * @param object $parentObject
-     *
-     * @return void
      */
     public function init(&$parentObject)
     {
@@ -37,14 +31,12 @@ class InlineRecord implements InlineElementHookInterface
     /**
      * Pre-processing to define which control items are enabled or disabled.
      *
-     * @param string $parentUid The uid of the parent (embedding) record (uid or NEW...)
-     * @param string $foreignTable The table (foreign_table) we create control-icons for
-     * @param array $childRecord The current record of that foreign_table
-     * @param array $childConfig TCA configuration of the current field of the child record
-     * @param boolean $isVirtual Defines whether the current records is only virtually shown and not physically part of the parent record
-     * @param array $enabledControls (reference) Associative array with the enabled control items
-     *
-     * @return void
+     * @param string $parentUid       The uid of the parent (embedding) record (uid or NEW...)
+     * @param string $foreignTable    The table (foreign_table) we create control-icons for
+     * @param array  $childRecord     The current record of that foreign_table
+     * @param array  $childConfig     TCA configuration of the current field of the child record
+     * @param bool   $isVirtual       Defines whether the current records is only virtually shown and not physically part of the parent record
+     * @param array  $enabledControls (reference) Associative array with the enabled control items
      */
     public function renderForeignRecordHeaderControl_preProcess(
         $parentUid,
@@ -59,14 +51,12 @@ class InlineRecord implements InlineElementHookInterface
     /**
      * Post-processing to define which control items to show. Possibly own icons can be added here.
      *
-     * @param string $parentUid The uid of the parent (embedding) record (uid or NEW...)
+     * @param string $parentUid    The uid of the parent (embedding) record (uid or NEW...)
      * @param string $foreignTable The table (foreign_table) we create control-icons for
-     * @param array $childRecord The current record of that foreign_table
-     * @param array $childConfig TCA configuration of the current field of the child record
-     * @param boolean $isVirtual Defines whether the current records is only virtually shown and not physically part of the parent record
-     * @param array $controlItems (reference) Associative array with the currently available control items
-     *
-     * @return void
+     * @param array  $childRecord  The current record of that foreign_table
+     * @param array  $childConfig  TCA configuration of the current field of the child record
+     * @param bool   $isVirtual    Defines whether the current records is only virtually shown and not physically part of the parent record
+     * @param array  $controlItems (reference) Associative array with the currently available control items
      */
     public function renderForeignRecordHeaderControl_postProcess(
         $parentUid,
@@ -76,14 +66,14 @@ class InlineRecord implements InlineElementHookInterface
         $isVirtual,
         array &$controlItems
     ) {
-        if ($foreignTable != 'sys_file_reference') {
+        if ('sys_file_reference' != $foreignTable) {
             return;
         }
 
         if (is_array($childRecord['uid_local'])) {
             // Handling for TYPO3 > 8.x
             foreach ($childRecord['uid_local'] as $item) {
-                if ($item['table'] !== 'sys_file') {
+                if ('sys_file' !== $item['table']) {
                     return;
                 }
                 if (!MathUtility::canBeInterpretedAsInteger($childRecord['uid'])) {
@@ -115,7 +105,7 @@ class InlineRecord implements InlineElementHookInterface
             $wizardArguments = [
                 'P' => [
                     'referenceUid' => $childRecord['uid'],
-                    'returnUrl' => BackendUtility::getModuleUrl('record_edit', $returnUrl)
+                    'returnUrl' => BackendUtility::getModuleUrl('record_edit', $returnUrl),
                 ],
             ];
             $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
@@ -128,19 +118,20 @@ class InlineRecord implements InlineElementHookInterface
     }
 
     /**
-     * Check if the record is valid
+     * Check if the record is valid.
      *
      * @param string $table
-     * @param int $uid
+     * @param int    $uid
+     *
      * @return bool
      */
     protected function isValidRecord($table, $uid)
     {
-        return BackendUtility::getRecord($table, $uid) !== null;
+        return null !== BackendUtility::getRecord($table, $uid);
     }
 
     /**
-     * Add a element with the given key in front of the array
+     * Add a element with the given key in front of the array.
      *
      * @param $arr
      * @param string $key
