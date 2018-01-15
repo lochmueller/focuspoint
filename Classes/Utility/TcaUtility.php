@@ -32,7 +32,7 @@ class TcaUtility
                     '_DISTANCE' => '10',
                     'focuspoint' => [
                         'type' => 'script',
-                        'icon' => ExtensionManagementUtility::extRelPath('focuspoint') . 'ext_icon.png',
+                        'icon' => 'EXT:focuspoint/ext_icon.png',
                         'module' => [
                             'name' => 'focuspoint',
                         ],
