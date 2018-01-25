@@ -17,9 +17,9 @@ $loader = [
 $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 $iconRegistry->registerIcon(
     'tcarecords-tx_focuspoint_domain_model_filestandalone-default',
-    \TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class,
+    \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
     [
-        'source' => 'EXT:focuspoint/ext_icon.png'
+        'source' => 'EXT:focuspoint/ext_icon.svg'
     ]
 );
 
