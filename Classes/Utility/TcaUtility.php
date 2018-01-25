@@ -32,7 +32,7 @@ class TcaUtility
                     '_DISTANCE' => '10',
                     'focuspoint' => [
                         'type' => 'script',
-                        'icon' => 'EXT:focuspoint/ext_icon.png',
+                        'icon' => 'EXT:focuspoint/ext_icon.svg',
                         'module' => [
                             'name' => 'focuspoint',
                         ],
