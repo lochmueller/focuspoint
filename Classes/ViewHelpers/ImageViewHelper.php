@@ -40,8 +40,8 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         try {
             $internalImage = $service->getViewHelperImage($this->arguments['src'], $this->arguments['image'], $this->arguments['treatIdAsReference']);
             if ($this->arguments['realCrop'] && $internalImage instanceof FileInterface) {
-                $src = $service->getCroppedImageSrcByFile($internalImage, $this->arguments['ratio']);
-                $treatIdAsReference = false;
+                $this->arguments['src'] = $service->getCroppedImageSrcByFile($internalImage, $this->arguments['ratio']);
+                $this->arguments['treatIdAsReference'] = false;
                 $image = null;
             }
         } catch (\Exception $ex) {
