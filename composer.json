@@ -1,7 +1,8 @@
 {
   "name": "lochmueller/focuspoint",
   "description": "Focuspoint integrate the focal point method to crop images in the frontend of the web page. Use the jQuery-focuspoint plugin (https://github.com/jonom/jquery-focuspoint example http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) to crop the images. Use the function as wizard in the file list view and directly in the content element.",
-  "version": "2.2.0",
+  "version": "2.2.1",
+  "license": "GPL-2.0-or-later",
   "autoload": {
     "psr-4": {
       "HDNET\\Focuspoint\\": "Classes/"
@@ -24,7 +25,6 @@
     "Focuspoint"
   ],
   "homepage": "https://github.com/lochmueller/focuspoint",
-  "license": "GPL-2.0+",
   "support": {
     "issues": "https://github.com/lochmueller/focuspoint/issues"
   },
