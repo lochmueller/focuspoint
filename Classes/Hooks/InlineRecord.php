@@ -94,8 +94,14 @@ class InlineRecord implements InlineElementHookInterface
         $table = $childRecord['tablenames'];
         $uid = $parentUid;
 
-        $arguments = GeneralUtility::_GET();
-        if ($this->isValidRecord($table, $uid) && isset($arguments['edit'])) {
+        if ($this->isValidRecord($table, $uid)) {
+            $arguments = GeneralUtility::_GET();
+            // The arguments array is different in case this is called by an AJAX request
+            // via an IRRE inside an IRRE...
+            if (!isset($arguments['edit'])) {
+                $url = parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
+                parse_str($url['query'], $arguments);
+            }
             $returnUrl = [
                 'edit' => $arguments['edit'],
                 'returnUrl' => $arguments['returnUrl'],
