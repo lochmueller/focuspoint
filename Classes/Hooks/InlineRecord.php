@@ -99,8 +99,8 @@ class InlineRecord implements InlineElementHookInterface
             // The arguments array is different in case this is called by an AJAX request
             // via an IRRE inside an IRRE...
             if (!isset($arguments['edit'])) {
-                $stuff = parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
-                parse_str($stuff['query'], $arguments);
+                $url = parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
+                parse_str($url['query'], $arguments);
             }
             $returnUrl = [
                 'edit' => $arguments['edit'],
