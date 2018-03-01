@@ -63,7 +63,7 @@ class FocusCropService extends AbstractService
         }
         $image = $resourceFactory->getFileReferenceObject($src);
 
-        return $image->getOriginalFile();
+        return $image;
     }
 
     /**
