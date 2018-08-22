@@ -16,7 +16,7 @@ class FileReference extends AbstractModel
      * Focus point Y.
      *
      * @var int
-     * @db
+     * @db int(11) null
      */
     protected $focusPointY;
 
@@ -24,7 +24,7 @@ class FileReference extends AbstractModel
      * Focus point X.
      *
      * @var int
-     * @db
+     * @db int(11) null
      */
     protected $focusPointX;
 
