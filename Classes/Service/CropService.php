@@ -56,7 +56,7 @@ class CropService extends AbstractService
      *
      * @return string
      */
-    protected function getFunctionName($fileExtension)
+    protected function getFunctionName(string $fileExtension):string
     {
         $validFunctions = [
             'GraphicalFunctions',

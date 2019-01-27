@@ -79,7 +79,7 @@ class FocusCropService extends AbstractService
      *
      * @return string
      */
-    public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, $ratio)
+    public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, string $ratio)
     {
         $file = $this->getViewHelperImage($src, $image, $treatIdAsReference);
 
@@ -94,7 +94,7 @@ class FocusCropService extends AbstractService
      *
      * @return string The new filename
      */
-    public function getCroppedImageSrcByFileReference($fileReference, $ratio)
+    public function getCroppedImageSrcByFileReference($fileReference, string $ratio)
     {
         if ($fileReference instanceof FileReference) {
             $fileReference = $fileReference->getOriginalResource();
@@ -113,7 +113,7 @@ class FocusCropService extends AbstractService
      *
      * @return string The new filename
      */
-    public function getCroppedImageSrcByFile(FileInterface $file, $ratio)
+    public function getCroppedImageSrcByFile(FileInterface $file, string $ratio)
     {
         $result = $this->getCroppedImageSrcBySrc(
             $file->getForLocalProcessing(false),
@@ -138,7 +138,7 @@ class FocusCropService extends AbstractService
      *
      * @return string The new filename
      */
-    public function getCroppedImageSrcBySrc($src, $ratio, $x, $y)
+    public function getCroppedImageSrcBySrc(string $src, string $ratio, int $x, int $y):string
     {
         $absoluteImageName = GeneralUtility::getFileAbsFileName($src);
         if (!is_file($absoluteImageName)) {
@@ -215,8 +215,10 @@ class FocusCropService extends AbstractService
      * Emit tempImageCropped signal.
      *
      * @param string $tempImageName
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function emitTempImageCropped($tempImageName)
+    protected function emitTempImageCropped(string $tempImageName)
     {
         $this->getSignalSlotDispatcher()->dispatch(__CLASS__, self::SIGNAL_tempImageCropped, [$tempImageName]);
     }
@@ -246,14 +248,16 @@ class FocusCropService extends AbstractService
     }
 
     /**
-     * @param $absoluteImageName
-     * @param $ratio
-     * @param $focusPointX
-     * @param $focusPointY
+     * @param string $absoluteImageName
+     * @param string $ratio
+     * @param int $focusPointX
+     * @param int $focusPointY
      *
-     * @return array
+     * @return string
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY)
+    protected function generateTempImageName(string $absoluteImageName, string $ratio, int $focusPointX, int $focusPointY):string
     {
         $name = '';
 
@@ -288,7 +292,7 @@ class FocusCropService extends AbstractService
      *
      * @return string Path relative to PATH_site
      */
-    protected function getTempImageFolder()
+    protected function getTempImageFolder():string
     {
         if (null === $this->tempImageFolder) {
             $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);

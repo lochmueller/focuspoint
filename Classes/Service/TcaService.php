@@ -53,7 +53,7 @@ class TcaService extends AbstractService
      *
      * @return array
      */
-    protected function getCustomItems()
+    protected function getCustomItems():array
     {
         $databaseConnection = GlobalUtility::getDatabaseConnection();
 

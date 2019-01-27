@@ -37,7 +37,7 @@ class DimensionService extends AbstractService
      *
      * @return int
      */
-    public function getCropMode($width, $height, $ratio)
+    public function getCropMode(int $width, int $height, string $ratio):int
     {
         $ratio = $this->getRatio($ratio);
         $widthDiff = $width / $ratio[0];
@@ -58,7 +58,7 @@ class DimensionService extends AbstractService
      *
      * @return array
      */
-    public function getFocusWidthAndHeight($width, $height, $ratio)
+    public function getFocusWidthAndHeight(int $width, int $height, string $ratio):array
     {
         $width = (int) $width;
         $height = (int) $height;
@@ -98,14 +98,14 @@ class DimensionService extends AbstractService
      * @return array
      */
     public function calculateSourcePosition(
-        $cropMode,
-        $width,
-        $height,
-        $focusWidth,
-        $focusHeight,
-        $focusPointX,
-        $focusPointY
-    ) {
+        int $cropMode,
+        int $width,
+        int $height,
+        int $focusWidth,
+        int $focusHeight,
+        int $focusPointX,
+        int $focusPointY
+    ):array {
         if (self::CROP_PORTRAIT == $cropMode) {
             return array_reverse($this->getShiftedFocusAreaPosition($height, $focusHeight, $focusPointY, true));
         } elseif (self::CROP_LANDSCAPE == $cropMode) {
@@ -128,7 +128,7 @@ class DimensionService extends AbstractService
      *
      * @return array
      */
-    protected function getShiftedFocusAreaPosition($length, $focusLength, $focusPosition, $invertScala = false)
+    protected function getShiftedFocusAreaPosition(int $length, int $focusLength, int $focusPosition, bool $invertScala = false):array
     {
         $halfWidth = $length / 2;
         $pixelPosition = (int) floor($halfWidth * $focusPosition / 100 + $halfWidth);
@@ -165,7 +165,7 @@ class DimensionService extends AbstractService
      *
      * @return array
      */
-    public function getShiftedFocusPointPosition($imgWidth, $imgHeight, $focusX, $focusY, $ratio)
+    public function getShiftedFocusPointPosition(int $imgWidth, int $imgHeight, int $focusX, int $focusY, string $ratio):array
     {
         $halfWidth = $imgWidth / 2;
         $halfHeight = $imgHeight / 2;
@@ -208,7 +208,7 @@ class DimensionService extends AbstractService
      *
      * @throws \Exception
      */
-    public function getRatio($ratio)
+    public function getRatio(string $ratio):array
     {
         $ratio = $this->mapDatabaseRatio($ratio);
         $ratio = explode(':', $ratio);
@@ -237,7 +237,7 @@ class DimensionService extends AbstractService
      *
      * @return string
      */
-    protected function mapDatabaseRatio($ratio)
+    protected function mapDatabaseRatio(string $ratio):string
     {
         $databaseConnection = GlobalUtility::getDatabaseConnection();
         if (!is_object($databaseConnection)) {
@@ -250,7 +250,7 @@ class DimensionService extends AbstractService
             'identifier=' . $databaseConnection->fullQuoteStr($ratio, $table)
         );
         if (isset($row['dimension'])) {
-            return $row['dimension'];
+            return (string)$row['dimension'];
         }
 
         return $ratio;
