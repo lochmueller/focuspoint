@@ -5,8 +5,8 @@
 
 namespace HDNET\Focuspoint\Service;
 
-use HDNET\Focuspoint\Utility\GlobalUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * TcaService.
@@ -55,12 +55,11 @@ class TcaService extends AbstractService
      */
     protected function getCustomItems():array
     {
-        $databaseConnection = GlobalUtility::getDatabaseConnection();
-
-        return (array) $databaseConnection->exec_SELECTgetRows(
-            '*',
-            'tx_focuspoint_domain_model_dimension',
-            '1=1' . BackendUtility::deleteClause('tx_focuspoint_domain_model_dimension')
-        );
+        $table = 'tx_focuspoint_domain_model_dimension';
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        return (array) $queryBuilder->select('*')
+            ->from($table)
+            ->execute()
+            ->fetchAll();
     }
 }

@@ -5,7 +5,8 @@
 
 namespace HDNET\Focuspoint\Service;
 
-use HDNET\Focuspoint\Utility\GlobalUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -239,18 +240,17 @@ class DimensionService extends AbstractService
      */
     protected function mapDatabaseRatio(string $ratio):string
     {
-        $databaseConnection = GlobalUtility::getDatabaseConnection();
-        if (!is_object($databaseConnection)) {
-            return $ratio;
-        }
         $table = 'tx_focuspoint_domain_model_dimension';
-        $row = $databaseConnection->exec_SELECTgetSingleRow(
-            '*',
-            $table,
-            'identifier=' . $databaseConnection->fullQuoteStr($ratio, $table)
-        );
-        if (isset($row['dimension'])) {
-            return (string)$row['dimension'];
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+        $rows = $queryBuilder->select('*')
+            ->from($table)
+            ->where(
+                $queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter($ratio))
+            )
+            ->execute()->fetchAll();
+
+        if (!empty($rows)) {
+            return (string) $rows[0]['dimension'];
         }
 
         return $ratio;

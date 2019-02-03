@@ -5,8 +5,9 @@
 
 namespace HDNET\Focuspoint\Utility;
 
-use TYPO3\CMS\Core\Database\DatabaseConnection;
+use HDNET\Focuspoint\Domain\Repository\SysFileMetadataRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Utility functions for files.
@@ -25,10 +26,7 @@ class FileUtility
      */
     public static function getFileByMetaData($uid)
     {
-        /** @var DatabaseConnection $database */
-        $database = $GLOBALS['TYPO3_DB'];
-        $row = $database->exec_SELECTgetSingleRow('file', 'sys_file_metadata', 'uid=' . $uid);
-
+        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int) $uid);
         if (!isset($row['file'])) {
             throw new \Exception('File not found in metadata', 1475144028);
         }

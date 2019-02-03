@@ -2,7 +2,8 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
-use HDNET\Focuspoint\Utility\GlobalUtility;
+use HDNET\Focuspoint\Domain\Repository\SysFileMetadataRepository;
+use HDNET\Focuspoint\Domain\Repository\SysFileReferenceRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -76,21 +77,17 @@ class FileReference extends AbstractWizardHandler
             'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100, 0),
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
-        GlobalUtility::getDatabaseConnection()
-            ->exec_UPDATEquery('sys_file_reference', 'uid=' . $this->getReferenceUid(), $values);
+
+        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->updateByUid((int)$this->getReferenceUid(), $values);
 
         // save also to the file
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
         $fileUid = $reference->getOriginalFile()->getUid();
-        $row = GlobalUtility::getDatabaseConnection()
-            ->exec_SELECTgetSingleRow(
-                '*',
-                'sys_file_metadata',
-                'file=' . $fileUid
-            );
+
+        $sysFileMatadataRepository = GeneralUtility::makeInstance(SysFileMetadataRepository::class);
+        $row = $sysFileMatadataRepository->findByFileUid((int)$fileUid);
         if ($row) {
-            GlobalUtility::getDatabaseConnection()
-                ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $row['uid'], $values);
+            $sysFileMatadataRepository->updateByUid((int) $row['uid'], $values);
         }
     }
 

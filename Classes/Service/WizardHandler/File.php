@@ -2,8 +2,8 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
+use HDNET\Focuspoint\Domain\Repository\SysFileMetadataRepository;
 use HDNET\Focuspoint\Utility\FileUtility;
-use HDNET\Focuspoint\Utility\GlobalUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -45,13 +45,7 @@ class File extends AbstractWizardHandler
      */
     public function getCurrentPoint()
     {
-        $row = GlobalUtility::getDatabaseConnection()
-            ->exec_SELECTgetSingleRow(
-                'focus_point_x, focus_point_y',
-                'sys_file_metadata',
-                'uid=' . $this->getMataDataUid()
-            );
-
+        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int)$this->getMataDataUid());
         return $this->cleanupPosition([
             $row['focus_point_x'],
             $row['focus_point_y'],
@@ -70,8 +64,8 @@ class File extends AbstractWizardHandler
             'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100, 0),
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
-        GlobalUtility::getDatabaseConnection()
-            ->exec_UPDATEquery('sys_file_metadata', 'uid=' . $this->getMataDataUid(), $values);
+
+        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->updateByUid((int)$this->getMataDataUid(), $values);
     }
 
     /**

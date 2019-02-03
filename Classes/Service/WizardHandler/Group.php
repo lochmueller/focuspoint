@@ -2,7 +2,7 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
-use HDNET\Focuspoint\Utility\GlobalUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -32,20 +32,22 @@ class Group extends AbstractWizardHandler
      */
     public function getCurrentPoint()
     {
-        $connection = GlobalUtility::getDatabaseConnection();
-        $row = $connection->exec_SELECTgetSingleRow(
-            'uid,focus_point_x,focus_point_y',
-            self::TABLE,
-            'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE)
-        );
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
+        $rows = (array)$queryBuilder->select('uid', 'focus_point_x', 'focus_point_y')
+            ->from(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($this->getRelativeFilePath()))
+            )
+            ->execute()
+            ->fetchAll();
 
-        if (false === $row) {
+        if (empty($rows)) {
             return [0, 0];
         }
 
         return $this->cleanupPosition([
-            $row['focus_point_x'],
-            $row['focus_point_y'],
+            $rows[0]['focus_point_x'],
+            $rows[0]['focus_point_y'],
         ]);
     }
 
@@ -57,21 +59,33 @@ class Group extends AbstractWizardHandler
      */
     public function setCurrentPoint($x, $y)
     {
-        $connection = GlobalUtility::getDatabaseConnection();
-        $row = $connection->exec_SELECTgetSingleRow(
-            'uid',
-            self::TABLE,
-            'relative_file_path = ' . $connection->fullQuoteStr($this->getRelativeFilePath(), self::TABLE)
-        );
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
+        $rows = (array)$queryBuilder->select('uid')
+            ->from(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($this->getRelativeFilePath()))
+            )
+            ->execute()
+            ->fetchAll();
+
         $values = [
             'focus_point_x' => $x,
             'focus_point_y' => $y,
             'relative_file_path' => $this->getRelativeFilePath(),
         ];
-        if ($row) {
-            $connection->exec_UPDATEquery(self::TABLE, 'uid=' . $row['uid'], $values);
+
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable(self::TABLE);
+        if (!empty($rows)) {
+            $connection->update(
+                self::TABLE,
+                $values,
+                ['uid' => (int) $rows[0]['uid']]
+            );
         } else {
-            $connection->exec_INSERTquery(self::TABLE, $values);
+            $connection->insert(
+                self::TABLE,
+                $values
+            );
         }
     }
 

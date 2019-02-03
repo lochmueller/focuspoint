@@ -6,7 +6,7 @@
 namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Service\WizardHandler\Group;
-use HDNET\Focuspoint\Utility\GlobalUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -150,15 +150,19 @@ class FocusCropService extends AbstractService
         $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
 
         if (0 === $focusPointX && 0 === $focusPointY) {
-            $connection = GlobalUtility::getDatabaseConnection();
-            $row = $connection->exec_SELECTgetSingleRow(
-                'uid,focus_point_x,focus_point_y',
-                Group::TABLE,
-                'relative_file_path = ' . $connection->fullQuoteStr($relativeSrc, Group::TABLE)
-            );
-            if ($row) {
-                $focusPointX = MathUtility::forceIntegerInRange((int) $row['focus_point_x'], -100, 100, 0);
-                $focusPointY = MathUtility::forceIntegerInRange((int) $row['focus_point_y'], -100, 100, 0);
+            $table = Group::TABLE;
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+            $rows = (array) $queryBuilder->select('uid', 'focus_point_x', 'focus_point_y')
+                ->from($table)
+                ->where(
+                    $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($relativeSrc))
+                )
+                ->execute()
+                ->fetchAll();
+
+            if (!empty($rows)) {
+                $focusPointX = MathUtility::forceIntegerInRange((int) $rows[0]['focus_point_x'], -100, 100, 0);
+                $focusPointY = MathUtility::forceIntegerInRange((int) $rows[0]['focus_point_y'], -100, 100, 0);
             }
         }
 
