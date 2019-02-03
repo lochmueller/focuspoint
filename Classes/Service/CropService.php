@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Crop images.
  */
@@ -36,7 +37,7 @@ class CropService extends AbstractService
         $sourceY,
         $absoluteTempImageName
     ) {
-        $fileExtension = strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
+        $fileExtension = \mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
         $function = $this->getFunctionName($fileExtension);
         $function = 'cropVia' . $function;
         $this->$function(
@@ -56,24 +57,24 @@ class CropService extends AbstractService
      *
      * @return string
      */
-    protected function getFunctionName(string $fileExtension):string
+    protected function getFunctionName(string $fileExtension): string
     {
         $validFunctions = [
             'GraphicalFunctions',
             'GifBuilder',
             'ImageMagick',
         ];
-        $configuration = isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) ? unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) : [];
+        $configuration = isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) ? \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) : [];
         $functionConfiguration = $configuration['imageFunctionConfiguration'] ?? 'png:cropViaGifBuilder;*:GraphicalFunctions';
         $parts = GeneralUtility::trimExplode(';', $functionConfiguration, true);
         foreach ($parts as $part) {
             list($extensions, $function) = GeneralUtility::trimExplode(':', $part, true);
-            if (!in_array($function, $validFunctions)) {
+            if (!\in_array($function, $validFunctions, true)) {
                 continue;
             }
 
             $extensions = GeneralUtility::trimExplode(',', $extensions, true);
-            if (in_array($fileExtension, $extensions) || in_array('*', $extensions)) {
+            if (\in_array($fileExtension, $extensions, true) || \in_array('*', $extensions, true)) {
                 return $function;
             }
         }
@@ -127,15 +128,15 @@ class CropService extends AbstractService
         $sourceY,
         $absoluteTempImageName
     ) {
-        $size = getimagesize($absoluteImageName);
-        $relativeImagePath = rtrim(PathUtility::getRelativePath(
+        $size = \getimagesize($absoluteImageName);
+        $relativeImagePath = \rtrim(PathUtility::getRelativePath(
             GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
             $absoluteImageName
         ), '/');
         // We need to pass maxWidth and maxHeight, which would otherwise fall back to 2000px, see:
         // https://github.com/TYPO3/TYPO3.CMS/blob/TYPO3_7-6/typo3/sysext/frontend/Classes/Imaging/GifBuilder.php#L367-L368
         $configuration = [
-            'format' => strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
+            'format' => \mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
             'maxWidth' => $size[0],
             'maxHeight' => $size[1],
@@ -186,7 +187,7 @@ class CropService extends AbstractService
         /** @var GraphicalFunctions $graphicalFunctions */
         $graphicalFunctions = GeneralUtility::makeInstance(GraphicalFunctions::class);
         $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
-        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
+        $destinationImage = \imagecreatetruecolor($focusWidth, $focusHeight);
 
         // prevent the problem of large images result in a "Allowed memory size" error
         // we do not need the alpha layer at all, because the PNG rendered with cropViaGraphicalFunctions

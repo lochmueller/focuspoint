@@ -1,11 +1,10 @@
 <?php
+
 /**
  * TCA functions.
  */
 
 namespace HDNET\Focuspoint\Utility;
-
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * TCA functions.

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Local crop scale mask helper (overwrite).
  */
@@ -62,7 +63,7 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     public function process(TaskInterface $task)
     {
         $configuration = $task->getConfiguration();
-        $crop = $configuration['crop'] ? json_decode($configuration['crop']) : null;
+        $crop = $configuration['crop'] ? \json_decode($configuration['crop']) : null;
         if ($crop instanceof \stdClass && isset($crop->x)) {
             // if crop is enable release the process
             return parent::process($task);
@@ -100,14 +101,15 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     /**
      * Find the current ratio configuration.
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getCurrentRatioConfiguration(): string
     {
         $currentRecord = $GLOBALS['TSFE']->currentRecord;
         $parts = GeneralUtility::trimExplode(':', $currentRecord);
-        if (2 !== sizeof($parts)) {
+        if (2 !== \count($parts)) {
             throw new \Exception('Invalid count of current record parts', 12367);
         }
         if ('tt_content' !== $parts[0]) {
@@ -118,6 +120,6 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
             throw new \Exception('No image_ratio found in the current record', 324672);
         }
 
-        return trim((string) $record['image_ratio']);
+        return \trim((string) $record['image_ratio']);
     }
 }

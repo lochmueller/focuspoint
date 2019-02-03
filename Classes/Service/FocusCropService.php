@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Crop images via focus crop.
  */
@@ -41,10 +42,10 @@ class FocusCropService extends AbstractService
      * @param $image
      * @param $treatIdAsReference
      *
-     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|CoreFileReference|\TYPO3\CMS\Core\Resource\Folder
-     *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     *
+     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|CoreFileReference|\TYPO3\CMS\Core\Resource\Folder
      */
     public function getViewHelperImage($src, $image, $treatIdAsReference)
     {
@@ -138,14 +139,14 @@ class FocusCropService extends AbstractService
      *
      * @return string The new filename
      */
-    public function getCroppedImageSrcBySrc(string $src, string $ratio, int $x, int $y):string
+    public function getCroppedImageSrcBySrc(string $src, string $ratio, int $x, int $y): string
     {
         $absoluteImageName = GeneralUtility::getFileAbsFileName($src);
-        if (!is_file($absoluteImageName)) {
+        if (!\is_file($absoluteImageName)) {
             return null;
         }
-        $docRoot = rtrim(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), '/') . '/';
-        $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
+        $docRoot = \rtrim(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), '/') . '/';
+        $relativeSrc = \str_replace($docRoot, '', $absoluteImageName);
         $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
         $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
 
@@ -172,16 +173,16 @@ class FocusCropService extends AbstractService
 
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
-        if (is_file($absoluteTempImageName)) {
+        if (\is_file($absoluteTempImageName)) {
             return $tempImageName;
         }
 
         $absoluteTempImageFolder = GeneralUtility::getFileAbsFileName($tempImageFolder);
-        if (!is_dir($absoluteTempImageFolder)) {
+        if (!\is_dir($absoluteTempImageFolder)) {
             GeneralUtility::mkdir_deep($absoluteTempImageFolder);
         }
 
-        $imageSizeInformation = getimagesize($absoluteImageName);
+        $imageSizeInformation = \getimagesize($absoluteImageName);
         $width = $imageSizeInformation[0];
         $height = $imageSizeInformation[1];
 
@@ -219,6 +220,7 @@ class FocusCropService extends AbstractService
      * Emit tempImageCropped signal.
      *
      * @param string $tempImageName
+     *
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
@@ -254,14 +256,15 @@ class FocusCropService extends AbstractService
     /**
      * @param string $absoluteImageName
      * @param string $ratio
-     * @param int $focusPointX
-     * @param int $focusPointY
+     * @param int    $focusPointX
+     * @param int    $focusPointY
      *
-     * @return string
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     *
+     * @return string
      */
-    protected function generateTempImageName(string $absoluteImageName, string $ratio, int $focusPointX, int $focusPointY):string
+    protected function generateTempImageName(string $absoluteImageName, string $ratio, int $focusPointX, int $focusPointY): string
     {
         $name = '';
 
@@ -277,8 +280,8 @@ class FocusCropService extends AbstractService
             return $name;
         }
 
-        $hash = function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
-        $name = $hash . '-fp-' . preg_replace(
+        $hash = \function_exists('sha1_file') ? \sha1_file($absoluteImageName) : \md5_file($absoluteImageName);
+        $name = $hash . '-fp-' . \preg_replace(
             '/[^0-9a-z-]/',
             '-',
             $ratio
@@ -286,7 +289,7 @@ class FocusCropService extends AbstractService
             $absoluteImageName,
             PATHINFO_EXTENSION
         );
-        $name = preg_replace('/--+/', '-', $name);
+        $name = \preg_replace('/--+/', '-', $name);
 
         return $name;
     }
@@ -296,10 +299,10 @@ class FocusCropService extends AbstractService
      *
      * @return string Path relative to PATH_site
      */
-    protected function getTempImageFolder():string
+    protected function getTempImageFolder(): string
     {
         if (null === $this->tempImageFolder) {
-            $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
+            $extConf = \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
             if (isset($extConf['tempImageFolder'])) {
                 $this->tempImageFolder = $extConf['tempImageFolder'];
             } else {

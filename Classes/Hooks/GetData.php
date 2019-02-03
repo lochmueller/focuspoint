@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Get data for focuspoint.
  */
@@ -35,8 +36,8 @@ class GetData implements ContentObjectGetDataHookInterface
         $returnValue,
         ContentObjectRenderer &$parentObject
     ) {
-        $parts = explode(':', $getDataString);
-        if (isset($parts[0]) && isset($parts[1]) && 'fp' === $parts[0]) {
+        $parts = \explode(':', $getDataString);
+        if (isset($parts[0], $parts[1]) && 'fp' === $parts[0]) {
             $fileObject = $parentObject->getCurrentFile();
             if (!($fileObject instanceof FileReference)) {
                 return $returnValue;
@@ -52,23 +53,21 @@ class GetData implements ContentObjectGetDataHookInterface
                 case 'yp':
                     $metaData = $originalFile->_getMetaData();
 
-                    return (float) $metaData['focus_point_' . substr($parts[1], 0, 1)];
+                    return (float) $metaData['focus_point_' . \mb_substr($parts[1], 0, 1)];
                 case 'xp_positive':
                 case 'yp_positive':
                     $metaData = $originalFile->_getMetaData();
-                    if ('xp_positive' == $parts[1]) {
-                        return (int) (abs($metaData['focus_point_' . substr($parts[1], 0, 1)] + 100) / 2);
-                    } else {
-                        return (int) (abs($metaData['focus_point_' . substr($parts[1], 0, 1)] - 100) / 2);
+                    if ('xp_positive' === $parts[1]) {
+                        return (int) (\abs($metaData['focus_point_' . \mb_substr($parts[1], 0, 1)] + 100) / 2);
                     }
-                    // no break
+                    return (int) (\abs($metaData['focus_point_' . \mb_substr($parts[1], 0, 1)] - 100) / 2);
                 case 'w':
                 case 'h':
                     $fileName = GeneralUtility::getFileAbsFileName($fileObject->getPublicUrl(true));
-                    if (file_exists($fileName)) {
-                        $sizes = getimagesize($fileName);
+                    if (\file_exists($fileName)) {
+                        $sizes = \getimagesize($fileName);
 
-                        return $sizes[('w' == $parts[1] ? 0 : 1)];
+                        return $sizes[('w' === $parts[1] ? 0 : 1)];
                     }
                     break;
             }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,7 +16,7 @@ use HDNET\Focuspoint\Controller\Wizard\FocuspointController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Wizard to add new records to a group/select TCEform formfield
+ * Wizard to add new records to a group/select TCEform formfield.
  */
 
 /** @var FocuspointController $editController */

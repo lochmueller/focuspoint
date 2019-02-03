@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Wizard controller.
  */
@@ -35,7 +36,7 @@ class FocuspointController
         $handler = $this->getCurrentHandler();
         $parameter = GeneralUtility::_GET();
         if (isset($parameter['save'])) {
-            if (is_object($handler)) {
+            if (\is_object($handler)) {
                 $handler->setCurrentPoint($parameter['xValue'] * 100, $parameter['yValue'] * 100);
             }
             HttpUtility::redirect($parameter['P']['returnUrl']);
@@ -54,7 +55,7 @@ class FocuspointController
             'Resources/Private/Templates/Wizard/Focuspoint.html'
         ));
 
-        if (is_object($handler)) {
+        if (\is_object($handler)) {
             ArrayUtility::mergeRecursiveWithOverrule($saveArguments, $handler->getArguments());
             list($x, $y) = $handler->getCurrentPoint();
             $template->assign('filePath', $handler->getPublicUrl());
@@ -96,8 +97,6 @@ class FocuspointController
                 return $handler;
             }
         }
-
-        return null;
     }
 
     /**

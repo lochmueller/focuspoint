@@ -34,7 +34,7 @@ class WizardService extends AbstractService
             return '<span class="btn btn-default disabled" title="' . $label . '">' . $spriteIcon . '</span>';
         }
 
-        return '<a href="' . $uri . '" class="btn btn-default' . ($additionalClass !== '' ? ' ' . $additionalClass : '') . '" title="' . $label . '">' . $spriteIcon . '</a>';
+        return '<a href="' . $uri . '" class="btn btn-default' . ('' !== $additionalClass ? ' ' . $additionalClass : '') . '" title="' . $label . '">' . $spriteIcon . '</a>';
     }
 
     /**
@@ -42,7 +42,7 @@ class WizardService extends AbstractService
      *
      * @return string
      */
-    protected function getWizardIcon():string
+    protected function getWizardIcon(): string
     {
         /** @var IconFactory $iconFactory */
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);

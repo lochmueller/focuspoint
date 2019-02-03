@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Extends the file list.
  */
@@ -61,9 +62,9 @@ class FileList implements FileListEditIconHookInterface
      *
      * @param array $cells
      *
-     * @return int
-     *
      * @throws \Exception
+     *
+     * @return int
      */
     protected function getFileMetaUidByCells($cells)
     {

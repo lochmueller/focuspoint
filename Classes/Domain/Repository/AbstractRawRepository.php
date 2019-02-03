@@ -1,8 +1,7 @@
 <?php
+
 /**
- * Abstract raw repository
- *
- * @author  Tim Lochmüller
+ * Abstract raw repository.
  */
 
 namespace HDNET\Focuspoint\Domain\Repository;
@@ -11,22 +10,15 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Abstract raw repository
+ * Abstract raw repository.
  */
 abstract class AbstractRawRepository
 {
-
     /**
-     * Get the tablename
-     *
-     * @return string
-     */
-    abstract protected function getTableName(): string;
-
-    /**
-     * Find by uid
+     * Find by uid.
      *
      * @param int $uid
+     *
      * @return array|null
      */
     public function findByUid(int $uid)
@@ -39,13 +31,14 @@ abstract class AbstractRawRepository
             )
             ->execute()
             ->fetchAll();
-        return isset($rows[0]) ? $rows[0] : null;
+
+        return $rows[0] ?? null;
     }
 
     /**
-     * Update by uid
+     * Update by uid.
      *
-     * @param int $uid
+     * @param int   $uid
      * @param array $values
      */
     public function updateByUid(int $uid, array $values)
@@ -58,4 +51,10 @@ abstract class AbstractRawRepository
         );
     }
 
+    /**
+     * Get the tablename.
+     *
+     * @return string
+     */
+    abstract protected function getTableName(): string;
 }

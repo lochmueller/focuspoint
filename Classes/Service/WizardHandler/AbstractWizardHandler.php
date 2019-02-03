@@ -60,7 +60,7 @@ abstract class AbstractWizardHandler
      */
     protected function displayableImageUrl($url)
     {
-        if (in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'])) {
+        if (\in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'], true)) {
             $objectManager = new ObjectManager();
             /** @var ImageService $imageService */
             $imageService = $objectManager->get(ImageService::class);
@@ -71,7 +71,7 @@ abstract class AbstractWizardHandler
             $url = $imageService->getImageUri($processedImage);
         }
 
-        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ltrim($url, '/');
+        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . \ltrim($url, '/');
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class AbstractWizardHandler
      *
      * @return int[]
      */
-    protected function cleanupPosition(array $position):array
+    protected function cleanupPosition(array $position): array
     {
         return [
             MathUtility::forceIntegerInRange((int) $position[0], -100, 100, 0),

@@ -45,7 +45,8 @@ class File extends AbstractWizardHandler
      */
     public function getCurrentPoint()
     {
-        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int)$this->getMataDataUid());
+        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int) $this->getMataDataUid());
+
         return $this->cleanupPosition([
             $row['focus_point_x'],
             $row['focus_point_y'],
@@ -65,7 +66,7 @@ class File extends AbstractWizardHandler
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
 
-        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->updateByUid((int)$this->getMataDataUid(), $values);
+        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->updateByUid((int) $this->getMataDataUid(), $values);
     }
 
     /**
@@ -89,16 +90,14 @@ class File extends AbstractWizardHandler
     {
         $parameter = GeneralUtility::_GET();
         if (!isset($parameter['P'])) {
-            return null;
+            return;
         }
         $p = $parameter['P'];
         if (isset($p['metaUid']) && MathUtility::canBeInterpretedAsInteger($p['metaUid'])) {
             return (int) $p['metaUid'];
         }
-        if (isset($p['table']) && 'sys_file_metadata' == $p['table'] && isset($p['uid']) && MathUtility::canBeInterpretedAsInteger($p['uid'])) {
+        if (isset($p['table']) && 'sys_file_metadata' === $p['table'] && isset($p['uid']) && MathUtility::canBeInterpretedAsInteger($p['uid'])) {
             return (int) $p['uid'];
         }
-
-        return null;
     }
 }

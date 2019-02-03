@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TcaService.
  */
@@ -23,7 +24,7 @@ class TcaService extends AbstractService
     {
         $customItems = $this->getCustomItems();
         if (empty($customItems)) {
-            array_unshift($params['items'], [
+            \array_unshift($params['items'], [
                 '',
                 '',
             ]);
@@ -33,16 +34,16 @@ class TcaService extends AbstractService
 
         // Add element
         foreach ($customItems as $item) {
-            array_unshift($params['items'], [
+            \array_unshift($params['items'], [
                 $item['dimension'] . ' / ' . $item['title'],
                 $item['identifier'],
             ]);
         }
-        array_unshift($params['items'], [
+        \array_unshift($params['items'], [
             'Custom',
             '--div--',
         ]);
-        array_unshift($params['items'], [
+        \array_unshift($params['items'], [
             '',
             '',
         ]);
@@ -53,10 +54,11 @@ class TcaService extends AbstractService
      *
      * @return array
      */
-    protected function getCustomItems():array
+    protected function getCustomItems(): array
     {
         $table = 'tx_focuspoint_domain_model_dimension';
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
+
         return (array) $queryBuilder->select('*')
             ->from($table)
             ->execute()

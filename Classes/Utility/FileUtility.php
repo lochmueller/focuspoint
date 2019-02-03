@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utility functions for files.
  */
@@ -19,10 +20,10 @@ class FileUtility
      *
      * @param int $uid
      *
-     * @return \TYPO3\CMS\Core\Resource\File
-     *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
+     *
+     * @return \TYPO3\CMS\Core\Resource\File
      */
     public static function getFileByMetaData($uid)
     {
@@ -39,10 +40,10 @@ class FileUtility
      *
      * @param int $uid
      *
-     * @return \TYPO3\CMS\Core\Resource\File
-     *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
+     *
+     * @return \TYPO3\CMS\Core\Resource\File
      */
     public static function getFileByUid($uid)
     {

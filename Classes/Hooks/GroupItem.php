@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Hook into group items.
  *
@@ -51,7 +52,7 @@ class GroupItem implements DatabaseFileIconsHookInterface
         $this->loadJavaScript();
 
         $matches = [];
-        if (!preg_match('/\[([a-zA-Z0-9_]+)\]\[([a-zA-Z0-9_]+)\]\[([a-zA-Z0-9_]+)\]/', $fName, $matches)) {
+        if (!\preg_match('/\[([a-zA-Z0-9_]+)\]\[([a-zA-Z0-9_]+)\]\[([a-zA-Z0-9_]+)\]/', $fName, $matches)) {
             return;
         }
 

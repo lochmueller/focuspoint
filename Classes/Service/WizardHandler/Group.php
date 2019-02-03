@@ -33,7 +33,7 @@ class Group extends AbstractWizardHandler
     public function getCurrentPoint()
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
-        $rows = (array)$queryBuilder->select('uid', 'focus_point_x', 'focus_point_y')
+        $rows = (array) $queryBuilder->select('uid', 'focus_point_x', 'focus_point_y')
             ->from(self::TABLE)
             ->where(
                 $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($this->getRelativeFilePath()))
@@ -60,7 +60,7 @@ class Group extends AbstractWizardHandler
     public function setCurrentPoint($x, $y)
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
-        $rows = (array)$queryBuilder->select('uid')
+        $rows = (array) $queryBuilder->select('uid')
             ->from(self::TABLE)
             ->where(
                 $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($this->getRelativeFilePath()))
@@ -121,36 +121,36 @@ class Group extends AbstractWizardHandler
     /**
      * get the file name.
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getRelativeFilePath()
     {
         $parameter = GeneralUtility::_GET();
         if (!isset($parameter['P'])) {
-            return null;
+            return;
         }
         $p = $parameter['P'];
         if (!isset($p['table']) || !isset($p['field']) || !isset($p['file'])) {
-            return null;
+            return;
         }
         if (!isset($GLOBALS['TCA'][$p['table']])) {
-            return null;
+            return;
         }
         $tableTca = $GLOBALS['TCA'][$p['table']];
         if (!isset($tableTca['columns'][$p['field']])) {
-            return null;
+            return;
         }
         $fieldTca = $tableTca['columns'][$p['field']];
 
         $uploadFolder = $fieldTca['config']['uploadfolder'] ?? '';
         $baseFolder = '';
-        if ('' !== trim($uploadFolder, '/')) {
-            $baseFolder = rtrim($uploadFolder, '/') . '/';
+        if ('' !== \trim($uploadFolder, '/')) {
+            $baseFolder = \rtrim($uploadFolder, '/') . '/';
         }
 
         $filePath = $baseFolder . $p['file'];
-        if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
-            return null;
+        if (!\is_file(GeneralUtility::getFileAbsFileName($filePath))) {
+            return;
         }
 
         return $filePath;

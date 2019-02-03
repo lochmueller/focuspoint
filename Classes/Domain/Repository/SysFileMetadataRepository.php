@@ -1,8 +1,7 @@
 <?php
 
 /**
- * SysFileMetadata
- *
+ * SysFileMetadata.
  */
 
 namespace HDNET\Focuspoint\Domain\Repository;
@@ -11,25 +10,15 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- *  SysFileMetadata
+ *  SysFileMetadata.
  */
 class SysFileMetadataRepository extends AbstractRawRepository
 {
-
     /**
-     * Get the tablename
-     *
-     * @return string
-     */
-    protected function getTableName(): string
-    {
-        return 'sys_file_metadata';
-    }
-
-    /**
-     * Find by file
+     * Find by file.
      *
      * @param int $fileUid
+     *
      * @return array|null
      */
     public function findByFileUid(int $fileUid)
@@ -43,6 +32,16 @@ class SysFileMetadataRepository extends AbstractRawRepository
             ->execute()
             ->fetchAll();
 
-        return isset($rows[0]) ? $rows[0] : null;
+        return $rows[0] ?? null;
+    }
+
+    /**
+     * Get the tablename.
+     *
+     * @return string
+     */
+    protected function getTableName(): string
+    {
+        return 'sys_file_metadata';
     }
 }

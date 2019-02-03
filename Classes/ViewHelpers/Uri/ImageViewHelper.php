@@ -28,9 +28,11 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
      * Default render method - simply calls renderStatic() with a
      * prepared set of arguments.
      *
-     * @return string Rendered string
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     *
+     * @return string Rendered string
+     *
      * @api
      */
     public function render()
@@ -43,21 +45,20 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param callable|\Closure $renderChildrenClosure
+     * @param array                     $arguments
+     * @param callable|\Closure         $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
-     *
-     * @return string
      *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     *
+     * @return string
      */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    )
-    {
+    ) {
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
         $arguments['src'] = $service->getCroppedImageSrcForViewHelper(

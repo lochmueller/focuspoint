@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Hook into the inline icons.
  */
@@ -65,11 +66,11 @@ class InlineRecord implements InlineElementHookInterface
         $isVirtual,
         array &$controlItems
     ) {
-        if ('sys_file_reference' != $foreignTable) {
+        if ('sys_file_reference' !== $foreignTable) {
             return;
         }
 
-        if (is_array($childRecord['uid_local'])) {
+        if (\is_array($childRecord['uid_local'])) {
             // Handling for TYPO3 > 8.x
             foreach ($childRecord['uid_local'] as $item) {
                 if ('sys_file' !== $item['table']) {
@@ -99,8 +100,8 @@ class InlineRecord implements InlineElementHookInterface
             // The arguments array is different in case this is called by an AJAX request
             // via an IRRE inside an IRRE...
             if (!isset($arguments['edit'])) {
-                $url = parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
-                parse_str($url['query'], $arguments);
+                $url = \parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
+                \parse_str($url['query'], $arguments);
             }
             $returnUrl = [
                 'edit' => $arguments['edit'],
@@ -144,8 +145,8 @@ class InlineRecord implements InlineElementHookInterface
      */
     protected function arrayUnshiftAssoc(&$arr, $key, $val)
     {
-        $arr = array_reverse($arr, true);
+        $arr = \array_reverse($arr, true);
         $arr[$key] = $val;
-        $arr = array_reverse($arr, true);
+        $arr = \array_reverse($arr, true);
     }
 }

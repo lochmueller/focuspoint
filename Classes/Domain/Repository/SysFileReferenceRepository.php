@@ -1,20 +1,18 @@
 <?php
 
 /**
- * SysFileReference
- *
+ * SysFileReference.
  */
 
 namespace HDNET\Focuspoint\Domain\Repository;
 
 /**
- *  SysFileReference
+ *  SysFileReference.
  */
 class SysFileReferenceRepository extends AbstractRawRepository
 {
-
     /**
-     * Get the tablename
+     * Get the tablename.
      *
      * @return string
      */

@@ -141,14 +141,14 @@ $custom = [
     ],
     'palettes' => [
         'image_settings' => [
-            'showitem' => str_replace(
+            'showitem' => \str_replace(
                 'imageborder;',
                 'image_ratio,imageborder;',
                 $GLOBALS['TCA']['tt_content']['palettes']['image_settings']['showitem']
             ),
         ],
         'mediaAdjustments' => [
-            'showitem' => str_replace(
+            'showitem' => \str_replace(
                 'imageborder;',
                 'image_ratio,imageborder;',
                 $GLOBALS['TCA']['tt_content']['palettes']['mediaAdjustments']['showitem']
