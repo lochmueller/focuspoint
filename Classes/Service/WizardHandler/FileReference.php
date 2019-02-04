@@ -78,16 +78,16 @@ class FileReference extends AbstractWizardHandler
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
 
-        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->updateByUid((int) $this->getReferenceUid(), $values);
+        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->update((int) $this->getReferenceUid(), $values);
 
         // save also to the file
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
         $fileUid = $reference->getOriginalFile()->getUid();
 
         $sysFileMatadataRepository = GeneralUtility::makeInstance(SysFileMetadataRepository::class);
-        $row = $sysFileMatadataRepository->findByFileUid((int) $fileUid);
+        $row = $sysFileMatadataRepository->findOneByFileUid((int) $fileUid);
         if ($row) {
-            $sysFileMatadataRepository->updateByUid((int) $row['uid'], $values);
+            $sysFileMatadataRepository->update((int) $row['uid'], $values);
         }
     }
 

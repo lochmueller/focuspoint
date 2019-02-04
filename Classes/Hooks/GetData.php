@@ -60,6 +60,7 @@ class GetData implements ContentObjectGetDataHookInterface
                     if ('xp_positive' === $parts[1]) {
                         return (int) (\abs($metaData['focus_point_' . \mb_substr($parts[1], 0, 1)] + 100) / 2);
                     }
+
                     return (int) (\abs($metaData['focus_point_' . \mb_substr($parts[1], 0, 1)] - 100) / 2);
                 case 'w':
                 case 'h':

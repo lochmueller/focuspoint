@@ -2,6 +2,7 @@
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
+use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -59,6 +60,7 @@ class Group extends AbstractWizardHandler
      */
     public function setCurrentPoint($x, $y)
     {
+        $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
         $rows = (array) $queryBuilder->select('uid')
             ->from(self::TABLE)
@@ -74,16 +76,13 @@ class Group extends AbstractWizardHandler
             'relative_file_path' => $this->getRelativeFilePath(),
         ];
 
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable(self::TABLE);
         if (!empty($rows)) {
-            $connection->update(
-                self::TABLE,
-                $values,
-                ['uid' => (int) $rows[0]['uid']]
+            $fileStandaloneRepository->update(
+                (int) $rows[0]['uid'],
+                $values
             );
         } else {
-            $connection->insert(
-                self::TABLE,
+            $fileStandaloneRepository->insert(
                 $values
             );
         }

@@ -1,30 +1,29 @@
 <?php
-
 /**
- * SysFileMetadata.
+ * DimensionRepository.
  */
 
 namespace HDNET\Focuspoint\Domain\Repository;
 
 /**
- *  SysFileMetadata.
+ * DimensionRepository.
  */
-class SysFileMetadataRepository extends AbstractRawRepository
+class DimensionRepository extends AbstractRawRepository
 {
     /**
-     * Find one by file.
+     * Find one by identifier.
      *
-     * @param int $fileUid
+     * @param string $identifier
      *
      * @return array|null
      */
-    public function findOneByFileUid(int $fileUid)
+    public function findOneByIdentifier(string $identifier)
     {
         $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')
             ->from($this->getTableName())
             ->where(
-                $queryBuilder->expr()->eq('file', $fileUid)
+                $queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter($identifier))
             )
             ->execute()
             ->fetchAll();
@@ -39,6 +38,6 @@ class SysFileMetadataRepository extends AbstractRawRepository
      */
     protected function getTableName(): string
     {
-        return 'sys_file_metadata';
+        return 'tx_focuspoint_domain_model_dimension';
     }
 }

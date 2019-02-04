@@ -6,7 +6,7 @@
 
 namespace HDNET\Focuspoint\Service;
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use HDNET\Focuspoint\Domain\Repository\DimensionRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -56,12 +56,6 @@ class TcaService extends AbstractService
      */
     protected function getCustomItems(): array
     {
-        $table = 'tx_focuspoint_domain_model_dimension';
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
-
-        return (array) $queryBuilder->select('*')
-            ->from($table)
-            ->execute()
-            ->fetchAll();
+        return GeneralUtility::makeInstance(DimensionRepository::class)->findAll();
     }
 }

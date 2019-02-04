@@ -66,7 +66,7 @@ class File extends AbstractWizardHandler
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
 
-        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->updateByUid((int) $this->getMataDataUid(), $values);
+        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->update((int) $this->getMataDataUid(), $values);
     }
 
     /**

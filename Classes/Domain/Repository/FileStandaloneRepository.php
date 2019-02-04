@@ -1,30 +1,29 @@
 <?php
-
 /**
- * SysFileMetadata.
+ * FileStandalone.
  */
 
 namespace HDNET\Focuspoint\Domain\Repository;
 
 /**
- *  SysFileMetadata.
+ * FileStandalone.
  */
-class SysFileMetadataRepository extends AbstractRawRepository
+class FileStandaloneRepository extends AbstractRawRepository
 {
     /**
-     * Find one by file.
+     * Find one by relative file path.
      *
-     * @param int $fileUid
+     * @param string $relativeFilePath
      *
      * @return array|null
      */
-    public function findOneByFileUid(int $fileUid)
+    public function findOneByRelativeFilePath(string $relativeFilePath)
     {
         $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')
             ->from($this->getTableName())
             ->where(
-                $queryBuilder->expr()->eq('file', $fileUid)
+                $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($relativeFilePath))
             )
             ->execute()
             ->fetchAll();
@@ -39,6 +38,6 @@ class SysFileMetadataRepository extends AbstractRawRepository
      */
     protected function getTableName(): string
     {
-        return 'sys_file_metadata';
+        return 'tx_focuspoint_domain_model_filestandalone';
     }
 }

@@ -23,7 +23,7 @@ abstract class AbstractRawRepository
      */
     public function findByUid(int $uid)
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->getTableName());
+        $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')
             ->from($this->getTableName())
             ->where(
@@ -36,19 +36,66 @@ abstract class AbstractRawRepository
     }
 
     /**
+     * Find all.
+     *
+     * @return array
+     */
+    public function findAll(): array
+    {
+        $queryBuilder = $this->getQueryBuilder();
+
+        return (array) $queryBuilder->select('*')
+            ->from($this->getTableName())
+            ->execute()
+            ->fetchAll();
+    }
+
+    /**
      * Update by uid.
      *
      * @param int   $uid
      * @param array $values
      */
-    public function updateByUid(int $uid, array $values)
+    public function update(int $uid, array $values)
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->getTableName());
-        $connection->update(
+        $this->getConnection()->update(
             $this->getTableName(),
             $values,
             ['uid' => (int) $uid]
         );
+    }
+
+    /**
+     * Insert.
+     *
+     * @param array $values
+     */
+    public function insert(array $values)
+    {
+        $this->getConnection()->insert(
+            $this->getTableName(),
+            $values
+        );
+    }
+
+    /**
+     * Get connection.
+     *
+     * @return \TYPO3\CMS\Core\Database\Connection
+     */
+    protected function getConnection()
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->getTableName());
+    }
+
+    /**
+     * Get query builder.
+     *
+     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
+     */
+    protected function getQueryBuilder()
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->getTableName());
     }
 
     /**
