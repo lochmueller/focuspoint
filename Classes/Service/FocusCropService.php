@@ -121,7 +121,7 @@ class FocusCropService extends AbstractService
             $file->getProperty('focus_point_x'),
             $file->getProperty('focus_point_y')
         );
-        if (null === $result) {
+        if ('' === $result) {
             return $file->getPublicUrl();
         }
 
@@ -142,7 +142,7 @@ class FocusCropService extends AbstractService
     {
         $absoluteImageName = GeneralUtility::getFileAbsFileName($src);
         if (!\is_file($absoluteImageName)) {
-            return null;
+            return '';
         }
         $docRoot = \rtrim(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), '/') . '/';
         $relativeSrc = \str_replace($docRoot, '', $absoluteImageName);
