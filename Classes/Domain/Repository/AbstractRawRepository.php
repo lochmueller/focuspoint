@@ -85,7 +85,7 @@ abstract class AbstractRawRepository
      */
     protected function getConnection()
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->getTableName());
+        return $this->getConnectionPool()->getConnectionForTable($this->getTableName());
     }
 
     /**
@@ -95,7 +95,7 @@ abstract class AbstractRawRepository
      */
     protected function getQueryBuilder()
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($this->getTableName());
+        return $this->getConnectionPool()->getQueryBuilderForTable($this->getTableName());
     }
 
     /**
@@ -104,4 +104,14 @@ abstract class AbstractRawRepository
      * @return string
      */
     abstract protected function getTableName(): string;
+
+    /**
+     * Get connection pool.
+     *
+     * @return ConnectionPool
+     */
+    private function getConnectionPool()
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
+    }
 }

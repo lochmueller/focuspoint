@@ -3,7 +3,6 @@
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -11,11 +10,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Group extends AbstractWizardHandler
 {
-    /**
-     * The table name.
-     */
-    const TABLE = 'tx_focuspoint_domain_model_filestandalone';
-
     /**
      * Check if the handler can handle the current request.
      *
@@ -33,22 +27,15 @@ class Group extends AbstractWizardHandler
      */
     public function getCurrentPoint()
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
-        $rows = (array) $queryBuilder->select('uid', 'focus_point_x', 'focus_point_y')
-            ->from(self::TABLE)
-            ->where(
-                $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($this->getRelativeFilePath()))
-            )
-            ->execute()
-            ->fetchAll();
-
-        if (empty($rows)) {
+        $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
+        $row = $fileStandaloneRepository->findOneByRelativeFilePath($this->getRelativeFilePath());
+        if (!isset($row['focus_point_x'])) {
             return [0, 0];
         }
 
         return $this->cleanupPosition([
-            $rows[0]['focus_point_x'],
-            $rows[0]['focus_point_y'],
+            $row['focus_point_x'],
+            $row['focus_point_y'],
         ]);
     }
 
@@ -61,14 +48,7 @@ class Group extends AbstractWizardHandler
     public function setCurrentPoint($x, $y)
     {
         $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::TABLE);
-        $rows = (array) $queryBuilder->select('uid')
-            ->from(self::TABLE)
-            ->where(
-                $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($this->getRelativeFilePath()))
-            )
-            ->execute()
-            ->fetchAll();
+        $row = $fileStandaloneRepository->findOneByRelativeFilePath($this->getRelativeFilePath());
 
         $values = [
             'focus_point_x' => $x,
@@ -76,9 +56,9 @@ class Group extends AbstractWizardHandler
             'relative_file_path' => $this->getRelativeFilePath(),
         ];
 
-        if (!empty($rows)) {
+        if (isset($row['uid'])) {
             $fileStandaloneRepository->update(
-                (int) $rows[0]['uid'],
+                (int) $row['uid'],
                 $values
             );
         } else {
