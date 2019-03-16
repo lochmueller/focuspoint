@@ -160,7 +160,6 @@ class CropService extends AbstractService
         $gifBuilder = GeneralUtility::makeInstance(GifBuilder::class);
         $gifBuilder->init();
         $gifBuilder->start($configuration, []);
-        $gifBuilder->createTempSubDir('focuscrop/');
         $gifBuilder->make();
         $gifBuilder->output($absoluteTempImageName);
         $gifBuilder->destroy();
