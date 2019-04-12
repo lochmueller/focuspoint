@@ -11,8 +11,10 @@ use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
  * Crop images.
@@ -64,7 +66,11 @@ class CropService extends AbstractService
             'GifBuilder',
             'ImageMagick',
         ];
-        $configuration = isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) ? \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) : [];
+        if(VersionNumberUtility::convertVersionStringToArray(VersionNumberUtility::getCurrentTypo3Version())['version_main'] < 9) {
+			$configuration = isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) ? \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']) : [];
+		} else {
+			$configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('focuspoint');
+		}
         $functionConfiguration = $configuration['imageFunctionConfiguration'] ?? 'png:cropViaGifBuilder;*:GraphicalFunctions';
         $parts = GeneralUtility::trimExplode(';', $functionConfiguration, true);
         foreach ($parts as $part) {
