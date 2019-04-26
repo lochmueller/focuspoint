@@ -71,6 +71,10 @@ abstract class AbstractWizardHandler
             $url = $imageService->getImageUri($processedImage);
         }
 
+        if(filter_var($url, FILTER_VALIDATE_URL)) {
+            return $url;
+        }
+
         return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . \ltrim($url, '/');
     }
 
