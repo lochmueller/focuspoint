@@ -23,3 +23,5 @@ if (!$is9orHigher) {
     // @deprecated (not used since TYPO3 9.x.x anymore
     \HDNET\Autoloader\Utility\ExtendedUtility::addHook('TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tceforms.php|dbFileIcons', \HDNET\Focuspoint\Hooks\GroupItem::class);
 }
+
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['fluid']['namespaces']['fp'] = ['HDNET\Focuspoint\ViewHelpers'];
