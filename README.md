@@ -1,7 +1,12 @@
 # EXT:focuspoint
 
-[![Build Status](https://travis-ci.org/lochmueller/focuspoint.svg?branch=master)](https://travis-ci.org/lochmueller/focuspoint)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lochmueller/focuspoint/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lochmueller/focuspoint/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/lochmueller/focuspoint/v/stable)](https://packagist.org/packages/lochmueller/focuspoint)
+[![Total Downloads](https://poser.pugx.org/lochmueller/focuspoint/downloads)](https://packagist.org/packages/lochmueller/focuspoint)
+[![License](https://poser.pugx.org/lochmueller/focuspoint/license)](https://packagist.org/packages/lochmueller/focuspoint)
+[![TYPO3](https://img.shields.io/badge/TYPO3-8-orange.svg)](https://typo3.org/)
+[![TYPO3](https://img.shields.io/badge/TYPO3-9-orange.svg)](https://typo3.org/)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lochmueller/focuspoint.svg)](http://isitmaintained.com/project/lochmueller/focuspoint "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/lochmueller/focuspoint.svg)](http://isitmaintained.com/project/lochmueller/focuspoint "Percentage of issues still open")
 
 ## Installation
 
