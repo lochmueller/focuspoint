@@ -14,9 +14,8 @@
 		}
 	},
 	"require": {
-		"php": ">=7.0.0",
-		"typo3/cms-core": "^8.7||^9.5",
-		"lochmueller/autoloader": "^5.0||^6.0"
+		"php": ">=7.3.0",
+		"typo3/cms-core": "^9.5||^10.0"
 	},
 	"type": "typo3-cms-extension",
 	"keywords": [
