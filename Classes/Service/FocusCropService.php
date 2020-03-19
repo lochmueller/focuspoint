@@ -144,7 +144,10 @@ class FocusCropService extends AbstractService
         if (!\is_file($absoluteImageName)) {
             return '';
         }
-        $docRoot = \rtrim(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'), '/') . '/';
+
+        /** @var \TYPO3\CMS\Core\Http\NormalizedParams $params */
+        $params = $GLOBALS['TYPO3_REQUEST']->getAttribute('normalizedParams');
+        $docRoot = \rtrim($params->getDocumentRoot(), '/') . '/';
         $relativeSrc = \str_replace($docRoot, '', $absoluteImageName);
         $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
         $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
@@ -180,6 +183,7 @@ class FocusCropService extends AbstractService
         /** @var DimensionService $dimensionService */
         $dimensionService = GeneralUtility::makeInstance(DimensionService::class);
         list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
+
         $cropMode = $dimensionService->getCropMode($width, $height, $ratio);
         list($sourceX, $sourceY) = $dimensionService->calculateSourcePosition(
             $cropMode,

@@ -13,6 +13,7 @@ use HDNET\Focuspoint\Service\WizardHandler\Group;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -76,8 +77,11 @@ class FocuspointController
      *
      * @return ResponseInterface
      */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response)
+    public function mainAction(ServerRequestInterface $request, ResponseInterface $response = null)
     {
+        if($response === null) {
+            $response = new HtmlResponse('');
+        }
         $content = $this->main();
         $response->getBody()->write($content);
 

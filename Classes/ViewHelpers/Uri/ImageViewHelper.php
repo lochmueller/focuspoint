@@ -25,26 +25,6 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     }
 
     /**
-     * Default render method - simply calls renderStatic() with a
-     * prepared set of arguments.
-     *
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
-     *
-     * @return string Rendered string
-     *
-     * @api
-     */
-    public function render()
-    {
-        return static::renderStatic(
-            $this->arguments,
-            $this->buildRenderChildrenClosure(),
-            $this->renderingContext
-        );
-    }
-
-    /**
      * @param array                     $arguments
      * @param callable|\Closure         $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
