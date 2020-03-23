@@ -18,10 +18,8 @@ class ImageUtility
 {
     /**
      * Get the allowed file extensions for the focuspoint method.
-     *
-     * @return array
      */
-    public static function getAllowedFileExtensions()
+    public static function getAllowedFileExtensions(): array
     {
         $configuredExtensions = GeneralUtility::trimExplode(
             ',',
@@ -37,10 +35,8 @@ class ImageUtility
      * Check if the given path or extension is valid for the focuspoint.
      *
      * @param $pathOrExtension
-     *
-     * @return bool
      */
-    public static function isValidFileExtension($pathOrExtension)
+    public static function isValidFileExtension($pathOrExtension): bool
     {
         $pathOrExtension = mb_strtolower($pathOrExtension);
         $validExtensions = self::getAllowedFileExtensions();

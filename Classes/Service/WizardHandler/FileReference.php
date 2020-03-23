@@ -17,20 +17,16 @@ class FileReference extends AbstractWizardHandler
 {
     /**
      * Check if the handler can handle the current request.
-     *
-     * @return bool
      */
-    public function canHandle()
+    public function canHandle(): bool
     {
         return null !== $this->getReferenceUid();
     }
 
     /**
      * get the arguments for same request call.
-     *
-     * @return array
      */
-    public function getArguments()
+    public function getArguments(): array
     {
         return [
             'P' => [
@@ -41,10 +37,8 @@ class FileReference extends AbstractWizardHandler
 
     /**
      * Return the current point.
-     *
-     * @return int[]
      */
-    public function getCurrentPoint()
+    public function getCurrentPoint(): array
     {
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
         $properties = $reference->getProperties();
@@ -57,10 +51,8 @@ class FileReference extends AbstractWizardHandler
 
     /**
      * Get the public URL for the current handler.
-     *
-     * @return string
      */
-    public function getPublicUrl()
+    public function getPublicUrl(): string
     {
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
 
@@ -69,11 +61,8 @@ class FileReference extends AbstractWizardHandler
 
     /**
      * Set the point (between -100 and 100).
-     *
-     * @param int $x
-     * @param int $y
      */
-    public function setCurrentPoint($x, $y): void
+    public function setCurrentPoint(int $x, int $y): void
     {
         $values = [
             'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100, 0),

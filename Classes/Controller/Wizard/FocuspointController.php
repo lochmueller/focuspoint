@@ -76,10 +76,8 @@ class FocuspointController
      * Returns the Module menu for the AJAX request.
      *
      * @param ResponseInterface $response
-     *
-     * @return ResponseInterface
      */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response = null):ResponseInterface
+    public function mainAction(ServerRequestInterface $request, ResponseInterface $response = null): ResponseInterface
     {
         if (null === $response) {
             $response = new HtmlResponse('');
@@ -107,10 +105,8 @@ class FocuspointController
 
     /**
      * Get the wizard handler.
-     *
-     * @return array
      */
-    protected function getWizardHandler():array
+    protected function getWizardHandler(): array
     {
         return [
             GeneralUtility::makeInstance(File::class),

@@ -14,20 +14,16 @@ class Group extends AbstractWizardHandler
 {
     /**
      * Check if the handler can handle the current request.
-     *
-     * @return bool
      */
-    public function canHandle()
+    public function canHandle(): bool
     {
         return null !== $this->getRelativeFilePath();
     }
 
     /**
      * Return the current point.
-     *
-     * @return int[]
      */
-    public function getCurrentPoint()
+    public function getCurrentPoint(): array
     {
         $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
         $row = $fileStandaloneRepository->findOneByRelativeFilePath($this->getRelativeFilePath());
@@ -43,11 +39,8 @@ class Group extends AbstractWizardHandler
 
     /**
      * Set the point (between -100 and 100).
-     *
-     * @param int $x
-     * @param int $y
      */
-    public function setCurrentPoint($x, $y): void
+    public function setCurrentPoint(int $x, int $y): void
     {
         $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
         $row = $fileStandaloneRepository->findOneByRelativeFilePath($this->getRelativeFilePath());
@@ -72,20 +65,16 @@ class Group extends AbstractWizardHandler
 
     /**
      * Get the public URL for the current handler.
-     *
-     * @return string
      */
-    public function getPublicUrl()
+    public function getPublicUrl(): string
     {
         return $this->displayableImageUrl($this->getRelativeFilePath());
     }
 
     /**
      * get the arguments for same request call.
-     *
-     * @return array
      */
-    public function getArguments()
+    public function getArguments(): array
     {
         $parameter = GeneralUtility::_GET();
         $p = $parameter['P'];

@@ -24,10 +24,8 @@ class FileUtility
      *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     *
-     * @return \TYPO3\CMS\Core\Resource\File
      */
-    public static function getFileByMetaData($uid)
+    public static function getFileByMetaData($uid): \TYPO3\CMS\Core\Resource\File
     {
         $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int)$uid);
         if (!isset($row['file'])) {
@@ -44,10 +42,8 @@ class FileUtility
      *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     *
-     * @return \TYPO3\CMS\Core\Resource\File
      */
-    public static function getFileByUid($uid)
+    public static function getFileByUid($uid): \TYPO3\CMS\Core\Resource\File
     {
         return ResourceFactory::getInstance()
             ->getFileObject($uid)

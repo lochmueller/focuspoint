@@ -116,8 +116,8 @@ class FocusCropService extends AbstractService
         $result = $this->getCroppedImageSrcBySrc(
             $file->getForLocalProcessing(false),
             $ratio,
-            $file->getProperty('focus_point_x'),
-            $file->getProperty('focus_point_y')
+            (int)$file->getProperty('focus_point_x'),
+            (int)$file->getProperty('focus_point_y')
         );
         if ('' === $result) {
             return $file->getPublicUrl();

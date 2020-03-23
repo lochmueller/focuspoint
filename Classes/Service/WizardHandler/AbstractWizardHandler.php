@@ -21,52 +21,39 @@ abstract class AbstractWizardHandler
 {
     /**
      * Check if the handler can handle the current request.
-     *
-     * @return true
      */
-    abstract public function canHandle();
+    abstract public function canHandle(): bool;
 
     /**
      * get the arguments for same request call.
-     *
-     * @return array
      */
-    abstract public function getArguments();
+    abstract public function getArguments(): array;
 
     /**
      * Return the current point (between -100 and 100).
-     *
-     * @return array
      */
-    abstract public function getCurrentPoint();
+    abstract public function getCurrentPoint(): array;
 
     /**
      * Set the point (between -100 and 100).
-     *
-     * @param int $x
-     * @param int $y
      */
-    abstract public function setCurrentPoint($x, $y);
+    abstract public function setCurrentPoint(int $x, int $y);
 
     /**
      * Get the public URL for the current handler.
-     *
-     * @return string
      */
-    abstract public function getPublicUrl();
+    abstract public function getPublicUrl(): string;
 
     /**
      * @param string $url
-     *
-     * @return string
      */
-    protected function displayableImageUrl($url)
+    protected function displayableImageUrl($url): string
     {
         if (\in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'], true)) {
             $objectManager = new ObjectManager();
             /** @var ImageService $imageService */
             $imageService = $objectManager->get(ImageService::class);
-            $image = $imageService->getImage($url, null, null);
+            $image = $imageService->getImage($url, null, false);
             $processedImage = $imageService->applyProcessingInstructions($image, [
                 'width' => '800',
             ]);
@@ -82,8 +69,6 @@ abstract class AbstractWizardHandler
 
     /**
      * Cleanup the position of both values.
-     *
-     * @return int[]
      */
     protected function cleanupPosition(array $position): array
     {

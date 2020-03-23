@@ -15,10 +15,8 @@ class TcaUtility
 {
     /**
      * Get field configuration.
-     *
-     * @return array
      */
-    public static function getBaseConfiguration()
+    public static function getBaseConfiguration(): array
     {
         return [
             'config' => [

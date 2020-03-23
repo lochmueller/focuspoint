@@ -9,7 +9,6 @@ return PhpCsFixer\Config::create()
         PhpCsFixer\Finder::create()
             ->in(__DIR__ . '/Classes')
             ->in(__DIR__ . '/Configuration/TCA')
-            ->in(__DIR__ . '/Modules')
             ->in(__DIR__ . '/Tests')
     )
     ->setRules([
