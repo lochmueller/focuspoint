@@ -12,6 +12,7 @@ use HDNET\Focuspoint\Service\WizardHandler\FileReference;
 use HDNET\Focuspoint\Service\WizardHandler\Group;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -64,7 +65,8 @@ class FocuspointController
             $template->assign('currentTop', (($y - 100) / -2) . '%');
         }
 
-        $template->assign('saveUri', BackendUtility::getModuleUrl('focuspoint', $saveArguments));
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $template->assign('saveUri', $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
 
         return $template->render();
     }

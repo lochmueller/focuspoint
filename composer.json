@@ -9,13 +9,12 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"HDNET\\Focuspoint\\Tests\\": "Tests",
-			"TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/"
+			"HDNET\\Focuspoint\\Tests\\": "Tests"
 		}
 	},
 	"require": {
-		"php": "^7.2||^7.3||^7.4",
-		"typo3/cms-core": "^9.5||^10.0",
+		"php": "^7.3||^7.4",
+		"typo3/cms-core": "^10.0",
 		"lochmueller/autoloader": "^7.0"
 	},
 	"type": "typo3-cms-extension",
@@ -29,10 +28,8 @@
 	},
 	"require-dev": {
 		"namelesscoder/typo3-repository-client": "^2.0",
-		"typo3/testing-framework": "^1.1",
-		"squizlabs/php_codesniffer": "^2.6",
+		"typo3/testing-framework": "^6.2",
 		"friendsofphp/php-cs-fixer": "^2.14",
-		"phpmd/phpmd": "^2.4",
 		"scrutinizer/ocular": "^1.3"
 	},
 	"config": {

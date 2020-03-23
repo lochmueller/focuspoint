@@ -27,11 +27,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
     }
 
     /**
-     * Resize a given image (if required) and renders the respective img tag.
-     *
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
-     *
-     * @return string Rendered tag
+     * @inheritDoc
      */
     public function render()
     {

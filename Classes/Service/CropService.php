@@ -159,7 +159,6 @@ class CropService extends AbstractService
 
         /** @var GifBuilder $gifBuilder */
         $gifBuilder = GeneralUtility::makeInstance(GifBuilder::class);
-        $gifBuilder->init();
         $gifBuilder->start($configuration, []);
         $gifBuilder->make();
         $gifBuilder->output($absoluteTempImageName);

@@ -10,6 +10,7 @@ use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\FileUtility;
 use HDNET\Focuspoint\Utility\ImageUtility;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -54,7 +55,8 @@ class FileList implements FileListEditIconHookInterface
                 'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
             ],
         ];
-        $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $wizardUri = $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
         $cells['focuspoint'] = $wizardService->getWizardButton($wizardUri);
     }
 

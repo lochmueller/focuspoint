@@ -9,6 +9,7 @@ namespace HDNET\Focuspoint\Hooks;
 use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Focuspoint\Service\WizardService;
 use TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -71,30 +72,20 @@ class InlineRecord implements InlineElementHookInterface
             return;
         }
 
-        if (\is_array($childRecord['uid_local'])) {
-            // Handling for TYPO3 > 8.x
-            foreach ($childRecord['uid_local'] as $item) {
-                if ('sys_file' !== $item['table']) {
-                    return;
-                }
-                if (!MathUtility::canBeInterpretedAsInteger($childRecord['uid'])) {
-                    return;
-                }
-            }
-        } else {
-            // Handling for TYPO3 < 8.x
-            if (!GeneralUtility::isFirstPartOfStr($childRecord['uid_local'], 'sys_file_')) {
+        // Handling for TYPO3 > 8.x
+        foreach ($childRecord['uid_local'] as $item) {
+            if ('sys_file' !== $item['table']) {
                 return;
             }
-
-            $parts = BackendUtility::splitTable_Uid($childRecord['uid_local']);
-            if (!isset($parts[1])) {
+            if (!MathUtility::canBeInterpretedAsInteger($childRecord['uid'])) {
                 return;
             }
         }
 
         $table = $childRecord['tablenames'];
         $uid = $parentUid;
+
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
         if ($this->isValidRecord($table, $uid)) {
             $arguments = GeneralUtility::_GET();
@@ -112,10 +103,10 @@ class InlineRecord implements InlineElementHookInterface
             $wizardArguments = [
                 'P' => [
                     'referenceUid' => $childRecord['uid'],
-                    'returnUrl' => BackendUtility::getModuleUrl('record_edit', $returnUrl),
+                    'returnUrl' => $uriBuilder->buildUriFromRoute('record_edit', $returnUrl),
                 ],
             ];
-            $wizardUri = BackendUtility::getModuleUrl('focuspoint', $wizardArguments);
+            $wizardUri = $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
         } else {
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
         }
