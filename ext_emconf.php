@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'Focuspoint',
     'description' => 'Focuspoint integrate the focal point method to crop images in the frontend of the web page. Use the jQuery-focuspoint plugin (https://github.com/jonom/jquery-focuspoint example http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) to crop the images. Use the function as wizard in the file list view and directly in the content element.',
     'category' => 'be',
-    'version' => '3.2.1',
+    'version' => '4.0.0-dev',
     'state' => 'stable',
     'clearcacheonload' => true,
     'author' => 'Tim Lochmüller',
@@ -23,8 +23,8 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'php' => '7.2.0-0.0.0',
-            'typo3' => '9.5.0-10.4.99',
-            'autoloader' => '5.0.0-6.99.0',
+            'typo3' => '10.0.0-10.5.99',
+            'autoloader' => '7.0.0-7.99.0',
         ],
     ],
 ];

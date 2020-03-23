@@ -6,6 +6,7 @@
 
 namespace HDNET\Focuspoint\Hooks;
 
+use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Focuspoint\Service\WizardService;
 use TYPO3\CMS\Backend\Form\Element\InlineElementHookInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -15,7 +16,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 /**
  * Hook into the inline icons.
  *
- * @hook   TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tceforms_inline.php|tceformsInlineHook
+ * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|t3lib/class.t3lib_tceforms_inline.php|tceformsInlineHook")
  */
 class InlineRecord implements InlineElementHookInterface
 {

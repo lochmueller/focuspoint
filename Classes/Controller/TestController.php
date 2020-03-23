@@ -6,6 +6,7 @@
 
 namespace HDNET\Focuspoint\Controller;
 
+use HDNET\Autoloader\Annotation\Plugin;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -17,14 +18,14 @@ class TestController extends ActionController
      * File repository.
      *
      * @var \TYPO3\CMS\Core\Resource\FileRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $fileRepository;
 
     /**
      * Test action.
      *
-     * @plugin Test
+     * @Plugin("Test")
      */
     public function testAction()
     {

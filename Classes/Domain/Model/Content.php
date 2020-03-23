@@ -6,10 +6,13 @@
 
 namespace HDNET\Focuspoint\Domain\Model;
 
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
+
 /**
  * Content.
  *
- * @db     tt_content
+ * @DatabaseTable("tt_content")
  */
 class Content extends AbstractModel
 {
@@ -17,7 +20,7 @@ class Content extends AbstractModel
      * Image ratio.
      *
      * @var string
-     * @db
+     * @DatabaseField(type="string")
      */
     protected $imageRatio;
 

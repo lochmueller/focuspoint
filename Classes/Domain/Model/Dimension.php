@@ -6,11 +6,15 @@
 
 namespace HDNET\Focuspoint\Domain\Model;
 
+use HDNET\Autoloader\Annotation\DatabaseField;
+use HDNET\Autoloader\Annotation\DatabaseTable;
+use HDNET\Autoloader\Annotation\SmartExclude;
+
 /**
  * Dimension.
  *
- * @db
- * @smartExclude EnableFields,Language
+ * @DatabaseTable()
+ * @SmartExclude({"EnableFields", "Language"})
  */
 class Dimension extends AbstractModel
 {
@@ -18,7 +22,7 @@ class Dimension extends AbstractModel
      * Title.
      *
      * @var string
-     * @db
+     * @DatabaseField(type="string")
      */
     protected $title;
 
@@ -26,7 +30,7 @@ class Dimension extends AbstractModel
      * Identifier.
      *
      * @var string
-     * @db
+     * @DatabaseField(type="string")
      */
     protected $identifier;
 
@@ -34,7 +38,7 @@ class Dimension extends AbstractModel
      * Dimension.
      *
      * @var string
-     * @db
+     * @DatabaseField(type="string")
      */
     protected $dimension;
 
