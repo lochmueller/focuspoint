@@ -16,7 +16,7 @@
 	"require": {
 		"php": "^7.2||^7.3||^7.4",
 		"typo3/cms-core": "^9.5||^10.0",
-		"lochmueller/autoloader": "^5.0||^6.0"
+		"lochmueller/autoloader": "^7.0"
 	},
 	"type": "typo3-cms-extension",
 	"keywords": [
