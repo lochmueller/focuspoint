@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * @todo    General file information
  */
@@ -12,8 +14,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @todo General class information
+ *
+ * @internal
+ * @coversNothing
  */
-class DimensionServiceTest extends UnitTestCase
+final class DimensionServiceTest extends UnitTestCase
 {
     /**
      * @var DimensionService
@@ -23,37 +28,32 @@ class DimensionServiceTest extends UnitTestCase
     /**
      * Build up.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->service = GeneralUtility::makeInstance(DimensionService::class);
     }
 
     /**
-     * @test
      * @expectedException \Exception
      */
-    public function testInvalidShortRatio()
+    public function testInvalidShortRatio(): void
     {
         $this->service->getRatio(1);
     }
 
     /**
-     * @test
      * @expectedException \Exception
      */
-    public function testInvalidLongRatio()
+    public function testInvalidLongRatio(): void
     {
         $this->service->getRatio('1:1:2');
     }
 
-    /**
-     * @test
-     */
-    public function testValidRatio()
+    public function testValidRatio(): void
     {
-        $this->assertEquals([1, 1], $this->service->getRatio('1:1'));
-        $this->assertEquals([16, 9], $this->service->getRatio('16:9'));
-        $this->assertEquals([4, 3], $this->service->getRatio('4:3'));
+        self::assertSame([1, 1], $this->service->getRatio('1:1'));
+        self::assertSame([16, 9], $this->service->getRatio('16:9'));
+        self::assertSame([4, 3], $this->service->getRatio('4:3'));
     }
 
     /**
@@ -84,8 +84,6 @@ class DimensionServiceTest extends UnitTestCase
      * @param int    $imageHeight
      * @param int    $expectedWidth
      * @param int    $expectedHeight
-     *
-     * @test
      */
     public function testFocusBoxSize(
         $focusX,
@@ -95,13 +93,13 @@ class DimensionServiceTest extends UnitTestCase
         $imageHeight,
         $expectedWidth,
         $expectedHeight
-    ) {
+    ): void {
         $expected = [
             $expectedWidth,
             $expectedHeight,
         ];
 
-        $this->assertEquals($expected, $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio));
+        self::assertSame($expected, $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio));
     }
 
     /**
@@ -133,10 +131,8 @@ class DimensionServiceTest extends UnitTestCase
      * @param int    $imageHeight
      * @param int    $expectedX
      * @param int    $expectedY
-     *
-     * @test
      */
-    public function testFocusSourcePoint($focusX, $focusY, $ratio, $imageWidth, $imageHeight, $expectedX, $expectedY)
+    public function testFocusSourcePoint($focusX, $focusY, $ratio, $imageWidth, $imageHeight, $expectedX, $expectedY): void
     {
         $expected = [
             $expectedX,
@@ -145,7 +141,7 @@ class DimensionServiceTest extends UnitTestCase
 
         list($focusWidth, $focusHeight) = $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio);
 
-        $this->assertEquals(
+        self::assertSame(
             $expected,
             $this->service->calculateSourcePosition(
                 DimensionService::CROP_LANDSCAPE,
@@ -162,9 +158,8 @@ class DimensionServiceTest extends UnitTestCase
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage Ratio have to be in the format of e.g. "1:1" or "16:9"
-     * @test
      */
-    public function testRatioException()
+    public function testRatioException(): void
     {
         $this->service->getFocusWidthAndHeight(100, 100, '11');
     }

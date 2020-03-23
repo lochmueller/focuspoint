@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Crop images.
  */
 
 namespace HDNET\Focuspoint\Service;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -13,7 +16,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
  * Crop images.
@@ -37,11 +39,11 @@ class CropService extends AbstractService
         $sourceX,
         $sourceY,
         $absoluteTempImageName
-    ) {
-        $fileExtension = \mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
+    ): void {
+        $fileExtension = mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
         $function = $this->getFunctionName($fileExtension);
         $function = 'cropVia' . $function;
-        $this->$function(
+        $this->{$function}(
             $absoluteImageName,
             $focusWidth,
             $focusHeight,
@@ -53,10 +55,6 @@ class CropService extends AbstractService
 
     /**
      * Get the graphical function by file extension.
-     *
-     * @param string $fileExtension
-     *
-     * @return string
      */
     protected function getFunctionName(string $fileExtension): string
     {
@@ -100,7 +98,7 @@ class CropService extends AbstractService
         $sourceX,
         $sourceY,
         $absoluteTempImageName
-    ) {
+    ): void {
         $quality = MathUtility::forceIntegerInRange($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'], 10, 100, 75);
 
         $cropCommand = $focusWidth . 'x' . $focusHeight . '+' . $sourceX . '+' . $sourceY;
@@ -128,16 +126,16 @@ class CropService extends AbstractService
         $sourceX,
         $sourceY,
         $absoluteTempImageName
-    ) {
-        $size = \getimagesize($absoluteImageName);
-        $relativeImagePath = \rtrim(PathUtility::getRelativePath(
+    ): void {
+        $size = getimagesize($absoluteImageName);
+        $relativeImagePath = rtrim(PathUtility::getRelativePath(
             GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
             $absoluteImageName
         ), '/');
         // We need to pass maxWidth and maxHeight, which would otherwise fall back to 2000px, see:
         // https://github.com/TYPO3/TYPO3.CMS/blob/TYPO3_7-6/typo3/sysext/frontend/Classes/Imaging/GifBuilder.php#L367-L368
         $configuration = [
-            'format' => \mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
+            'format' => mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
             'XY' => $size[0] . ',' . $size[1],
             'maxWidth' => $size[0],
             'maxHeight' => $size[1],
@@ -182,11 +180,11 @@ class CropService extends AbstractService
         $sourceX,
         $sourceY,
         $absoluteTempImageName
-    ) {
+    ): void {
         /** @var GraphicalFunctions $graphicalFunctions */
         $graphicalFunctions = GeneralUtility::makeInstance(GraphicalFunctions::class);
         $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
-        $destinationImage = \imagecreatetruecolor($focusWidth, $focusHeight);
+        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
 
         // prevent the problem of large images result in a "Allowed memory size" error
         // we do not need the alpha layer at all, because the PNG rendered with cropViaGraphicalFunctions

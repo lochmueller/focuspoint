@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 /**
  * FileStandalone.
  */
@@ -13,8 +15,6 @@ class FileStandaloneRepository extends AbstractRawRepository
     /**
      * Find one by relative file path.
      *
-     * @param string $relativeFilePath
-     *
      * @return array|null
      */
     public function findOneByRelativeFilePath(string $relativeFilePath)
@@ -26,15 +26,14 @@ class FileStandaloneRepository extends AbstractRawRepository
                 $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($relativeFilePath))
             )
             ->execute()
-            ->fetchAll();
+            ->fetchAll()
+        ;
 
         return $rows[0] ?? null;
     }
 
     /**
      * Get the tablename.
-     *
-     * @return string
      */
     protected function getTableName(): string
     {

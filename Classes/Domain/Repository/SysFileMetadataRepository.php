@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * SysFileMetadata.
  */
@@ -14,8 +16,6 @@ class SysFileMetadataRepository extends AbstractRawRepository
     /**
      * Find one by file.
      *
-     * @param int $fileUid
-     *
      * @return array|null
      */
     public function findOneByFileUid(int $fileUid)
@@ -27,15 +27,14 @@ class SysFileMetadataRepository extends AbstractRawRepository
                 $queryBuilder->expr()->eq('file', $fileUid)
             )
             ->execute()
-            ->fetchAll();
+            ->fetchAll()
+        ;
 
         return $rows[0] ?? null;
     }
 
     /**
      * Get the tablename.
-     *
-     * @return string
      */
     protected function getTableName(): string
     {

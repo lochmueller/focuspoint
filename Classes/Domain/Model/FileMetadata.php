@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * File metadata.
  */
@@ -47,7 +49,7 @@ class FileMetadata extends AbstractModel
      *
      * @param int $focusPointY
      */
-    public function setFocusPointY($focusPointY)
+    public function setFocusPointY($focusPointY): void
     {
         $this->focusPointY = $focusPointY;
     }
@@ -67,7 +69,7 @@ class FileMetadata extends AbstractModel
      *
      * @param int $focusPointX
      */
-    public function setFocusPointX($focusPointX)
+    public function setFocusPointX($focusPointX): void
     {
         $this->focusPointX = $focusPointX;
     }

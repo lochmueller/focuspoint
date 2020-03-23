@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Utility functions for files.
  */
@@ -27,12 +29,12 @@ class FileUtility
      */
     public static function getFileByMetaData($uid)
     {
-        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int) $uid);
+        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int)$uid);
         if (!isset($row['file'])) {
             throw new \Exception('File not found in metadata', 1475144028);
         }
 
-        return self::getFileByUid((int) $row['file']);
+        return self::getFileByUid((int)$row['file']);
     }
 
     /**
@@ -48,6 +50,7 @@ class FileUtility
     public static function getFileByUid($uid)
     {
         return ResourceFactory::getInstance()
-            ->getFileObject($uid);
+            ->getFileObject($uid)
+        ;
     }
 }

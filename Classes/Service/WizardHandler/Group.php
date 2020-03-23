@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
@@ -45,7 +47,7 @@ class Group extends AbstractWizardHandler
      * @param int $x
      * @param int $y
      */
-    public function setCurrentPoint($x, $y)
+    public function setCurrentPoint($x, $y): void
     {
         $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
         $row = $fileStandaloneRepository->findOneByRelativeFilePath($this->getRelativeFilePath());
@@ -58,7 +60,7 @@ class Group extends AbstractWizardHandler
 
         if (isset($row['uid'])) {
             $fileStandaloneRepository->update(
-                (int) $row['uid'],
+                (int)$row['uid'],
                 $values
             );
         } else {
@@ -123,12 +125,12 @@ class Group extends AbstractWizardHandler
 
         $uploadFolder = $fieldTca['config']['uploadfolder'] ?? '';
         $baseFolder = '';
-        if ('' !== \trim($uploadFolder, '/')) {
-            $baseFolder = \rtrim($uploadFolder, '/') . '/';
+        if ('' !== trim($uploadFolder, '/')) {
+            $baseFolder = rtrim($uploadFolder, '/') . '/';
         }
 
         $filePath = $baseFolder . $p['file'];
-        if (!\is_file(GeneralUtility::getFileAbsFileName($filePath))) {
+        if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
             return;
         }
 

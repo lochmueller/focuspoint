@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Dimension.
  */
@@ -13,7 +15,7 @@ use HDNET\Autoloader\Annotation\SmartExclude;
 /**
  * Dimension.
  *
- * @DatabaseTable()
+ * @DatabaseTable
  * @SmartExclude({"EnableFields", "Language"})
  */
 class Dimension extends AbstractModel
@@ -53,7 +55,7 @@ class Dimension extends AbstractModel
     /**
      * @param mixed $title
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         $this->title = $title;
     }
@@ -69,7 +71,7 @@ class Dimension extends AbstractModel
     /**
      * @param mixed $identifier
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier($identifier): void
     {
         $this->identifier = $identifier;
     }
@@ -85,7 +87,7 @@ class Dimension extends AbstractModel
     /**
      * @param mixed $dimension
      */
-    public function setDimension($dimension)
+    public function setDimension($dimension): void
     {
         $this->dimension = $dimension;
     }

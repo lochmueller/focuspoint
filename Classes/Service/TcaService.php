@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * TcaService.
  */
@@ -17,14 +19,13 @@ class TcaService extends AbstractService
     /**
      * Add the custom elements.
      *
-     * @param array  $params
      * @param object $parent
      */
-    public function addDatabaseItems(array &$params, $parent)
+    public function addDatabaseItems(array &$params, $parent): void
     {
         $customItems = $this->getCustomItems();
         if (empty($customItems)) {
-            \array_unshift($params['items'], [
+            array_unshift($params['items'], [
                 '',
                 '',
             ]);
@@ -34,16 +35,16 @@ class TcaService extends AbstractService
 
         // Add element
         foreach ($customItems as $item) {
-            \array_unshift($params['items'], [
+            array_unshift($params['items'], [
                 $item['dimension'] . ' / ' . $item['title'],
                 $item['identifier'],
             ]);
         }
-        \array_unshift($params['items'], [
+        array_unshift($params['items'], [
             'Custom',
             '--div--',
         ]);
-        \array_unshift($params['items'], [
+        array_unshift($params['items'], [
             '',
             '',
         ]);
@@ -51,8 +52,6 @@ class TcaService extends AbstractService
 
     /**
      * Get custom elements.
-     *
-     * @return array
      */
     protected function getCustomItems(): array
     {

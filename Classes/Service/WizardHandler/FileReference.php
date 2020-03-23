@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use HDNET\Focuspoint\Domain\Repository\SysFileMetadataRepository;
@@ -71,23 +73,23 @@ class FileReference extends AbstractWizardHandler
      * @param int $x
      * @param int $y
      */
-    public function setCurrentPoint($x, $y)
+    public function setCurrentPoint($x, $y): void
     {
         $values = [
             'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100, 0),
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
 
-        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->update((int) $this->getReferenceUid(), $values);
+        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->update((int)$this->getReferenceUid(), $values);
 
         // save also to the file
         $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
         $fileUid = $reference->getOriginalFile()->getUid();
 
         $sysFileMatadataRepository = GeneralUtility::makeInstance(SysFileMetadataRepository::class);
-        $row = $sysFileMatadataRepository->findOneByFileUid((int) $fileUid);
+        $row = $sysFileMatadataRepository->findOneByFileUid((int)$fileUid);
         if ($row) {
-            $sysFileMatadataRepository->update((int) $row['uid'], $values);
+            $sysFileMatadataRepository->update((int)$row['uid'], $values);
         }
     }
 
@@ -104,7 +106,7 @@ class FileReference extends AbstractWizardHandler
         }
         $p = $parameter['P'];
         if (isset($p['referenceUid']) && MathUtility::canBeInterpretedAsInteger($p['referenceUid'])) {
-            return (int) $p['referenceUid'];
+            return (int)$p['referenceUid'];
         }
     }
 }

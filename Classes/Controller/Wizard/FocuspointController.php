@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Wizard controller.
  */
@@ -13,7 +15,6 @@ use HDNET\Focuspoint\Service\WizardHandler\Group;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -74,14 +75,13 @@ class FocuspointController
     /**
      * Returns the Module menu for the AJAX request.
      *
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
+     * @param ResponseInterface $response
      *
      * @return ResponseInterface
      */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response = null)
+    public function mainAction(ServerRequestInterface $request, ResponseInterface $response = null):ResponseInterface
     {
-        if($response === null) {
+        if (null === $response) {
             $response = new HtmlResponse('');
         }
         $content = $this->main();
@@ -98,7 +98,7 @@ class FocuspointController
     protected function getCurrentHandler()
     {
         foreach ($this->getWizardHandler() as $handler) {
-            /** @var $handler AbstractWizardHandler */
+            /** @var AbstractWizardHandler $handler */
             if ($handler->canHandle()) {
                 return $handler;
             }
@@ -110,7 +110,7 @@ class FocuspointController
      *
      * @return array
      */
-    protected function getWizardHandler()
+    protected function getWizardHandler():array
     {
         return [
             GeneralUtility::makeInstance(File::class),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Hook into the inline icons.
  */
@@ -26,7 +28,7 @@ class InlineRecord implements InlineElementHookInterface
      *
      * @param object $parentObject
      */
-    public function init(&$parentObject)
+    public function init(&$parentObject): void
     {
     }
 
@@ -47,7 +49,7 @@ class InlineRecord implements InlineElementHookInterface
         array $childConfig,
         $isVirtual,
         array &$enabledControls
-    ) {
+    ): void {
     }
 
     /**
@@ -67,7 +69,7 @@ class InlineRecord implements InlineElementHookInterface
         array $childConfig,
         $isVirtual,
         array &$controlItems
-    ) {
+    ): void {
         if ('sys_file_reference' !== $foreignTable) {
             return;
         }
@@ -92,8 +94,8 @@ class InlineRecord implements InlineElementHookInterface
             // The arguments array is different in case this is called by an AJAX request
             // via an IRRE inside an IRRE...
             if (!isset($arguments['edit'])) {
-                $url = \parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
-                \parse_str($url['query'], $arguments);
+                $url = parse_url(GeneralUtility::getIndpEnv('HTTP_REFERER'));
+                parse_str($url['query'], $arguments);
             }
             $returnUrl = [
                 'edit' => $arguments['edit'],
@@ -112,7 +114,7 @@ class InlineRecord implements InlineElementHookInterface
         }
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance(WizardService::class);
-        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton($wizardUri));
+        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton((string)$wizardUri));
     }
 
     /**
@@ -135,10 +137,10 @@ class InlineRecord implements InlineElementHookInterface
      * @param string $key
      * @param string $val
      */
-    protected function arrayUnshiftAssoc(&$arr, $key, $val)
+    protected function arrayUnshiftAssoc(&$arr, $key, $val): void
     {
-        $arr = \array_reverse($arr, true);
+        $arr = array_reverse($arr, true);
         $arr[$key] = $val;
-        $arr = \array_reverse($arr, true);
+        $arr = array_reverse($arr, true);
     }
 }

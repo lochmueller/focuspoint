@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Test controller.
  */
@@ -27,7 +29,7 @@ class TestController extends ActionController
      *
      * @Plugin("Test")
      */
-    public function testAction()
+    public function testAction(): void
     {
         $contentElement = $this->configurationManager->getContentObject()->data;
         $fileReferences = $this->fileRepository->findByRelation('tt_content', 'image', $contentElement['uid']);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Get the URI of the cropped image.
  */
@@ -18,16 +20,14 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     /**
      * Initialize ViewHelper arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('ratio', 'string', 'Ratio of the image', false, '1:1');
     }
 
     /**
-     * @param array                     $arguments
-     * @param callable|\Closure         $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
+     * @param callable|\Closure $renderChildrenClosure
      *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException

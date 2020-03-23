@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Abstract wizard handler.
  */
@@ -71,25 +73,23 @@ abstract class AbstractWizardHandler
             $url = $imageService->getImageUri($processedImage);
         }
 
-        if(filter_var($url, FILTER_VALIDATE_URL)) {
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
             return $url;
         }
 
-        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . \ltrim($url, '/');
+        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ltrim($url, '/');
     }
 
     /**
      * Cleanup the position of both values.
-     *
-     * @param array $position
      *
      * @return int[]
      */
     protected function cleanupPosition(array $position): array
     {
         return [
-            MathUtility::forceIntegerInRange((int) $position[0], -100, 100, 0),
-            MathUtility::forceIntegerInRange((int) $position[1], -100, 100, 0),
+            MathUtility::forceIntegerInRange((int)$position[0], -100, 100, 0),
+            MathUtility::forceIntegerInRange((int)$position[1], -100, 100, 0),
         ];
     }
 }

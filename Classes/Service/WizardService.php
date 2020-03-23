@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Helper class for wizard handling.
  */
@@ -19,9 +21,6 @@ class WizardService extends AbstractService
     /**
      * Get the wizard button with the given URI.
      *
-     * @param string $uri
-     * @param string $additionalClass
-     *
      * @return string
      */
     public function getWizardButton(string $uri = '', string $additionalClass = '')
@@ -39,8 +38,6 @@ class WizardService extends AbstractService
 
     /**
      * Get the wizard icon.
-     *
-     * @return string
      */
     protected function getWizardIcon(): string
     {

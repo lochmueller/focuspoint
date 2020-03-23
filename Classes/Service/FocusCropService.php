@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Crop images via focus crop.
  */
@@ -61,9 +63,8 @@ class FocusCropService extends AbstractService
         if (!$treatIdAsReference) {
             return $resourceFactory->getFileObject($src);
         }
-        $image = $resourceFactory->getFileReferenceObject($src);
 
-        return $image;
+        return $resourceFactory->getFileReferenceObject($src);
     }
 
     /**
@@ -90,7 +91,6 @@ class FocusCropService extends AbstractService
      * Get the cropped image.
      *
      * @param string $fileReference
-     * @param string $ratio
      *
      * @return string The new filename
      */
@@ -102,14 +102,12 @@ class FocusCropService extends AbstractService
         if ($fileReference instanceof CoreFileReference) {
             return $this->getCroppedImageSrcByFile($fileReference->getOriginalFile(), $ratio);
         }
+
         throw new \InvalidArgumentException('The given argument is not a valid file reference', 1475144027);
     }
 
     /**
      * Get the cropped image by File Object.
-     *
-     * @param FileInterface $file
-     * @param string        $ratio
      *
      * @return string The new filename
      */
@@ -131,32 +129,29 @@ class FocusCropService extends AbstractService
     /**
      * Get the cropped image by src.
      *
-     * @param string $src   Relative file name
-     * @param string $ratio
-     * @param int    $x
-     * @param int    $y
+     * @param string $src Relative file name
      *
      * @return string The new filename
      */
     public function getCroppedImageSrcBySrc(string $src, string $ratio, int $x, int $y): string
     {
         $absoluteImageName = GeneralUtility::getFileAbsFileName($src);
-        if (!\is_file($absoluteImageName)) {
+        if (!is_file($absoluteImageName)) {
             return '';
         }
 
         /** @var \TYPO3\CMS\Core\Http\NormalizedParams $params */
         $params = $GLOBALS['TYPO3_REQUEST']->getAttribute('normalizedParams');
-        $docRoot = \rtrim($params->getDocumentRoot(), '/') . '/';
-        $relativeSrc = \str_replace($docRoot, '', $absoluteImageName);
-        $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
-        $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
+        $docRoot = rtrim($params->getDocumentRoot(), '/') . '/';
+        $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
+        $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
+        $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
 
         if (0 === $focusPointX && 0 === $focusPointY) {
             $row = GeneralUtility::makeInstance(FileStandaloneRepository::class)->findOneByRelativeFilePath($relativeSrc);
             if (isset($row['focus_point_x'])) {
-                $focusPointX = MathUtility::forceIntegerInRange((int) $row['focus_point_x'], -100, 100, 0);
-                $focusPointY = MathUtility::forceIntegerInRange((int) $row['focus_point_y'], -100, 100, 0);
+                $focusPointX = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
+                $focusPointY = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
             }
         }
 
@@ -166,16 +161,16 @@ class FocusCropService extends AbstractService
 
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
-        if (\is_file($absoluteTempImageName)) {
+        if (is_file($absoluteTempImageName)) {
             return $tempImageName;
         }
 
         $absoluteTempImageFolder = GeneralUtility::getFileAbsFileName($tempImageFolder);
-        if (!\is_dir($absoluteTempImageFolder)) {
+        if (!is_dir($absoluteTempImageFolder)) {
             GeneralUtility::mkdir_deep($absoluteTempImageFolder);
         }
 
-        $imageSizeInformation = \getimagesize($absoluteImageName);
+        $imageSizeInformation = getimagesize($absoluteImageName);
         $width = $imageSizeInformation[0];
         $height = $imageSizeInformation[1];
 
@@ -213,12 +208,10 @@ class FocusCropService extends AbstractService
     /**
      * Emit tempImageCropped signal.
      *
-     * @param string $tempImageName
-     *
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function emitTempImageCropped(string $tempImageName)
+    protected function emitTempImageCropped(string $tempImageName): void
     {
         $this->getSignalSlotDispatcher()->dispatch(__CLASS__, self::SIGNAL_tempImageCropped, [$tempImageName]);
     }
@@ -248,15 +241,8 @@ class FocusCropService extends AbstractService
     }
 
     /**
-     * @param string $absoluteImageName
-     * @param string $ratio
-     * @param int    $focusPointX
-     * @param int    $focusPointY
-     *
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     *
-     * @return string
      */
     protected function generateTempImageName(string $absoluteImageName, string $ratio, int $focusPointX, int $focusPointY): string
     {
@@ -274,8 +260,8 @@ class FocusCropService extends AbstractService
             return $name;
         }
 
-        $hash = \function_exists('sha1_file') ? \sha1_file($absoluteImageName) : \md5_file($absoluteImageName);
-        $name = $hash . '-fp-' . \preg_replace(
+        $hash = \function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
+        $name = $hash . '-fp-' . preg_replace(
             '/[^0-9a-z-]/',
             '-',
             $ratio
@@ -283,9 +269,8 @@ class FocusCropService extends AbstractService
             $absoluteImageName,
             PATHINFO_EXTENSION
         );
-        $name = \preg_replace('/--+/', '-', $name);
 
-        return $name;
+        return preg_replace('/--+/', '-', $name);
     }
 
     /**
@@ -296,7 +281,7 @@ class FocusCropService extends AbstractService
     protected function getTempImageFolder(): string
     {
         if (null === $this->tempImageFolder) {
-            $extConf = \unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
+            $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
             if (isset($extConf['tempImageFolder'])) {
                 $this->tempImageFolder = $extConf['tempImageFolder'];
             } else {

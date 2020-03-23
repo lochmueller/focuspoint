@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Abstract raw repository.
  */
@@ -17,8 +19,6 @@ abstract class AbstractRawRepository
     /**
      * Find by uid.
      *
-     * @param int $uid
-     *
      * @return array|null
      */
     public function findByUid(int $uid)
@@ -30,47 +30,42 @@ abstract class AbstractRawRepository
                 $queryBuilder->expr()->eq('uid', $uid)
             )
             ->execute()
-            ->fetchAll();
+            ->fetchAll()
+        ;
 
         return $rows[0] ?? null;
     }
 
     /**
      * Find all.
-     *
-     * @return array
      */
     public function findAll(): array
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        return (array) $queryBuilder->select('*')
+        return (array)$queryBuilder->select('*')
             ->from($this->getTableName())
             ->execute()
-            ->fetchAll();
+            ->fetchAll()
+        ;
     }
 
     /**
      * Update by uid.
-     *
-     * @param int   $uid
-     * @param array $values
      */
-    public function update(int $uid, array $values)
+    public function update(int $uid, array $values): void
     {
         $this->getConnection()->update(
             $this->getTableName(),
             $values,
-            ['uid' => (int) $uid]
+            ['uid' => (int)$uid]
         );
     }
 
     /**
      * Insert.
-     *
-     * @param array $values
      */
-    public function insert(array $values)
+    public function insert(array $values): void
     {
         $this->getConnection()->insert(
             $this->getTableName(),
@@ -100,8 +95,6 @@ abstract class AbstractRawRepository
 
     /**
      * Get the tablename.
-     *
-     * @return string
      */
     abstract protected function getTableName(): string;
 

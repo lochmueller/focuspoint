@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Extends the file list.
  */
@@ -11,7 +13,6 @@ use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\FileUtility;
 use HDNET\Focuspoint\Utility\ImageUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
@@ -29,7 +30,7 @@ class FileList implements FileListEditIconHookInterface
      * @param array                        $cells        Array of edit icons
      * @param \TYPO3\CMS\Filelist\FileList $parentObject Parent object
      */
-    public function manipulateEditIcons(&$cells, &$parentObject)
+    public function manipulateEditIcons(&$cells, &$parentObject): void
     {
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance(WizardService::class);
@@ -56,7 +57,7 @@ class FileList implements FileListEditIconHookInterface
             ],
         ];
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $wizardUri = $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
+        $wizardUri = (string)$uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
         $cells['focuspoint'] = $wizardService->getWizardButton($wizardUri);
     }
 
@@ -78,6 +79,6 @@ class FileList implements FileListEditIconHookInterface
             throw new \Exception('No meta data found', 1475144024);
         }
 
-        return (int) $metaData['uid'];
+        return (int)$metaData['uid'];
     }
 }

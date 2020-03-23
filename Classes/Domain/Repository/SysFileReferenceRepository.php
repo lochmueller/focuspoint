@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * SysFileReference.
  */
@@ -13,8 +15,6 @@ class SysFileReferenceRepository extends AbstractRawRepository
 {
     /**
      * Get the tablename.
-     *
-     * @return string
      */
     protected function getTableName(): string
     {

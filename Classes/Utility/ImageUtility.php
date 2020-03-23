@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Image Utility.
  */
@@ -23,12 +25,12 @@ class ImageUtility
     {
         $configuredExtensions = GeneralUtility::trimExplode(
             ',',
-            \mb_strtolower($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']),
+            mb_strtolower($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']),
             true
         );
         $ignoreExtensions = ['pdf', 'ai', 'tga'];
 
-        return \array_diff($configuredExtensions, $ignoreExtensions);
+        return array_diff($configuredExtensions, $ignoreExtensions);
     }
 
     /**
@@ -40,7 +42,7 @@ class ImageUtility
      */
     public static function isValidFileExtension($pathOrExtension)
     {
-        $pathOrExtension = \mb_strtolower($pathOrExtension);
+        $pathOrExtension = mb_strtolower($pathOrExtension);
         $validExtensions = self::getAllowedFileExtensions();
         if (\in_array($pathOrExtension, $validExtensions, true)) {
             return true;

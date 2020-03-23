@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types = 1);
 /**
  * DimensionRepository.
  */
@@ -13,8 +15,6 @@ class DimensionRepository extends AbstractRawRepository
     /**
      * Find one by identifier.
      *
-     * @param string $identifier
-     *
      * @return array|null
      */
     public function findOneByIdentifier(string $identifier)
@@ -26,15 +26,14 @@ class DimensionRepository extends AbstractRawRepository
                 $queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter($identifier))
             )
             ->execute()
-            ->fetchAll();
+            ->fetchAll()
+        ;
 
         return $rows[0] ?? null;
     }
 
     /**
      * Get the tablename.
-     *
-     * @return string
      */
     protected function getTableName(): string
     {

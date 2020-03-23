@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Override the ViewHelper with ratio.
  */
@@ -18,7 +20,7 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
     /**
      * Initialize ViewHelper arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('ratio', 'string', 'Ratio of the image', false, '1:1');
@@ -27,13 +29,14 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function render()
     {
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
         $internalImage = null;
+
         try {
             $internalImage = $service->getViewHelperImage($this->arguments['src'], $this->arguments['image'], $this->arguments['treatIdAsReference']);
             if ($this->arguments['realCrop'] && $internalImage instanceof FileInterface) {

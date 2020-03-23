@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
 use HDNET\Autoloader\Utility\ModelUtility;
+use HDNET\Focuspoint\Service\TcaService;
 
 $GLOBALS['TCA']['tt_content'] = ModelUtility::getTcaOverrideInformation(
     'focuspoint',
@@ -13,7 +16,7 @@ $custom = [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => \HDNET\Focuspoint\Service\TcaService::class . '->addDatabaseItems',
+                'itemsProcFunc' => TcaService::class . '->addDatabaseItems',
                 'items' => [
                     [
                         'Natural',
@@ -141,14 +144,14 @@ $custom = [
     ],
     'palettes' => [
         'image_settings' => [
-            'showitem' => \str_replace(
+            'showitem' => str_replace(
                 'imageborder;',
                 'image_ratio,imageborder;',
                 $GLOBALS['TCA']['tt_content']['palettes']['image_settings']['showitem']
             ),
         ],
         'mediaAdjustments' => [
-            'showitem' => \str_replace(
+            'showitem' => str_replace(
                 'imageborder;',
                 'image_ratio,imageborder;',
                 $GLOBALS['TCA']['tt_content']['palettes']['mediaAdjustments']['showitem']

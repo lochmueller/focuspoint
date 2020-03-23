@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Content.
  */
@@ -39,7 +41,7 @@ class Content extends AbstractModel
      *
      * @param string $imageRatio
      */
-    public function setImageRatio($imageRatio)
+    public function setImageRatio($imageRatio): void
     {
         $this->imageRatio = $imageRatio;
     }

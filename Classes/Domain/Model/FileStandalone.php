@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * File standalone.
  */
@@ -13,7 +15,7 @@ use HDNET\Autoloader\Annotation\SmartExclude;
 /**
  * File standalone.
  *
- * @DatabaseTable()
+ * @DatabaseTable
  * @SmartExclude({"EnableFields", "Language"})
  */
 class FileStandalone extends AbstractModel
@@ -55,7 +57,7 @@ class FileStandalone extends AbstractModel
      *
      * @param int $focusPointY
      */
-    public function setFocusPointY($focusPointY)
+    public function setFocusPointY($focusPointY): void
     {
         $this->focusPointY = $focusPointY;
     }
@@ -75,7 +77,7 @@ class FileStandalone extends AbstractModel
      *
      * @param int $focusPointX
      */
-    public function setFocusPointX($focusPointX)
+    public function setFocusPointX($focusPointX): void
     {
         $this->focusPointX = $focusPointX;
     }
