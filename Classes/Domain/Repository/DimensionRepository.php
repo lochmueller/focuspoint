@@ -14,10 +14,8 @@ class DimensionRepository extends AbstractRawRepository
 {
     /**
      * Find one by identifier.
-     *
-     * @return array|null
      */
-    public function findOneByIdentifier(string $identifier)
+    public function findOneByIdentifier(string $identifier): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')

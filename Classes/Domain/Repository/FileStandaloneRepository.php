@@ -14,10 +14,8 @@ class FileStandaloneRepository extends AbstractRawRepository
 {
     /**
      * Find one by relative file path.
-     *
-     * @return array|null
      */
-    public function findOneByRelativeFilePath(string $relativeFilePath)
+    public function findOneByRelativeFilePath(string $relativeFilePath): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')

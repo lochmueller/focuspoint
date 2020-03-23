@@ -15,10 +15,8 @@ class SysFileMetadataRepository extends AbstractRawRepository
 {
     /**
      * Find one by file.
-     *
-     * @return array|null
      */
-    public function findOneByFileUid(int $fileUid)
+    public function findOneByFileUid(int $fileUid): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')

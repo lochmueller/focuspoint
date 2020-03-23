@@ -1,11 +1,11 @@
 <?php
 
-use HDNET\Focuspoint\Controller\Wizard\FocuspointController;
+use HDNET\Focuspoint\Controller\BackendController;
 
 return [
     'focuspoint' => [
         'path' => '/wizard/focuspoint',
-        'target' => FocuspointController::class . '::mainAction'
+        'target' => BackendController::class . '::wizardAction'
     ]
 ];
 

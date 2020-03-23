@@ -6,7 +6,7 @@ declare(strict_types = 1);
  * Wizard controller.
  */
 
-namespace HDNET\Focuspoint\Controller\Wizard;
+namespace HDNET\Focuspoint\Controller;
 
 use HDNET\Focuspoint\Service\WizardHandler\AbstractWizardHandler;
 use HDNET\Focuspoint\Service\WizardHandler\File;
@@ -25,17 +25,18 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 /**
  * Wizard controller.
  */
-class FocuspointController
+class BackendController
 {
     /**
-     * Main action.
+     * Returns the Module menu for the AJAX request.
      *
-     * @throws \Exception
-     *
-     * @return string
+     * @param ResponseInterface $response
      */
-    public function main()
+    public function wizardAction(ServerRequestInterface $request, ResponseInterface $response = null): ResponseInterface
     {
+        if (null === $response) {
+            $response = new HtmlResponse('');
+        }
         $handler = $this->getCurrentHandler();
         $parameter = GeneralUtility::_GET();
         if (isset($parameter['save'])) {
@@ -69,21 +70,7 @@ class FocuspointController
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
         $template->assign('saveUri', $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
 
-        return $template->render();
-    }
-
-    /**
-     * Returns the Module menu for the AJAX request.
-     *
-     * @param ResponseInterface $response
-     */
-    public function mainAction(ServerRequestInterface $request, ResponseInterface $response = null): ResponseInterface
-    {
-        if (null === $response) {
-            $response = new HtmlResponse('');
-        }
-        $content = $this->main();
-        $response->getBody()->write($content);
+        $response->getBody()->write((string)$template->render());
 
         return $response;
     }

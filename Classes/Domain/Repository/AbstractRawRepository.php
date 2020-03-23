@@ -18,10 +18,8 @@ abstract class AbstractRawRepository
 {
     /**
      * Find by uid.
-     *
-     * @return array|null
      */
-    public function findByUid(int $uid)
+    public function findByUid(int $uid): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
         $rows = $queryBuilder->select('*')
@@ -75,20 +73,16 @@ abstract class AbstractRawRepository
 
     /**
      * Get connection.
-     *
-     * @return \TYPO3\CMS\Core\Database\Connection
      */
-    protected function getConnection()
+    protected function getConnection(): \TYPO3\CMS\Core\Database\Connection
     {
         return $this->getConnectionPool()->getConnectionForTable($this->getTableName());
     }
 
     /**
      * Get query builder.
-     *
-     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
      */
-    protected function getQueryBuilder()
+    protected function getQueryBuilder(): \TYPO3\CMS\Core\Database\Query\QueryBuilder
     {
         return $this->getConnectionPool()->getQueryBuilderForTable($this->getTableName());
     }
@@ -100,10 +94,8 @@ abstract class AbstractRawRepository
 
     /**
      * Get connection pool.
-     *
-     * @return ConnectionPool
      */
-    private function getConnectionPool()
+    private function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
     }
