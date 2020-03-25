@@ -1,45 +1,11 @@
 {namespace c=TYPO3\CMS\Core\ViewHelpers}
 
-<f:be.container includeCssFiles="{0: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/css/focuspoint.css\')}', 1: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/demos/demo.css\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/grid/grid.css\')}', 3: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/helper/helper-tool.css\')}', 4: '{f:uri.resource(extensionName: \'focuspoint\', path:\'Css/Helper.css\')}'}"
-								includeJsFiles="{0:'{f:uri.resource(extensionName: \'focuspoint\', path:\'JavaScript/jquery-1.11.3.min.js\')}', 1:'{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.min.js\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.helpertool.js\')}'}">
+<f:be.container
+	includeCssFiles="{0: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/css/focuspoint.css\')}', 1: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/demos/demo.css\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/grid/grid.css\')}', 3: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/helper/helper-tool.css\')}', 4: '{f:uri.resource(extensionName: \'focuspoint\', path:\'Css/Helper.css\')}'}"
+	includeJsFiles="{0:'{f:uri.resource(extensionName: \'focuspoint\', path:\'JavaScript/jquery-1.11.3.min.js\')}', 1:'{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.js\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.helpertool.js\')}'}">
 
-	<style type="text/css">
-		body {
-			top: 0;
-			left: 0;
-			right: 0;
-		}
-	</style>
-
-	<div class="typo3-fullDoc">
-		<div id="typo3-docheader">
-			<div id="typo3-docheader-row1" class="typo3-docheader-functions">
-				<div class="buttonsleft left">
-					<f:be.buttons.csh/>
-					<f:render section="menu" optional="true"/>
-				</div>
-				<div class="buttonsright right">
-					<f:be.pagePath/>
-					<f:be.pageInfo/>
-				</div>
-			</div>
-			<div id="typo3-docheader-row2" class="typo3-docheader-buttons">
-				<div class="docheader-row2-left left">
-					<f:render section="iconButtons" optional="true" arguments="{saveUri: saveUri}"/>
-				</div>
-				<div class="docheader-row2-right right">
-					<f:be.buttons.shortcut/>
-				</div>
-			</div>
-		</div>
-
-		<div id="typo3-docbody">
-			<div id="typo3-inner-docbody">
-				<f:flashMessages />
-				<f:render section="content"
-									arguments="{filePath: filePath, currentTop:currentTop, currentLeft: currentLeft}"/>
-			</div>
-		</div>
+	<div style="position: relative; height: 100%; width: 100%">
+		<f:render section="content" arguments="{_all}"/>
 	</div>
 </f:be.container>
 
@@ -54,6 +20,9 @@
 				<div class="helper-tool">
 					<h1>
 						<f:translate key="wizard.title" extensionName="focuspoint"/>
+						<a href="{saveUri}" id="saveFocus">
+							<c:icon identifier="actions-document-save-close"/>
+						</a>
 					</h1>
 
 					<div class="helper-tool-target">
@@ -83,7 +52,7 @@
 						jQuery('img.helper-tool-img').trigger('click');
 					}, 1000);
 
-					jQuery('#saveFocus').click(function () {
+					jQuery('#saveFocus').click(function (e) {
 						var valueString = jQuery('#data-attr').val();
 
 						var Ausdruck = /-y="([-0-9\.]*)"/;
@@ -104,14 +73,4 @@
 			<f:translate key="no.handler" extensionName="focuspoint"/>
 		</f:else>
 	</f:if>
-</f:section>
-
-<f:section name="iconButtons">
-	<a href="{saveUri}" id="saveFocus">
-		<c:icon identifier="actions-document-save-close"/>
-	</a>
-</f:section>
-
-<f:section name="menu">
-
 </f:section>

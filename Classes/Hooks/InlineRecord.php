@@ -105,10 +105,10 @@ class InlineRecord implements InlineElementHookInterface
             $wizardArguments = [
                 'P' => [
                     'referenceUid' => $childRecord['uid'],
-                    'returnUrl' => $uriBuilder->buildUriFromRoute('record_edit', $returnUrl),
+                    'returnUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', $returnUrl),
                 ],
             ];
-            $wizardUri = $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
+            $wizardUri = (string)$uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
         } else {
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
         }

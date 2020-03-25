@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -41,7 +42,7 @@ class BackendController
         $parameter = GeneralUtility::_GET();
         if (isset($parameter['save'])) {
             if (\is_object($handler)) {
-                $handler->setCurrentPoint($parameter['xValue'] * 100, $parameter['yValue'] * 100);
+                $handler->setCurrentPoint((int)($parameter['xValue'] * 100), (int)($parameter['yValue'] * 100));
             }
             HttpUtility::redirect($parameter['P']['returnUrl']);
         }
@@ -68,7 +69,7 @@ class BackendController
         }
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $template->assign('saveUri', $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
+        $template->assign('saveUri', (string)$uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
 
         $response->getBody()->write((string)$template->render());
 
