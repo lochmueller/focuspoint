@@ -74,6 +74,8 @@ class InlineRecord implements InlineElementHookInterface
             return;
         }
 
+        return; // @todo in v10 the icon just open the IRRE element and not the wizard. Since there is no solution I will hide the icon.
+
         // Handling for TYPO3 > 8.x
         foreach ($childRecord['uid_local'] as $item) {
             if ('sys_file' !== $item['table']) {
