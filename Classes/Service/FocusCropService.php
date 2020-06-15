@@ -292,7 +292,9 @@ class FocusCropService extends AbstractService
     protected function getTempImageFolder()
     {
         if ($this->tempImageFolder === null) {
-            $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
+            $extConf = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+                \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+            )->get('focuspoint');
             if (isset($extConf['tempImageFolder'])) {
                 $this->tempImageFolder = $extConf['tempImageFolder'];
             } else {
