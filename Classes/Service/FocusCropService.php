@@ -18,6 +18,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
  * Crop images via focus crop.
@@ -281,9 +282,10 @@ class FocusCropService extends AbstractService
     protected function getTempImageFolder(): string
     {
         if (null === $this->tempImageFolder) {
-            $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['focuspoint']);
-            if (isset($extConf['tempImageFolder'])) {
-                $this->tempImageFolder = $extConf['tempImageFolder'];
+            // get extension Configuration set from Extension Manager
+            $foucspointConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('focuspoint');
+            if (isset($foucspointConfiguration['tempImageFolder'])) {
+                $this->tempImageFolder = $foucspointConfiguration['tempImageFolder'];
             } else {
                 $this->tempImageFolder = 'typo3temp/focuscrop/';
             }
