@@ -9,6 +9,7 @@ declare(strict_types = 1);
 namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -16,16 +17,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
-use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
  * Crop images via focus crop.
  */
 class FocusCropService extends AbstractService
 {
-    const SIGNAL_tempImageCropped = 'tempImageCropped';
+    public const SIGNAL_tempImageCropped = 'tempImageCropped';
 
     /**
      * @var Dispatcher
@@ -225,20 +224,10 @@ class FocusCropService extends AbstractService
     protected function getSignalSlotDispatcher()
     {
         if (!isset($this->signalSlotDispatcher)) {
-            $this->signalSlotDispatcher = $this->getObjectManager()->get(Dispatcher::class);
+            $this->signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         }
 
         return $this->signalSlotDispatcher;
-    }
-
-    /**
-     * Gets the ObjectManager.
-     *
-     * @return ObjectManager
-     */
-    protected function getObjectManager()
-    {
-        return GeneralUtility::makeInstance(ObjectManager::class);
     }
 
     /**
