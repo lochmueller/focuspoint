@@ -74,8 +74,6 @@ class InlineRecord implements InlineElementHookInterface
             return;
         }
 
-        return; // @todo in v10 the icon just open the IRRE element and not the wizard. Since there is no solution I will hide the icon.
-
         // Handling for TYPO3 > 8.x
         foreach ($childRecord['uid_local'] as $item) {
             if ('sys_file' !== $item['table']) {
@@ -87,7 +85,7 @@ class InlineRecord implements InlineElementHookInterface
         }
 
         $table = $childRecord['tablenames'];
-        $uid = $parentUid;
+        $uid = (int)$parentUid;
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
@@ -116,18 +114,13 @@ class InlineRecord implements InlineElementHookInterface
         }
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance(WizardService::class);
-        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton((string)$wizardUri));
+        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton((string)$wizardUri, true));
     }
 
     /**
      * Check if the record is valid.
-     *
-     * @param string $table
-     * @param int    $uid
-     *
-     * @return bool
      */
-    protected function isValidRecord($table, $uid)
+    protected function isValidRecord(string $table, int $uid): bool
     {
         return null !== BackendUtility::getRecord($table, $uid);
     }
@@ -136,10 +129,8 @@ class InlineRecord implements InlineElementHookInterface
      * Add a element with the given key in front of the array.
      *
      * @param $arr
-     * @param string $key
-     * @param string $val
      */
-    protected function arrayUnshiftAssoc(&$arr, $key, $val): void
+    protected function arrayUnshiftAssoc(array &$arr, string $key, string $val): void
     {
         $arr = array_reverse($arr, true);
         $arr[$key] = $val;
