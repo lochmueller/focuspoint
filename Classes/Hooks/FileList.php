@@ -67,10 +67,8 @@ class FileList implements FileListEditIconHookInterface
      * @param array $cells
      *
      * @throws \Exception
-     *
-     * @return int
      */
-    protected function getFileMetaUidByCells($cells)
+    protected function getFileMetaUidByCells($cells): int
     {
         if ($cells['__fileOrFolderObject'] instanceof FileInterface) {
             $metaData = $cells['__fileOrFolderObject']->_getMetaData();

@@ -84,14 +84,12 @@ class FileReference extends AbstractWizardHandler
 
     /**
      * Fetch the meta data UID.
-     *
-     * @return int|null
      */
-    protected function getReferenceUid()
+    protected function getReferenceUid(): ?int
     {
         $parameter = GeneralUtility::_GET();
         if (!isset($parameter['P'])) {
-            return;
+            return null;
         }
         $p = $parameter['P'];
         if (isset($p['referenceUid']) && MathUtility::canBeInterpretedAsInteger($p['referenceUid'])) {

@@ -24,21 +24,14 @@ class CropService extends AbstractService
 {
     /**
      * Create the crop version of the image.
-     *
-     * @param string $absoluteImageName
-     * @param int    $focusWidth
-     * @param int    $focusHeight
-     * @param int    $sourceX
-     * @param int    $sourceY
-     * @param string $absoluteTempImageName
      */
     public function createImage(
-        $absoluteImageName,
-        $focusWidth,
-        $focusHeight,
-        $sourceX,
-        $sourceY,
-        $absoluteTempImageName
+        string $absoluteImageName,
+        int $focusWidth,
+        int $focusHeight,
+        int $sourceX,
+        int $sourceY,
+        string $absoluteTempImageName
     ): void {
         $fileExtension = mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
         $function = $this->getFunctionName($fileExtension);
@@ -83,21 +76,14 @@ class CropService extends AbstractService
 
     /**
      * Create the crop image (ImageMagikc/Gm).
-     *
-     * @param string $absoluteImageName
-     * @param int    $focusWidth
-     * @param int    $focusHeight
-     * @param int    $sourceX
-     * @param int    $sourceY
-     * @param string $absoluteTempImageName
      */
     protected function cropViaImageMagick(
-        $absoluteImageName,
-        $focusWidth,
-        $focusHeight,
-        $sourceX,
-        $sourceY,
-        $absoluteTempImageName
+        string $absoluteImageName,
+        int $focusWidth,
+        int $focusHeight,
+        int $sourceX,
+        int $sourceY,
+        string $absoluteTempImageName
     ): void {
         $quality = MathUtility::forceIntegerInRange($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'], 10, 100, 75);
 
@@ -111,21 +97,14 @@ class CropService extends AbstractService
 
     /**
      * Create the crop image (GifBuilder).
-     *
-     * @param string $absoluteImageName
-     * @param int    $focusWidth
-     * @param int    $focusHeight
-     * @param int    $sourceX
-     * @param int    $sourceY
-     * @param string $absoluteTempImageName
      */
     protected function cropViaGifBuilder(
-        $absoluteImageName,
-        $focusWidth,
-        $focusHeight,
-        $sourceX,
-        $sourceY,
-        $absoluteTempImageName
+        string $absoluteImageName,
+        int $focusWidth,
+        int $focusHeight,
+        int $sourceX,
+        int $sourceY,
+        string $absoluteTempImageName
     ): void {
         $size = getimagesize($absoluteImageName);
         $relativeImagePath = rtrim(PathUtility::getRelativePath(
@@ -165,21 +144,14 @@ class CropService extends AbstractService
 
     /**
      * Create the crop image (GraphicalFunctions).
-     *
-     * @param string $absoluteImageName
-     * @param int    $focusWidth
-     * @param int    $focusHeight
-     * @param int    $sourceX
-     * @param int    $sourceY
-     * @param string $absoluteTempImageName
      */
     protected function cropViaGraphicalFunctions(
-        $absoluteImageName,
-        $focusWidth,
-        $focusHeight,
-        $sourceX,
-        $sourceY,
-        $absoluteTempImageName
+        string $absoluteImageName,
+        int $focusWidth,
+        int $focusHeight,
+        int $sourceX,
+        int $sourceY,
+        string $absoluteTempImageName
     ): void {
         /** @var GraphicalFunctions $graphicalFunctions */
         $graphicalFunctions = GeneralUtility::makeInstance(GraphicalFunctions::class);

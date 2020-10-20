@@ -9,6 +9,7 @@ declare(strict_types = 1);
 namespace HDNET\Focuspoint\Utility;
 
 use HDNET\Focuspoint\Domain\Repository\SysFileMetadataRepository;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -20,14 +21,12 @@ class FileUtility
     /**
      * Get the file object of the given cell information.
      *
-     * @param int $uid
-     *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      */
-    public static function getFileByMetaData($uid): \TYPO3\CMS\Core\Resource\File
+    public static function getFileByMetaData(int $uid): File
     {
-        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int)$uid);
+        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid($uid);
         if (!isset($row['file'])) {
             throw new \Exception('File not found in metadata', 1475144028);
         }
@@ -38,12 +37,10 @@ class FileUtility
     /**
      * Get the file object of the given cell information.
      *
-     * @param int $uid
-     *
      * @throws \Exception
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      */
-    public static function getFileByUid($uid): \TYPO3\CMS\Core\Resource\File
+    public static function getFileByUid(int $uid): File
     {
         return ResourceFactory::getInstance()
             ->getFileObject($uid)

@@ -90,25 +90,23 @@ class Group extends AbstractWizardHandler
 
     /**
      * get the file name.
-     *
-     * @return string|null
      */
-    protected function getRelativeFilePath()
+    protected function getRelativeFilePath(): ?string
     {
         $parameter = GeneralUtility::_GET();
         if (!isset($parameter['P'])) {
-            return;
+            return null;
         }
         $p = $parameter['P'];
         if (!isset($p['table']) || !isset($p['field']) || !isset($p['file'])) {
-            return;
+            return null;
         }
         if (!isset($GLOBALS['TCA'][$p['table']])) {
-            return;
+            return null;
         }
         $tableTca = $GLOBALS['TCA'][$p['table']];
         if (!isset($tableTca['columns'][$p['field']])) {
-            return;
+            return null;
         }
         $fieldTca = $tableTca['columns'][$p['field']];
 
@@ -120,7 +118,7 @@ class Group extends AbstractWizardHandler
 
         $filePath = $baseFolder . $p['file'];
         if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
-            return;
+            return null;
         }
 
         return $filePath;

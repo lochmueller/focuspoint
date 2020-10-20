@@ -20,17 +20,17 @@ class DimensionService extends AbstractService
     /**
      * Crop mode. Not necessary.
      */
-    const CROP_NONE = 0;
+    public const CROP_NONE = 0;
 
     /**
      * Crop in landscape.
      */
-    const CROP_LANDSCAPE = 1;
+    public const CROP_LANDSCAPE = 1;
 
     /**
      * Crop in portrait.
      */
-    const CROP_PORTRAIT = 2;
+    public const CROP_PORTRAIT = 2;
 
     /**
      * Calc the ratio and check if the crop is landscape or portrait relevant.
@@ -121,13 +121,13 @@ class DimensionService extends AbstractService
         list($focusWidth, $focusHeight) = $this->getFocusWidthAndHeight($imgWidth, $imgHeight, $ratio);
 
         list($sourceX, $sourceY) = $this->calculateSourcePosition(
+            $focusWidth > $focusHeight ? self::CROP_LANDSCAPE : self::CROP_PORTRAIT,
             $imgWidth,
             $imgHeight,
             $focusWidth,
             $focusHeight,
             $focusX,
-            $focusY,
-            $ratio
+            $focusY
         );
 
         $newHalfWidth = $focusWidth / 2;

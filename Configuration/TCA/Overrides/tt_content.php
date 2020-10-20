@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
 use HDNET\Focuspoint\Service\TcaService;
 
@@ -160,7 +161,7 @@ $custom = [
     ],
 ];
 
-$GLOBALS['TCA']['tt_content'] = \HDNET\Autoloader\Utility\ArrayUtility::mergeRecursiveDistinct(
+$GLOBALS['TCA']['tt_content'] = ArrayUtility::mergeRecursiveDistinct(
     $GLOBALS['TCA']['tt_content'],
     $custom
 );

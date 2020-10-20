@@ -74,14 +74,12 @@ class File extends AbstractWizardHandler
 
     /**
      * Fetch the meta data UID.
-     *
-     * @return int|null
      */
-    protected function getMataDataUid()
+    protected function getMataDataUid(): ?int
     {
         $parameter = GeneralUtility::_GET();
         if (!isset($parameter['P'])) {
-            return;
+            return null;
         }
         $p = $parameter['P'];
         if (isset($p['metaUid']) && MathUtility::canBeInterpretedAsInteger($p['metaUid'])) {
@@ -90,5 +88,7 @@ class File extends AbstractWizardHandler
         if (isset($p['table']) && 'sys_file_metadata' === $p['table'] && isset($p['uid']) && MathUtility::canBeInterpretedAsInteger($p['uid'])) {
             return (int)$p['uid'];
         }
+
+        return null;
     }
 }

@@ -36,7 +36,7 @@ class ImageUtility
      *
      * @param $pathOrExtension
      */
-    public static function isValidFileExtension($pathOrExtension): bool
+    public static function isValidFileExtension(string $pathOrExtension): bool
     {
         $pathOrExtension = mb_strtolower($pathOrExtension);
         $validExtensions = self::getAllowedFileExtensions();

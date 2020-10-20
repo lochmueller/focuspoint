@@ -6,7 +6,6 @@ if (!defined('TYPO3_MODE')) {
 
 $loader = [
     'Xclass',
-    // 'Hooks', Called manually
     'SmartObjects',
     'ExtensionTypoScriptSetup',
     'Plugins',

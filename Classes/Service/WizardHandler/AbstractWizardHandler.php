@@ -11,7 +11,6 @@ namespace HDNET\Focuspoint\Service\WizardHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\ImageService;
 
 /**
@@ -44,15 +43,11 @@ abstract class AbstractWizardHandler
      */
     abstract public function getPublicUrl(): string;
 
-    /**
-     * @param string $url
-     */
-    protected function displayableImageUrl($url): string
+    protected function displayableImageUrl(string $url): string
     {
         if (\in_array(PathUtility::pathinfo($url, PATHINFO_EXTENSION), ['tif', 'tiff'], true)) {
-            $objectManager = new ObjectManager();
             /** @var ImageService $imageService */
-            $imageService = $objectManager->get(ImageService::class);
+            $imageService = GeneralUtility::makeInstance(ImageService::class);
             $image = $imageService->getImage($url, null, false);
             $processedImage = $imageService->applyProcessingInstructions($image, [
                 'width' => '800',
