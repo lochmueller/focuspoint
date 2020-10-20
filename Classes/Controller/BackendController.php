@@ -20,7 +20,6 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\HttpUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -39,7 +38,7 @@ class BackendController
             $response = new HtmlResponse('');
         }
         $handler = $this->getCurrentHandler();
-        $parameter = GeneralUtility::_GET();
+        $parameter = $request->getQueryParams();
         if (isset($parameter['save'])) {
             if (\is_object($handler)) {
                 $handler->setCurrentPoint((int)($parameter['xValue'] * 100), (int)($parameter['yValue'] * 100));
@@ -78,10 +77,8 @@ class BackendController
 
     /**
      * Get the current handler.
-     *
-     * @return AbstractWizardHandler|null
      */
-    protected function getCurrentHandler()
+    protected function getCurrentHandler(): ?AbstractWizardHandler
     {
         foreach ($this->getWizardHandler() as $handler) {
             /** @var AbstractWizardHandler $handler */
