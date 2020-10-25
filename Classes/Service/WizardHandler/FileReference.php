@@ -77,7 +77,7 @@ class FileReference extends AbstractWizardHandler
 
         $sysFileMatadataRepository = GeneralUtility::makeInstance(SysFileMetadataRepository::class);
         $row = $sysFileMatadataRepository->findOneByFileUid((int)$fileUid);
-        if ($row) {
+        if ($row && 0 === (int)$row['focus_point_y'] && 0 === (int)$row['focus_point_x']) {
             $sysFileMatadataRepository->update((int)$row['uid'], $values);
         }
     }
