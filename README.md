@@ -12,10 +12,10 @@
 ### Add TypoScript
 Include in static template or add TypoScript includes to your extension or template.
 ```typo3_typoscript
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:focuspoint/Configuration/TypoScript/setup.txt">
+@import 'EXT:focuspoint/Configuration/TypoScript/setup.txt'
 
 # Setup must be after "page" TypoScript
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:focuspoint/Configuration/TypoScript/setup.txt">
+@import 'EXT:focuspoint/Configuration/TypoScript/setup.txt'
 ```
 
 ### Fluid template (Example)
@@ -30,7 +30,7 @@ Edit your fluid template.
 ```
 
 ### Custom CSS
-Maybe you want to add additional css, for fluid example
+Maybe you want to add additional css, for fluid example.
 ```css
 .focuspoint {
   position: relative;
@@ -44,4 +44,4 @@ Maybe you want to add additional css, for fluid example
 Thank you for support and sponsoring the extension:
 
 - Violetta Digital Craft GmbH, [www.violetta.ch](https://www.violetta.ch)
-- and [all contributos](https://github.com/lochmueller/focuspoint/graphs/contributors)!
+- and [all contributors](https://github.com/lochmueller/focuspoint/graphs/contributors)!
