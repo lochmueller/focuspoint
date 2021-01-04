@@ -147,6 +147,11 @@ class FocusCropService extends AbstractService
         $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
         $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
 
+        // if image is SVG simply return its relative path we can not crop it
+        if('image/svg+xml' === mime_content_type($absoluteImageName)) {
+            return $relativeSrc;
+        }
+
         if (0 === $focusPointX && 0 === $focusPointY) {
             $row = GeneralUtility::makeInstance(FileStandaloneRepository::class)->findOneByRelativeFilePath($relativeSrc);
             if (isset($row['focus_point_x'])) {
