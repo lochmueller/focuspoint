@@ -36,10 +36,9 @@ class TcaUtility
                             'name' => 'focuspoint',
                         ],
                     ],
-                    'slider' => [
-                        'type' => 'slider',
-                        'step' => '1',
-                    ],
+                ],
+                'slider' => [
+                    'step' => '1',
                 ],
             ],
         ];
