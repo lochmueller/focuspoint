@@ -38,6 +38,7 @@
 	},
 	"extra": {
 		"typo3/cms": {
+			"extension-key": "focuspoint",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web",
 			"Package": {
