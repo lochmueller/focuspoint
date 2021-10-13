@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Crop images.
@@ -35,7 +35,7 @@ class CropService extends AbstractService
     ): void {
         $fileExtension = mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION));
         $function = $this->getFunctionName($fileExtension);
-        $function = 'cropVia' . $function;
+        $function = 'cropVia'.$function;
         $this->{$function}(
             $absoluteImageName,
             $focusWidth,
@@ -60,7 +60,7 @@ class CropService extends AbstractService
         $functionConfiguration = $configuration['imageFunctionConfiguration'] ?? 'png:cropViaGifBuilder;*:GraphicalFunctions';
         $parts = GeneralUtility::trimExplode(';', $functionConfiguration, true);
         foreach ($parts as $part) {
-            list($extensions, $function) = GeneralUtility::trimExplode(':', $part, true);
+            [$extensions, $function] = GeneralUtility::trimExplode(':', $part, true);
             if (!\in_array($function, $validFunctions, true)) {
                 continue;
             }
@@ -87,10 +87,10 @@ class CropService extends AbstractService
     ): void {
         $quality = MathUtility::forceIntegerInRange($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'], 10, 100, 75);
 
-        $cropCommand = $focusWidth . 'x' . $focusHeight . '+' . $sourceX . '+' . $sourceY;
+        $cropCommand = $focusWidth.'x'.$focusHeight.'+'.$sourceX.'+'.$sourceY;
         $command = CommandUtility::imageMagickCommand(
             'convert',
-            '-quality ' . $quality . ' ' . $absoluteImageName . ' -crop ' . $cropCommand . '  +repage ' . $absoluteTempImageName
+            '-quality '.$quality.' '.$absoluteImageName.' -crop '.$cropCommand.'  +repage '.$absoluteTempImageName
         );
         CommandUtility::exec($command, $out);
     }
@@ -115,7 +115,7 @@ class CropService extends AbstractService
         // https://github.com/TYPO3/TYPO3.CMS/blob/TYPO3_7-6/typo3/sysext/frontend/Classes/Imaging/GifBuilder.php#L367-L368
         $configuration = [
             'format' => mb_strtolower(PathUtility::pathinfo($absoluteImageName, PATHINFO_EXTENSION)),
-            'XY' => $size[0] . ',' . $size[1],
+            'XY' => $size[0].','.$size[1],
             'maxWidth' => $size[0],
             'maxHeight' => $size[1],
             'transparentBackground' => '1',
@@ -130,7 +130,7 @@ class CropService extends AbstractService
             ],
             '20' => 'CROP',
             '20.' => [
-                'crop' => $sourceX . ',' . $sourceY . ',' . $focusWidth . ',' . $focusHeight,
+                'crop' => $sourceX.','.$sourceY.','.$focusWidth.','.$focusHeight,
             ],
         ];
 

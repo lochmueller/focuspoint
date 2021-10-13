@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Extends the file list.
@@ -13,6 +13,7 @@ use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\FileUtility;
 use HDNET\Focuspoint\Utility\ImageUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
@@ -57,7 +58,7 @@ class FileList implements FileListEditIconHookInterface
             ],
         ];
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $wizardUri = (string)$uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
+        $wizardUri = (string) $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
         $cells['focuspoint'] = $wizardService->getWizardButton($wizardUri);
     }
 
@@ -70,6 +71,11 @@ class FileList implements FileListEditIconHookInterface
      */
     protected function getFileMetaUidByCells($cells): int
     {
+        if ($cells['__fileOrFolderObject'] instanceof File) {
+            if (\is_callable([$cells['__fileOrFolderObject'], 'getMetaData'])) {
+                return $cells['__fileOrFolderObject']->getMetaData()->get()['uid'];
+            }
+        }
         if ($cells['__fileOrFolderObject'] instanceof FileInterface) {
             $metaData = $cells['__fileOrFolderObject']->_getMetaData();
         }
@@ -77,6 +83,6 @@ class FileList implements FileListEditIconHookInterface
             throw new \Exception('No meta data found', 1475144024);
         }
 
-        return (int)$metaData['uid'];
+        return (int) $metaData['uid'];
     }
 }

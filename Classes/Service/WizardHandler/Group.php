@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
@@ -53,7 +53,7 @@ class Group extends AbstractWizardHandler
 
         if (isset($row['uid'])) {
             $fileStandaloneRepository->update(
-                (int)$row['uid'],
+                (int) $row['uid'],
                 $values
             );
         } else {
@@ -113,10 +113,10 @@ class Group extends AbstractWizardHandler
         $uploadFolder = $fieldTca['config']['uploadfolder'] ?? '';
         $baseFolder = '';
         if ('' !== trim($uploadFolder, '/')) {
-            $baseFolder = rtrim($uploadFolder, '/') . '/';
+            $baseFolder = rtrim($uploadFolder, '/').'/';
         }
 
-        $filePath = $baseFolder . $p['file'];
+        $filePath = $baseFolder.$p['file'];
         if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
             return null;
         }

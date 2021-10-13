@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Override the ViewHelper with ratio.
@@ -65,12 +65,12 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 
             $additionalClassDiv = 'focuspoint';
             if (!empty($this->arguments['additionalClassDiv'])) {
-                $additionalClassDiv .= ' ' . $this->arguments['additionalClassDiv'];
+                $additionalClassDiv .= ' '.$this->arguments['additionalClassDiv'];
             }
 
-            $focusTag = '<div class="' . $additionalClassDiv . '" data-image-imageSrc="' . $this->tag->getAttribute('src') . '" data-focus-x="' . ($focusPointX / 100) . '" data-focus-y="' . ($focusPointY / 100) . '" data-image-w="' . $this->tag->getAttribute('width') . '" data-image-h="' . $this->tag->getAttribute('height') . '">';
+            $focusTag = '<div class="'.$additionalClassDiv.'" data-image-imageSrc="'.$this->tag->getAttribute('src').'" data-focus-x="'.($focusPointX / 100).'" data-focus-y="'.($focusPointY / 100).'" data-image-w="'.$this->tag->getAttribute('width').'" data-image-h="'.$this->tag->getAttribute('height').'">';
 
-            return $focusTag . $this->tag->render() . '</div>';
+            return $focusTag.$this->tag->render().'</div>';
         }
 
         return 'Missing internal image!';

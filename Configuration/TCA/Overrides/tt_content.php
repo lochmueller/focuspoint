@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use HDNET\Autoloader\Utility\ArrayUtility;
 use HDNET\Autoloader\Utility\ModelUtility;
@@ -17,7 +17,7 @@ $custom = [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'itemsProcFunc' => TcaService::class . '->addDatabaseItems',
+                'itemsProcFunc' => TcaService::class.'->addDatabaseItems',
                 'items' => [
                     [
                         'Natural',
@@ -143,25 +143,21 @@ $custom = [
             ],
         ],
     ],
-    'palettes' => [
-        'image_settings' => [
-            'showitem' => str_replace(
-                'imageborder;',
-                'image_ratio,imageborder;',
-                $GLOBALS['TCA']['tt_content']['palettes']['image_settings']['showitem']
-            ),
-        ],
-        'mediaAdjustments' => [
-            'showitem' => str_replace(
-                'imageborder;',
-                'image_ratio,imageborder;',
-                $GLOBALS['TCA']['tt_content']['palettes']['mediaAdjustments']['showitem']
-            ),
-        ],
-    ],
 ];
 
 $GLOBALS['TCA']['tt_content'] = ArrayUtility::mergeRecursiveDistinct(
     $GLOBALS['TCA']['tt_content'],
     $custom
 );
+
+// Check for v11
+$checkPalettes = ['image_settings', 'mediaAdjustments'];
+foreach ($checkPalettes as $p) {
+    if (is_array($GLOBALS['TCA']['tt_content']['palettes'][$p])) {
+        $GLOBALS['TCA']['tt_content']['palettes'][$p]['showitem'] = str_replace(
+            'imageborder;',
+            'image_ratio,imageborder;',
+            $GLOBALS['TCA']['tt_content']['palettes'][$p]['showitem']
+        );
+    }
+}

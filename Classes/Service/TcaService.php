@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * TcaService.
@@ -36,7 +36,7 @@ class TcaService extends AbstractService
         // Add element
         foreach ($customItems as $item) {
             array_unshift($params['items'], [
-                $item['dimension'] . ' / ' . $item['title'],
+                $item['dimension'].' / '.$item['title'],
                 $item['identifier'],
             ]);
         }

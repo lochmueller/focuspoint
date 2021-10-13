@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
@@ -40,7 +40,7 @@ class FileReference extends AbstractWizardHandler
      */
     public function getCurrentPoint(): array
     {
-        $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
+        $reference = GeneralUtility::makeInstance(ResourceFactory::class)->getFileReferenceObject($this->getReferenceUid());
         $properties = $reference->getProperties();
 
         return $this->cleanupPosition([
@@ -54,7 +54,7 @@ class FileReference extends AbstractWizardHandler
      */
     public function getPublicUrl(): string
     {
-        $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
+        $reference = GeneralUtility::makeInstance(ResourceFactory::class)->getFileReferenceObject($this->getReferenceUid());
 
         return $this->displayableImageUrl($reference->getPublicUrl());
     }
@@ -69,16 +69,16 @@ class FileReference extends AbstractWizardHandler
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
 
-        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->update((int)$this->getReferenceUid(), $values);
+        GeneralUtility::makeInstance(SysFileReferenceRepository::class)->update((int) $this->getReferenceUid(), $values);
 
         // save also to the file
-        $reference = ResourceFactory::getInstance()->getFileReferenceObject($this->getReferenceUid());
+        $reference = GeneralUtility::makeInstance(ResourceFactory::class)->getFileReferenceObject($this->getReferenceUid());
         $fileUid = $reference->getOriginalFile()->getUid();
 
         $sysFileMatadataRepository = GeneralUtility::makeInstance(SysFileMetadataRepository::class);
-        $row = $sysFileMatadataRepository->findOneByFileUid((int)$fileUid);
-        if ($row && 0 === (int)$row['focus_point_y'] && 0 === (int)$row['focus_point_x']) {
-            $sysFileMatadataRepository->update((int)$row['uid'], $values);
+        $row = $sysFileMatadataRepository->findOneByFileUid((int) $fileUid);
+        if ($row && 0 === (int) $row['focus_point_y'] && 0 === (int) $row['focus_point_x']) {
+            $sysFileMatadataRepository->update((int) $row['uid'], $values);
         }
     }
 
@@ -93,7 +93,7 @@ class FileReference extends AbstractWizardHandler
         }
         $p = $parameter['P'];
         if (isset($p['referenceUid']) && MathUtility::canBeInterpretedAsInteger($p['referenceUid'])) {
-            return (int)$p['referenceUid'];
+            return (int) $p['referenceUid'];
         }
     }
 }

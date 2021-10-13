@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Crop images via focus crop.
@@ -46,11 +46,11 @@ class FocusCropService extends AbstractService
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
      *
-     * @return \TYPO3\CMS\Core\Resource\File|FileInterface|CoreFileReference|\TYPO3\CMS\Core\Resource\Folder
+     * @return CoreFileReference|FileInterface|\TYPO3\CMS\Core\Resource\File|\TYPO3\CMS\Core\Resource\Folder
      */
     public function getViewHelperImage($src, $image, $treatIdAsReference)
     {
-        $resourceFactory = ResourceFactory::getInstance();
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         if ($image instanceof \TYPO3\CMS\Core\Resource\FileReference) {
             return $image;
         }
@@ -116,8 +116,8 @@ class FocusCropService extends AbstractService
         $result = $this->getCroppedImageSrcBySrc(
             $file->getForLocalProcessing(false),
             $ratio,
-            (int)$file->getProperty('focus_point_x'),
-            (int)$file->getProperty('focus_point_y')
+            (int) $file->getProperty('focus_point_x'),
+            (int) $file->getProperty('focus_point_y')
         );
         if ('' === $result) {
             return $file->getPublicUrl();
@@ -142,27 +142,27 @@ class FocusCropService extends AbstractService
 
         /** @var \TYPO3\CMS\Core\Http\NormalizedParams $params */
         $params = $GLOBALS['TYPO3_REQUEST']->getAttribute('normalizedParams');
-        $docRoot = rtrim($params->getDocumentRoot(), '/') . '/';
+        $docRoot = rtrim($params->getDocumentRoot(), '/').'/';
         $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
-        $focusPointX = MathUtility::forceIntegerInRange((int)$x, -100, 100, 0);
-        $focusPointY = MathUtility::forceIntegerInRange((int)$y, -100, 100, 0);
+        $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
+        $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
 
         // if image is SVG simply return its relative path we can not crop it
-        if('image/svg+xml' === mime_content_type($absoluteImageName)) {
+        if ('image/svg+xml' === mime_content_type($absoluteImageName)) {
             return $relativeSrc;
         }
 
         if (0 === $focusPointX && 0 === $focusPointY) {
             $row = GeneralUtility::makeInstance(FileStandaloneRepository::class)->findOneByRelativeFilePath($relativeSrc);
             if (isset($row['focus_point_x'])) {
-                $focusPointX = MathUtility::forceIntegerInRange((int)$row['focus_point_x'], -100, 100, 0);
-                $focusPointY = MathUtility::forceIntegerInRange((int)$row['focus_point_y'], -100, 100, 0);
+                $focusPointX = MathUtility::forceIntegerInRange((int) $row['focus_point_x'], -100, 100, 0);
+                $focusPointY = MathUtility::forceIntegerInRange((int) $row['focus_point_y'], -100, 100, 0);
             }
         }
 
         $tempImageFolder = $this->getTempImageFolder();
         $tempImageName = $this->generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY);
-        $tempImageName = $tempImageFolder . $tempImageName;
+        $tempImageName = $tempImageFolder.$tempImageName;
 
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
@@ -182,10 +182,10 @@ class FocusCropService extends AbstractService
         // dimensions
         /** @var DimensionService $dimensionService */
         $dimensionService = GeneralUtility::makeInstance(DimensionService::class);
-        list($focusWidth, $focusHeight) = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
+        [$focusWidth, $focusHeight] = $dimensionService->getFocusWidthAndHeight($width, $height, $ratio);
 
         $cropMode = $dimensionService->getCropMode($width, $height, $ratio);
-        list($sourceX, $sourceY) = $dimensionService->calculateSourcePosition(
+        [$sourceX, $sourceY] = $dimensionService->calculateSourcePosition(
             $cropMode,
             $width,
             $height,
@@ -243,7 +243,7 @@ class FocusCropService extends AbstractService
     {
         $name = '';
 
-        list($name) = $this->getSignalSlotDispatcher()->dispatch(__CLASS__, __FUNCTION__, [
+        [$name] = $this->getSignalSlotDispatcher()->dispatch(__CLASS__, __FUNCTION__, [
             $name,
             $absoluteImageName,
             $ratio,
@@ -256,11 +256,11 @@ class FocusCropService extends AbstractService
         }
 
         $hash = \function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
-        $name = $hash . '-fp-' . preg_replace(
+        $name = $hash.'-fp-'.preg_replace(
             '/[^0-9a-z-]/',
             '-',
             $ratio
-        ) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo(
+        ).'-'.$focusPointX.'-'.$focusPointY.'.'.PathUtility::pathinfo(
             $absoluteImageName,
             PATHINFO_EXTENSION
         );

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Hook into the inline icons.
@@ -85,7 +85,7 @@ class InlineRecord implements InlineElementHookInterface
         }
 
         $table = $childRecord['tablenames'];
-        $uid = (int)$parentUid;
+        $uid = (int) $parentUid;
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
@@ -105,16 +105,16 @@ class InlineRecord implements InlineElementHookInterface
             $wizardArguments = [
                 'P' => [
                     'referenceUid' => $childRecord['uid'],
-                    'returnUrl' => (string)$uriBuilder->buildUriFromRoute('record_edit', $returnUrl),
+                    'returnUrl' => (string) $uriBuilder->buildUriFromRoute('record_edit', $returnUrl),
                 ],
             ];
-            $wizardUri = (string)$uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
+            $wizardUri = (string) $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
         } else {
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
         }
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance(WizardService::class);
-        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton((string)$wizardUri, true));
+        $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton((string) $wizardUri, true));
     }
 
     /**

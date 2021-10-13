@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Wizard controller.
@@ -41,7 +41,7 @@ class BackendController
         $parameter = $request->getQueryParams();
         if (isset($parameter['save'])) {
             if (\is_object($handler)) {
-                $handler->setCurrentPoint((int)($parameter['xValue'] * 100), (int)($parameter['yValue'] * 100));
+                $handler->setCurrentPoint((int) ($parameter['xValue'] * 100), (int) ($parameter['yValue'] * 100));
             }
             HttpUtility::redirect($parameter['P']['returnUrl']);
         }
@@ -61,16 +61,16 @@ class BackendController
 
         if (\is_object($handler)) {
             ArrayUtility::mergeRecursiveWithOverrule($saveArguments, $handler->getArguments());
-            list($x, $y) = $handler->getCurrentPoint();
+            [$x, $y] = $handler->getCurrentPoint();
             $template->assign('filePath', $handler->getPublicUrl());
-            $template->assign('currentLeft', (($x + 100) / 2) . '%');
-            $template->assign('currentTop', (($y - 100) / -2) . '%');
+            $template->assign('currentLeft', (($x + 100) / 2).'%');
+            $template->assign('currentTop', (($y - 100) / -2).'%');
         }
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $template->assign('saveUri', (string)$uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
+        $template->assign('saveUri', (string) $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
 
-        $response->getBody()->write((string)$template->render());
+        $response->getBody()->write((string) $template->render());
 
         return $response;
     }

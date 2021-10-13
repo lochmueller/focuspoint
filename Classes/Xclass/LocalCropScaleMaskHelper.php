@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Local crop scale mask helper (overwrite).
@@ -54,12 +54,12 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     /**
      * Processing the focus point crop (fallback to LocalCropScaleMaskHelper).
      *
-     * @return array|null
+     * @return null|array
      */
     public function process(TaskInterface $task)
     {
         $configuration = $task->getConfiguration();
-        $crop = $configuration['crop'] ? json_decode((string)$configuration['crop']) : null;
+        $crop = $configuration['crop'] ? json_decode((string) $configuration['crop']) : null;
         if ($crop instanceof \stdClass && isset($crop->x)) {
             // if crop is enable release the process
             return parent::process($task);
@@ -77,7 +77,7 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
                 if (null === $newFile) {
                     return parent::process($task);
                 }
-                $file = ResourceFactory::getInstance()
+                $file = GeneralUtility::makeInstance(ResourceFactory::class)
                     ->retrieveFileOrFolderObject($newFile)
                 ;
 
@@ -111,11 +111,11 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
         if ('tt_content' !== $parts[0]) {
             throw new \Exception('Invalid part 0. part 0 have to be tt_content', 127383);
         }
-        $record = BackendUtility::getRecord($parts[0], (int)$parts[1]);
+        $record = BackendUtility::getRecord($parts[0], (int) $parts[1]);
         if (!isset($record['image_ratio'])) {
             throw new \Exception('No image_ratio found in the current record', 324672);
         }
 
-        return trim((string)$record['image_ratio']);
+        return trim((string) $record['image_ratio']);
     }
 }

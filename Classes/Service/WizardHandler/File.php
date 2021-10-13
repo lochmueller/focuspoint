@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
@@ -41,7 +41,7 @@ class File extends AbstractWizardHandler
      */
     public function getCurrentPoint(): array
     {
-        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int)$this->getMataDataUid());
+        $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int) $this->getMataDataUid());
 
         return $this->cleanupPosition([
             $row['focus_point_x'],
@@ -59,7 +59,7 @@ class File extends AbstractWizardHandler
             'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
         ];
 
-        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->update((int)$this->getMataDataUid(), $values);
+        GeneralUtility::makeInstance(SysFileMetadataRepository::class)->update((int) $this->getMataDataUid(), $values);
     }
 
     /**
@@ -83,10 +83,10 @@ class File extends AbstractWizardHandler
         }
         $p = $parameter['P'];
         if (isset($p['metaUid']) && MathUtility::canBeInterpretedAsInteger($p['metaUid'])) {
-            return (int)$p['metaUid'];
+            return (int) $p['metaUid'];
         }
         if (isset($p['table']) && 'sys_file_metadata' === $p['table'] && isset($p['uid']) && MathUtility::canBeInterpretedAsInteger($p['uid'])) {
-            return (int)$p['uid'];
+            return (int) $p['uid'];
         }
 
         return null;

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * TCA functions.
@@ -31,7 +31,7 @@ class TcaUtility
                     '_DISTANCE' => '10',
                     'focuspoint' => [
                         'type' => 'script',
-                        'icon' => 'EXT:focuspoint/ext_icon.svg',
+                        'icon' => 'EXT:focuspoint/Resources/Public/Icons/Extension.svg',
                         'module' => [
                             'name' => 'focuspoint',
                         ],

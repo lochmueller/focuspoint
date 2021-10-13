@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Calc dimensions for focus point cropping.
@@ -56,8 +56,8 @@ class DimensionService extends AbstractService
      */
     public function getFocusWidthAndHeight(int $width, int $height, string $ratio): array
     {
-        $width = (int)$width;
-        $height = (int)$height;
+        $width = (int) $width;
+        $height = (int) $height;
         $ratio = $this->getRatio($ratio);
         $widthDiff = $width / $ratio[0];
         $heightDiff = $height / $ratio[1];
@@ -65,12 +65,12 @@ class DimensionService extends AbstractService
         if ($widthDiff < $heightDiff) {
             return [
                 $width,
-                (int)ceil($widthDiff / $heightDiff * $height),
+                (int) ceil($widthDiff / $heightDiff * $height),
             ];
         }
         if ($widthDiff > $heightDiff) {
             return [
-                (int)ceil($heightDiff / $widthDiff * $width),
+                (int) ceil($heightDiff / $widthDiff * $width),
                 $height,
             ];
         }
@@ -118,9 +118,9 @@ class DimensionService extends AbstractService
         $realFocusX = $halfWidth + ($focusX / 100 * $halfWidth);
         $realFocusY = $halfHeight - ($focusY / 100 * $halfHeight);
 
-        list($focusWidth, $focusHeight) = $this->getFocusWidthAndHeight($imgWidth, $imgHeight, $ratio);
+        [$focusWidth, $focusHeight] = $this->getFocusWidthAndHeight($imgWidth, $imgHeight, $ratio);
 
-        list($sourceX, $sourceY) = $this->calculateSourcePosition(
+        [$sourceX, $sourceY] = $this->calculateSourcePosition(
             $focusWidth > $focusHeight ? self::CROP_LANDSCAPE : self::CROP_PORTRAIT,
             $imgWidth,
             $imgHeight,
@@ -138,8 +138,8 @@ class DimensionService extends AbstractService
 
         $newFocusX = ($newRealFocusX - $newHalfWidth) * 100 / ($newHalfWidth);
         $newFocusY = ($newHalfHeight - $newRealFocusY) * 100 / ($newHalfHeight);
-        $newFocusX = (int)round($newFocusX, 0);
-        $newFocusY = (int)round($newFocusY, 0);
+        $newFocusX = (int) round($newFocusX, 0);
+        $newFocusY = (int) round($newFocusY, 0);
 
         return [$newFocusX, $newFocusY];
     }
@@ -158,12 +158,12 @@ class DimensionService extends AbstractService
         }
 
         return [
-            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int)$ratio[0] : (float)str_replace(
+            MathUtility::canBeInterpretedAsInteger($ratio[0]) ? (int) $ratio[0] : (float) str_replace(
                 ',',
                 '.',
                 $ratio[0]
             ),
-            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int)$ratio[1] : (float)str_replace(
+            MathUtility::canBeInterpretedAsInteger($ratio[1]) ? (int) $ratio[1] : (float) str_replace(
                 ',',
                 '.',
                 $ratio[1]
@@ -177,12 +177,12 @@ class DimensionService extends AbstractService
     protected function getShiftedFocusAreaPosition(int $length, int $focusLength, int $focusPosition, bool $invertScala = false): array
     {
         $halfWidth = $length / 2;
-        $pixelPosition = (int)floor($halfWidth * $focusPosition / 100 + $halfWidth);
+        $pixelPosition = (int) floor($halfWidth * $focusPosition / 100 + $halfWidth);
         if ($invertScala) {
             $pixelPosition = $length - $pixelPosition;
         }
-        $crop1 = (int)($pixelPosition - floor($focusLength / 2));
-        $crop2 = (int)($crop1 + $focusLength);
+        $crop1 = (int) ($pixelPosition - floor($focusLength / 2));
+        $crop2 = (int) ($crop1 + $focusLength);
         if ($crop1 < 0) {
             $crop1 -= $crop1;
         } elseif ($crop2 > $length) {
@@ -206,7 +206,7 @@ class DimensionService extends AbstractService
     {
         $row = GeneralUtility::makeInstance(DimensionRepository::class)->findOneByIdentifier($ratio);
         if (isset($row['dimension'])) {
-            return (string)$row['dimension'];
+            return (string) $row['dimension'];
         }
 
         return $ratio;

@@ -18,7 +18,7 @@ $iconRegistry->registerIcon(
     'tcarecords-tx_focuspoint_domain_model_filestandalone-default',
     \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
     [
-        'source' => 'EXT:focuspoint/ext_icon.svg'
+        'source' => 'EXT:focuspoint/Resources/Public/Icons/Extension.svg'
     ]
 );
 

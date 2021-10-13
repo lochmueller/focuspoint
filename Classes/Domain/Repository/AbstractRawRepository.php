@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Abstract raw repository.
@@ -8,7 +8,9 @@ declare(strict_types = 1);
 
 namespace HDNET\Focuspoint\Domain\Repository;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -41,7 +43,7 @@ abstract class AbstractRawRepository
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        return (array)$queryBuilder->select('*')
+        return (array) $queryBuilder->select('*')
             ->from($this->getTableName())
             ->execute()
             ->fetchAll()
@@ -56,7 +58,7 @@ abstract class AbstractRawRepository
         $this->getConnection()->update(
             $this->getTableName(),
             $values,
-            ['uid' => (int)$uid]
+            ['uid' => $uid]
         );
     }
 
@@ -74,7 +76,7 @@ abstract class AbstractRawRepository
     /**
      * Get connection.
      */
-    protected function getConnection(): \TYPO3\CMS\Core\Database\Connection
+    protected function getConnection(): Connection
     {
         return $this->getConnectionPool()->getConnectionForTable($this->getTableName());
     }
@@ -82,7 +84,7 @@ abstract class AbstractRawRepository
     /**
      * Get query builder.
      */
-    protected function getQueryBuilder(): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    protected function getQueryBuilder(): QueryBuilder
     {
         return $this->getConnectionPool()->getQueryBuilderForTable($this->getTableName());
     }

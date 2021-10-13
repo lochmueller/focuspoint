@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * @todo    General file information
@@ -51,9 +51,9 @@ final class DimensionServiceTest extends UnitTestCase
 
     public function testValidRatio(): void
     {
-        self::assertSame([1, 1], $this->service->getRatio('1:1'));
-        self::assertSame([16, 9], $this->service->getRatio('16:9'));
-        self::assertSame([4, 3], $this->service->getRatio('4:3'));
+        static::assertSame([1, 1], $this->service->getRatio('1:1'));
+        static::assertSame([16, 9], $this->service->getRatio('16:9'));
+        static::assertSame([4, 3], $this->service->getRatio('4:3'));
     }
 
     /**
@@ -99,7 +99,7 @@ final class DimensionServiceTest extends UnitTestCase
             $expectedHeight,
         ];
 
-        self::assertSame($expected, $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio));
+        static::assertSame($expected, $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio));
     }
 
     /**
@@ -139,9 +139,9 @@ final class DimensionServiceTest extends UnitTestCase
             $expectedY,
         ];
 
-        list($focusWidth, $focusHeight) = $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio);
+        [$focusWidth, $focusHeight] = $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio);
 
-        self::assertSame(
+        static::assertSame(
             $expected,
             $this->service->calculateSourcePosition(
                 DimensionService::CROP_LANDSCAPE,

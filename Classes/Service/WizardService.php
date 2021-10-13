@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Helper class for wizard handling.
@@ -26,14 +26,14 @@ class WizardService extends AbstractService
         $spriteIcon = $this->getWizardIcon();
         $label = LocalizationUtility::translate('focuspoint.wizard', 'focuspoint');
         if (null === $uri) {
-            $label .= ' ' . LocalizationUtility::translate('focuspoint.wizard.imagesonly', 'focuspoint');
+            $label .= ' '.LocalizationUtility::translate('focuspoint.wizard.imagesonly', 'focuspoint');
 
-            return '<span class="btn btn-default disabled" title="' . $label . '">' . $spriteIcon . '</span>';
+            return '<span class="btn btn-default disabled" title="'.$label.'">'.$spriteIcon.'</span>';
         }
 
-        $dataAction = $addDataActionNavigation ? ' data-action-navigate="' . $uri . '"' : '';
+        $dataAction = $addDataActionNavigation ? ' data-action-navigate="'.$uri.'"' : '';
 
-        return '<a href="' . $uri . '"' . $dataAction . ' class="btn btn-default" title="' . $label . '">' . $spriteIcon . '</a>';
+        return '<a href="'.$uri.'"'.$dataAction.' class="btn btn-default" title="'.$label.'">'.$spriteIcon.'</a>';
     }
 
     /**

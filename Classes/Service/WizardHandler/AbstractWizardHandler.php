@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 /**
  * Abstract wizard handler.
@@ -59,7 +59,7 @@ abstract class AbstractWizardHandler
             return $url;
         }
 
-        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ltrim($url, '/');
+        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL').ltrim($url, '/');
     }
 
     /**
@@ -68,8 +68,8 @@ abstract class AbstractWizardHandler
     protected function cleanupPosition(array $position): array
     {
         return [
-            MathUtility::forceIntegerInRange((int)$position[0], -100, 100, 0),
-            MathUtility::forceIntegerInRange((int)$position[1], -100, 100, 0),
+            MathUtility::forceIntegerInRange((int) $position[0], -100, 100, 0),
+            MathUtility::forceIntegerInRange((int) $position[1], -100, 100, 0),
         ];
     }
 }
