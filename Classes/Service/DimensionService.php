@@ -56,8 +56,6 @@ class DimensionService extends AbstractService
      */
     public function getFocusWidthAndHeight(int $width, int $height, string $ratio): array
     {
-        $width = (int) $width;
-        $height = (int) $height;
         $ratio = $this->getRatio($ratio);
         $widthDiff = $width / $ratio[0];
         $heightDiff = $height / $ratio[1];
@@ -182,7 +180,7 @@ class DimensionService extends AbstractService
             $pixelPosition = $length - $pixelPosition;
         }
         $crop1 = (int) ($pixelPosition - floor($focusLength / 2));
-        $crop2 = (int) ($crop1 + $focusLength);
+        $crop2 = $crop1 + $focusLength;
         if ($crop1 < 0) {
             $crop1 -= $crop1;
         } elseif ($crop2 > $length) {

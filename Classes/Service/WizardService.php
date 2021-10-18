@@ -21,9 +21,9 @@ class WizardService extends AbstractService
     /**
      * Get the wizard button with the given URI.
      */
-    public function getWizardButton(?string $uri = null, bool $addDataActionNavigation = false): string
+    public function getWizardButton(?string $uri = null, bool $addDataActionNavigation = false, bool $light = false): string
     {
-        $spriteIcon = $this->getWizardIcon();
+        $spriteIcon = $this->getWizardIcon($light);
         $label = LocalizationUtility::translate('focuspoint.wizard', 'focuspoint');
         if (null === $uri) {
             $label .= ' '.LocalizationUtility::translate('focuspoint.wizard.imagesonly', 'focuspoint');
@@ -39,12 +39,12 @@ class WizardService extends AbstractService
     /**
      * Get the wizard icon.
      */
-    protected function getWizardIcon(): string
+    protected function getWizardIcon($light = false): string
     {
         /** @var IconFactory $iconFactory */
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $icon = $iconFactory->getIcon(
-            'tcarecords-tx_focuspoint_domain_model_filestandalone-default',
+            'tcarecords-tx_focuspoint_domain_model_filestandalone-default' . ($light ? '-light' : ''),
             Icon::SIZE_SMALL,
             null
         );

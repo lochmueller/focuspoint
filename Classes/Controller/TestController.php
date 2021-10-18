@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace HDNET\Focuspoint\Controller;
 
 use HDNET\Autoloader\Annotation\Plugin;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -29,7 +30,7 @@ class TestController extends ActionController
      *
      * @Plugin("Test")
      */
-    public function testAction(): void
+    public function testAction(): ResponseInterface
     {
         $contentElement = $this->configurationManager->getContentObject()->data;
         $fileReferences = $this->fileRepository->findByRelation('tt_content', 'image', $contentElement['uid']);
@@ -38,5 +39,7 @@ class TestController extends ActionController
             'fileReferences' => $fileReferences,
             'customRatio' => $contentElement['image_ratio'],
         ]);
+
+        return $this->htmlResponse($this->view->render());
     }
 }

@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * @todo    General file information
- */
-
 namespace HDNET\Focuspoint\Tests\Unit\Service;
 
 use HDNET\Focuspoint\Service\DimensionService;
