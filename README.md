@@ -43,5 +43,7 @@ Maybe you want to add additional css, for fluid example.
 
 Thank you for support and sponsoring the extension:
 
-- Violetta Digital Craft GmbH, [www.violetta.ch](https://www.violetta.ch)
+- Violetta Digital Craft GmbH, [www.violetta.ch](https://www.violetta.ch) - TYPO3 v10 and v11 support
 - and [all contributors](https://github.com/lochmueller/focuspoint/graphs/contributors)!
+
+![GitHub Contributors Image](https://contrib.rocks/image?repo=lochmueller/focuspoint)
