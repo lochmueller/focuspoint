@@ -73,7 +73,7 @@ class FileList implements FileListEditIconHookInterface
     {
         if ($cells['__fileOrFolderObject'] instanceof File) {
             if (\is_callable([$cells['__fileOrFolderObject'], 'getMetaData'])) {
-                return $cells['__fileOrFolderObject']->getMetaData()->get()['uid'];
+                return (int) $cells['__fileOrFolderObject']->getMetaData()->get()['uid'];
             }
         }
         if ($cells['__fileOrFolderObject'] instanceof FileInterface) {
