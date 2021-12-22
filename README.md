@@ -12,10 +12,8 @@
 ### Add TypoScript
 Include in static template or add TypoScript includes to your extension or template.
 ```typo3_typoscript
-@import 'EXT:focuspoint/Configuration/TypoScript/setup.txt'
-
 # Setup must be after "page" TypoScript
-@import 'EXT:focuspoint/Configuration/TypoScript/setup.txt'
+@import 'EXT:focuspoint/Configuration/TypoScript/setup'
 ```
 
 ### Fluid template (Example)
