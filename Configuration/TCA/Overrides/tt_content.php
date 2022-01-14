@@ -153,7 +153,7 @@ $GLOBALS['TCA']['tt_content'] = ArrayUtility::mergeRecursiveDistinct(
 // Check for v11
 $checkPalettes = ['image_settings', 'mediaAdjustments'];
 foreach ($checkPalettes as $p) {
-    if (is_array($GLOBALS['TCA']['tt_content']['palettes'][$p])) {
+    if (\is_array($GLOBALS['TCA']['tt_content']['palettes'][$p])) {
         $GLOBALS['TCA']['tt_content']['palettes'][$p]['showitem'] = str_replace(
             'imageborder;',
             'image_ratio,imageborder;',

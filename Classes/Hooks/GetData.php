@@ -64,10 +64,10 @@ class GetData implements ContentObjectGetDataHookInterface
                 case 'yp_positive':
                 $metaData = \is_callable([$originalFile, 'getMetaData']) ? $originalFile->getMetaData()->get() : $originalFile->_getMetaData();
                     if ('xp_positive' === $parts[1]) {
-                        return (int) (abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] + 100) / 2);
+                        return (int) (\abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] + 100) / 2);
                     }
 
-                    return (int) (abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] - 100) / 2);
+                    return (int) (\abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] - 100) / 2);
 
                 case 'w':
                 case 'h':
