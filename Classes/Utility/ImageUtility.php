@@ -28,7 +28,7 @@ class ImageUtility
         );
         $ignoreExtensions = ['pdf', 'ai', 'tga'];
 
-        return array_diff($configuredExtensions, $ignoreExtensions);
+        return \array_diff($configuredExtensions, $ignoreExtensions);
     }
 
     /**

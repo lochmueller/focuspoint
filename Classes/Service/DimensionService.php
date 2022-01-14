@@ -63,12 +63,12 @@ class DimensionService extends AbstractService
         if ($widthDiff < $heightDiff) {
             return [
                 $width,
-                (int) ceil($widthDiff / $heightDiff * $height),
+                (int) \ceil($widthDiff / $heightDiff * $height),
             ];
         }
         if ($widthDiff > $heightDiff) {
             return [
-                (int) ceil($heightDiff / $widthDiff * $width),
+                (int) \ceil($heightDiff / $widthDiff * $width),
                 $height,
             ];
         }
@@ -92,7 +92,7 @@ class DimensionService extends AbstractService
         int $focusPointY
     ): array {
         if (self::CROP_PORTRAIT === $cropMode) {
-            return array_reverse($this->getShiftedFocusAreaPosition($height, $focusHeight, $focusPointY, true));
+            return \array_reverse($this->getShiftedFocusAreaPosition($height, $focusHeight, $focusPointY, true));
         }
         if (self::CROP_LANDSCAPE === $cropMode) {
             return $this->getShiftedFocusAreaPosition($width, $focusWidth, $focusPointX);
@@ -136,8 +136,8 @@ class DimensionService extends AbstractService
 
         $newFocusX = ($newRealFocusX - $newHalfWidth) * 100 / ($newHalfWidth);
         $newFocusY = ($newHalfHeight - $newRealFocusY) * 100 / ($newHalfHeight);
-        $newFocusX = (int) round($newFocusX, 0);
-        $newFocusY = (int) round($newFocusY, 0);
+        $newFocusX = (int) \round($newFocusX, 0);
+        $newFocusY = (int) \round($newFocusY, 0);
 
         return [$newFocusX, $newFocusY];
     }
@@ -175,11 +175,11 @@ class DimensionService extends AbstractService
     protected function getShiftedFocusAreaPosition(int $length, int $focusLength, int $focusPosition, bool $invertScala = false): array
     {
         $halfWidth = $length / 2;
-        $pixelPosition = (int) floor($halfWidth * $focusPosition / 100 + $halfWidth);
+        $pixelPosition = (int) \floor($halfWidth * $focusPosition / 100 + $halfWidth);
         if ($invertScala) {
             $pixelPosition = $length - $pixelPosition;
         }
-        $crop1 = (int) ($pixelPosition - floor($focusLength / 2));
+        $crop1 = (int) ($pixelPosition - \floor($focusLength / 2));
         $crop2 = $crop1 + $focusLength;
         if ($crop1 < 0) {
             $crop1 -= $crop1;

@@ -132,8 +132,8 @@ class InlineRecord implements InlineElementHookInterface
      */
     protected function arrayUnshiftAssoc(array &$arr, string $key, string $val): void
     {
-        $arr = array_reverse($arr, true);
+        $arr = \array_reverse($arr, true);
         $arr[$key] = $val;
-        $arr = array_reverse($arr, true);
+        $arr = \array_reverse($arr, true);
     }
 }
