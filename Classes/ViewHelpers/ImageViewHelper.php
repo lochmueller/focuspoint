@@ -9,7 +9,9 @@ declare(strict_types=1);
 namespace HDNET\Focuspoint\ViewHelpers;
 
 use HDNET\Focuspoint\Service\FocusCropService;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -60,8 +62,15 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
 
         // Ratio calculation
         if (null !== $internalImage) {
-            $focusPointY = $internalImage->getProperty('focus_point_y');
-            $focusPointX = $internalImage->getProperty('focus_point_x');
+            $metadata = null;
+            if ($internalImage instanceof FileReference) {
+                $metadata = $internalImage->getOriginalFile()->getMetaData();
+            }
+            if ($internalImage instanceof File) {
+                $metadata = $internalImage->getMetaData();
+            }
+            $focusPointY = $internalImage->getProperty('focus_point_y') ?: $metadata['focus_point_y'] ?? 0;
+            $focusPointX = $internalImage->getProperty('focus_point_x') ?: $metadata['focus_point_x'] ?? 0;
 
             $additionalClassDiv = 'focuspoint';
             if (!empty($this->arguments['additionalClassDiv'])) {
