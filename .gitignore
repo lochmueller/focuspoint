@@ -3,3 +3,4 @@
 .Build/*
 /Resources/External/
 /.php-cs-fixer.cache
+/composer.lock
