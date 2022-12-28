@@ -29,10 +29,10 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
     /**
      * @param callable|\Closure $renderChildrenClosure
      *
+     * @return string
+     *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
-     *
-     * @return string
      */
     public static function renderStatic(
         array $arguments,

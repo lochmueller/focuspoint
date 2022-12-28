@@ -39,14 +39,10 @@ class FocusCropService extends AbstractService
     /**
      * get the image.
      *
-     * @param $src
-     * @param $image
-     * @param $treatIdAsReference
+     * @return CoreFileReference|FileInterface|\TYPO3\CMS\Core\Resource\File|\TYPO3\CMS\Core\Resource\Folder
      *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
-     *
-     * @return CoreFileReference|FileInterface|\TYPO3\CMS\Core\Resource\File|\TYPO3\CMS\Core\Resource\Folder
      */
     public function getViewHelperImage($src, $image, $treatIdAsReference)
     {
@@ -70,15 +66,10 @@ class FocusCropService extends AbstractService
     /**
      * Helper function for view helpers.
      *
-     * @param $src
-     * @param $image
-     * @param $treatIdAsReference
-     * @param $ratio
+     * @return string
      *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
      * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
-     *
-     * @return string
      */
     public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, string $ratio)
     {

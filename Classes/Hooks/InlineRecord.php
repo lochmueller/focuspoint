@@ -112,6 +112,7 @@ class InlineRecord implements InlineElementHookInterface
         } else {
             $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
         }
+
         /** @var WizardService $wizardService */
         $wizardService = GeneralUtility::makeInstance(WizardService::class);
         $this->arrayUnshiftAssoc($controlItems, 'focuspoint', $wizardService->getWizardButton((string) $wizardUri, true));
@@ -127,13 +128,11 @@ class InlineRecord implements InlineElementHookInterface
 
     /**
      * Add a element with the given key in front of the array.
-     *
-     * @param $arr
      */
     protected function arrayUnshiftAssoc(array &$arr, string $key, string $val): void
     {
-        $arr = \array_reverse($arr, true);
+        $arr = array_reverse($arr, true);
         $arr[$key] = $val;
-        $arr = \array_reverse($arr, true);
+        $arr = array_reverse($arr, true);
     }
 }

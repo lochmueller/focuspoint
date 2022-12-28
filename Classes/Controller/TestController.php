@@ -21,6 +21,7 @@ class TestController extends ActionController
      * File repository.
      *
      * @var \TYPO3\CMS\Core\Resource\FileRepository
+     *
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $fileRepository;

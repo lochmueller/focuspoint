@@ -42,7 +42,7 @@ class GetData implements ContentObjectGetDataHookInterface
         $parts = explode(':', $getDataString);
         if (isset($parts[0], $parts[1]) && 'fp' === $parts[0]) {
             $fileObject = $parentObject->getCurrentFile();
-            if (!($fileObject instanceof FileReference)) {
+            if (!$fileObject instanceof FileReference) {
                 return $returnValue;
             }
             $originalFile = $fileObject->getOriginalFile();
@@ -56,18 +56,18 @@ class GetData implements ContentObjectGetDataHookInterface
 
                 case 'xp':
                 case 'yp':
-                $metaData = \is_callable([$originalFile, 'getMetaData']) ? $originalFile->getMetaData()->get() : $originalFile->_getMetaData();
+                    $metaData = \is_callable([$originalFile, 'getMetaData']) ? $originalFile->getMetaData()->get() : $originalFile->_getMetaData();
 
                     return (float) $metaData['focus_point_'.mb_substr($parts[1], 0, 1)];
 
                 case 'xp_positive':
                 case 'yp_positive':
-                $metaData = \is_callable([$originalFile, 'getMetaData']) ? $originalFile->getMetaData()->get() : $originalFile->_getMetaData();
+                    $metaData = \is_callable([$originalFile, 'getMetaData']) ? $originalFile->getMetaData()->get() : $originalFile->_getMetaData();
                     if ('xp_positive' === $parts[1]) {
-                        return (int) (\abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] + 100) / 2);
+                        return (int) (abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] + 100) / 2);
                     }
 
-                    return (int) (\abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] - 100) / 2);
+                    return (int) (abs($metaData['focus_point_'.mb_substr($parts[1], 0, 1)] - 100) / 2);
 
                 case 'w':
                 case 'h':
@@ -75,7 +75,7 @@ class GetData implements ContentObjectGetDataHookInterface
                     if (file_exists($fileName)) {
                         $sizes = getimagesize($fileName);
 
-                        return $sizes[('w' === $parts[1] ? 0 : 1)];
+                        return $sizes['w' === $parts[1] ? 0 : 1];
                     }
 
                     break;

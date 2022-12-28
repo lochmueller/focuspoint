@@ -22,6 +22,7 @@ class FileMetadata extends AbstractModel
      * Focus point Y.
      *
      * @var int
+     *
      * @DatabaseField(type="int")
      */
     protected $focusPointY;
@@ -30,6 +31,7 @@ class FileMetadata extends AbstractModel
      * Focus point X.
      *
      * @var int
+     *
      * @DatabaseField(type="int")
      */
     protected $focusPointX;

@@ -22,6 +22,7 @@ class Content extends AbstractModel
      * Image ratio.
      *
      * @var string
+     *
      * @DatabaseField(type="string")
      */
     protected $imageRatio;

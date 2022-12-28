@@ -28,13 +28,11 @@ class ImageUtility
         );
         $ignoreExtensions = ['pdf', 'ai', 'tga'];
 
-        return \array_diff($configuredExtensions, $ignoreExtensions);
+        return array_diff($configuredExtensions, $ignoreExtensions);
     }
 
     /**
      * Check if the given path or extension is valid for the focuspoint.
-     *
-     * @param $pathOrExtension
      */
     public static function isValidFileExtension(string $pathOrExtension): bool
     {

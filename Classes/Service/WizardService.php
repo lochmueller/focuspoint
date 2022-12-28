@@ -38,13 +38,15 @@ class WizardService extends AbstractService
 
     /**
      * Get the wizard icon.
+     *
+     * @param mixed $light
      */
     protected function getWizardIcon($light = false): string
     {
         /** @var IconFactory $iconFactory */
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $icon = $iconFactory->getIcon(
-            'tcarecords-tx_focuspoint_domain_model_filestandalone-default' . ($light ? '-light' : ''),
+            'tcarecords-tx_focuspoint_domain_model_filestandalone-default'.($light ? '-light' : ''),
             Icon::SIZE_SMALL,
             null
         );

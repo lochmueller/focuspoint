@@ -16,6 +16,7 @@ use HDNET\Autoloader\Annotation\SmartExclude;
  * Dimension.
  *
  * @DatabaseTable
+ *
  * @SmartExclude({"EnableFields", "Language"})
  */
 class Dimension extends AbstractModel
@@ -24,6 +25,7 @@ class Dimension extends AbstractModel
      * Title.
      *
      * @var string
+     *
      * @DatabaseField(type="string")
      */
     protected $title;
@@ -32,6 +34,7 @@ class Dimension extends AbstractModel
      * Identifier.
      *
      * @var string
+     *
      * @DatabaseField(type="string")
      */
     protected $identifier;
@@ -40,6 +43,7 @@ class Dimension extends AbstractModel
      * Dimension.
      *
      * @var string
+     *
      * @DatabaseField(type="string")
      */
     protected $dimension;

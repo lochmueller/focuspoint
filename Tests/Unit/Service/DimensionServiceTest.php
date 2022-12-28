@@ -12,6 +12,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @todo General class information
  *
  * @internal
+ *
  * @coversNothing
  */
 final class DimensionServiceTest extends UnitTestCase
@@ -118,6 +119,7 @@ final class DimensionServiceTest extends UnitTestCase
 
     /**
      * @depends      testFocusBoxSize
+     *
      * @dataProvider providerFocusSourcePoint
      *
      * @param int    $focusX
@@ -153,6 +155,7 @@ final class DimensionServiceTest extends UnitTestCase
 
     /**
      * @expectedException \Exception
+     *
      * @expectedExceptionMessage Ratio have to be in the format of e.g. "1:1" or "16:9"
      */
     public function testRatioException(): void
