@@ -44,8 +44,8 @@ class File extends AbstractWizardHandler
         $row = GeneralUtility::makeInstance(SysFileMetadataRepository::class)->findByUid((int) $this->getMataDataUid());
 
         return $this->cleanupPosition([
-            $row['focus_point_x'],
-            $row['focus_point_y'],
+            $row['focus_point_x'] ?? 0,
+            $row['focus_point_y'] ?? 0,
         ]);
     }
 
