@@ -11,6 +11,17 @@ $GLOBALS['TCA']['tt_content'] = ModelUtility::getTcaOverrideInformation(
     'tt_content'
 );
 
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['focuspoint_test'] = 'image,image_ratio';
+
+$loader = [
+    'Xclass',
+    'SmartObjects',
+    'ExtensionTypoScriptSetup',
+    'Plugins',
+    'StaticTyposcript',
+];
+\HDNET\Autoloader\Loader::extTables('HDNET', 'focuspoint', $loader);
+
 $custom = [
     'columns' => [
         'image_ratio' => [

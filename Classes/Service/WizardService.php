@@ -10,7 +10,6 @@ namespace HDNET\Focuspoint\Service;
 
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -18,6 +17,11 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class WizardService extends AbstractService
 {
+    public function __construct(
+        private readonly IconFactory $iconFactory
+    ) {
+    }
+
     /**
      * Get the wizard button with the given URI.
      */
@@ -38,14 +42,10 @@ class WizardService extends AbstractService
 
     /**
      * Get the wizard icon.
-     *
-     * @param mixed $light
      */
-    protected function getWizardIcon($light = false): string
+    protected function getWizardIcon(bool $light = false): string
     {
-        /** @var IconFactory $iconFactory */
-        $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-        $icon = $iconFactory->getIcon(
+        $icon = $this->iconFactory->getIcon(
             'tcarecords-tx_focuspoint_domain_model_filestandalone-default'.($light ? '-light' : ''),
             Icon::SIZE_SMALL,
             null
