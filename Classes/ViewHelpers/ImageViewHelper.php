@@ -30,9 +30,6 @@ class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
         $this->registerArgument('additionalClassDiv', 'string', 'Additional class for focus point div', false, '');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render()
     {
         /** @var FocusCropService $service */

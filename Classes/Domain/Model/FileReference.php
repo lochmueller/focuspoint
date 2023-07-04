@@ -8,13 +8,8 @@ declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
-
 /**
  * File metadata.
- *
- * @DatabaseTable("sys_file_reference")
  */
 class FileReference extends AbstractModel
 {
@@ -22,8 +17,6 @@ class FileReference extends AbstractModel
      * Focus point Y.
      *
      * @var int
-     *
-     * @DatabaseField(sql="int(11) null")
      */
     protected $focusPointY;
 
@@ -31,8 +24,6 @@ class FileReference extends AbstractModel
      * Focus point X.
      *
      * @var int
-     *
-     * @DatabaseField(sql="int(11) null")
      */
     protected $focusPointX;
 

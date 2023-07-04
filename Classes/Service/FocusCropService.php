@@ -39,6 +39,10 @@ class FocusCropService extends AbstractService
     /**
      * get the image.
      *
+     * @param mixed $src
+     * @param mixed $image
+     * @param mixed $treatIdAsReference
+     *
      * @return CoreFileReference|FileInterface|\TYPO3\CMS\Core\Resource\File|\TYPO3\CMS\Core\Resource\Folder
      *
      * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
@@ -65,6 +69,10 @@ class FocusCropService extends AbstractService
 
     /**
      * Helper function for view helpers.
+     *
+     * @param mixed $src
+     * @param mixed $image
+     * @param mixed $treatIdAsReference
      *
      * @return string
      *

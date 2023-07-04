@@ -6,11 +6,11 @@ use HDNET\Focuspoint\Service\TcaService;
 
 $GLOBALS['TCA']['tt_content']['columns']['image_ratio'] = [
     'exclude' => 1,
-    'label' => '',
+    'label' => 'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:tt_content.image_ratio',
     'config' => [
         'type' => 'select',
         'renderType' => 'selectSingle',
-        'itemsProcFunc' => TcaService::class . '->addDatabaseItems',
+        'itemsProcFunc' => TcaService::class.'->addDatabaseItems',
         'items' => [
             [
                 'Natural',

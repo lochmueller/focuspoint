@@ -48,15 +48,15 @@ final class DimensionServiceTest extends UnitTestCase
 
     public function testValidRatio(): void
     {
-        static::assertSame([1, 1], $this->service->getRatio('1:1'));
-        static::assertSame([16, 9], $this->service->getRatio('16:9'));
-        static::assertSame([4, 3], $this->service->getRatio('4:3'));
+        self::assertSame([1, 1], $this->service->getRatio('1:1'));
+        self::assertSame([16, 9], $this->service->getRatio('16:9'));
+        self::assertSame([4, 3], $this->service->getRatio('4:3'));
     }
 
     /**
      * @return array
      */
-    public function providerFocusBoxSize()
+    public function provideFocusBoxSizeCases()
     {
         return [
             [
@@ -72,7 +72,7 @@ final class DimensionServiceTest extends UnitTestCase
     }
 
     /**
-     * @dataProvider providerFocusBoxSize
+     * @dataProvider provideFocusBoxSizeCases
      *
      * @param int    $focusX
      * @param int    $focusY
@@ -96,13 +96,13 @@ final class DimensionServiceTest extends UnitTestCase
             $expectedHeight,
         ];
 
-        static::assertSame($expected, $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio));
+        self::assertSame($expected, $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio));
     }
 
     /**
      * @return array
      */
-    public function providerFocusSourcePoint()
+    public function provideFocusSourcePointCases()
     {
         return [
             [
@@ -120,7 +120,7 @@ final class DimensionServiceTest extends UnitTestCase
     /**
      * @depends      testFocusBoxSize
      *
-     * @dataProvider providerFocusSourcePoint
+     * @dataProvider provideFocusSourcePointCases
      *
      * @param int    $focusX
      * @param int    $focusY
@@ -139,7 +139,7 @@ final class DimensionServiceTest extends UnitTestCase
 
         [$focusWidth, $focusHeight] = $this->service->getFocusWidthAndHeight($imageWidth, $imageHeight, $ratio);
 
-        static::assertSame(
+        self::assertSame(
             $expected,
             $this->service->calculateSourcePosition(
                 DimensionService::CROP_LANDSCAPE,
