@@ -2,33 +2,31 @@
 
 declare(strict_types=1);
 
-use HDNET\Autoloader\Utility\ArrayUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
-use HDNET\Focuspoint\Domain\Model\Dimension;
 
-$base = ModelUtility::getTcaInformation(Dimension::class);
+// @todo add missing stuuff
 
-$custom = [
+return [
     'ctrl' => [
         'rootLevel' => 1,
     ],
     'columns' => [
         'title' => [
             'config' => [
+                'type' => 'input',
                 'eval' => 'trim,required',
             ],
         ],
         'identifier' => [
             'config' => [
+                'type' => 'input',
                 'eval' => 'alphanum_x,lower,nospace,trim,required,unique',
             ],
         ],
         'dimension' => [
             'config' => [
+                'type' => 'input',
                 'eval' => 'trim,nospace,required',
             ],
         ],
     ],
 ];
-
-return ArrayUtility::mergeRecursiveDistinct($base, $custom);

@@ -8,16 +8,8 @@ declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Domain\Model;
 
-use HDNET\Autoloader\Annotation\DatabaseField;
-use HDNET\Autoloader\Annotation\DatabaseTable;
-use HDNET\Autoloader\Annotation\SmartExclude;
-
 /**
  * File standalone.
- *
- * @DatabaseTable
- *
- * @SmartExclude({"EnableFields", "Language"})
  */
 class FileStandalone extends AbstractModel
 {
@@ -25,8 +17,6 @@ class FileStandalone extends AbstractModel
      * Focus point Y.
      *
      * @var int
-     *
-     * @DatabaseField(type="int")
      */
     protected $focusPointY;
 
@@ -34,15 +24,11 @@ class FileStandalone extends AbstractModel
      * Focus point X.
      *
      * @var int
-     *
-     * @DatabaseField(type="int")
      */
     protected $focusPointX;
 
     /**
      * @var string
-     *
-     * @DatabaseField(type="string")
      */
     protected $relativeFilePath;
 

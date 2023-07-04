@@ -16,9 +16,11 @@ class TcaUtility
     /**
      * Get field configuration.
      */
-    public static function getBaseConfiguration(): array
+    public static function getBaseConfiguration($label): array
     {
         return [
+            'exclude' => 1,
+            'label' => $label,
             'config' => [
                 'type' => 'input',
                 'size' => 4,

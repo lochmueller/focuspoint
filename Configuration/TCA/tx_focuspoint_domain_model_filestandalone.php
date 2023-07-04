@@ -2,22 +2,18 @@
 
 declare(strict_types=1);
 
-use HDNET\Autoloader\Utility\ArrayUtility;
-use HDNET\Autoloader\Utility\ModelUtility;
-use HDNET\Focuspoint\Domain\Model\FileStandalone;
+
+// @todo add missing stuuff
+
 use HDNET\Focuspoint\Utility\TcaUtility;
 
-$base = ModelUtility::getTcaInformation(FileStandalone::class);
-
-$custom = [
+return  [
     'ctrl' => [
         'hideTable' => true,
         'rootLevel' => 1,
     ],
     'columns' => [
-        'focus_point_y' => TcaUtility::getBaseConfiguration(),
-        'focus_point_x' => TcaUtility::getBaseConfiguration(),
+        'focus_point_y' => TcaUtility::getBaseConfiguration('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:tx_focuspoint_domain_model_filestandalone.focus_point_y'),
+        'focus_point_x' => TcaUtility::getBaseConfiguration('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:tx_focuspoint_domain_model_filestandalone.focus_point_x'),
     ],
 ];
-
-return ArrayUtility::mergeRecursiveDistinct($base, $custom);
