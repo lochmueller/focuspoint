@@ -146,3 +146,11 @@ foreach ($checkPalettes as $p) {
         );
     }
 }
+
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['focuspoint_test'] = 'image,image_ratio';
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'Focuspoint',
+    'Test',
+    'Focuspoint Test'
+);

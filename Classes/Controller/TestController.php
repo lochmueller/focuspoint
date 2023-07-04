@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Controller;
 
-use HDNET\Autoloader\Annotation\Plugin;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -28,8 +27,6 @@ class TestController extends ActionController
 
     /**
      * Test action.
-     *
-     * @Plugin("Test")
      */
     public function testAction(): ResponseInterface
     {
