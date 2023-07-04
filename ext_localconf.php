@@ -6,9 +6,7 @@ if (!defined('TYPO3_MODE')) {
 
 $loader = [
     'SmartObjects',
-    'ExtensionTypoScriptSetup',
     'Plugins',
-    'StaticTyposcript'
 ];
 \HDNET\Autoloader\Loader::extLocalconf('HDNET', 'focuspoint', $loader);
 
