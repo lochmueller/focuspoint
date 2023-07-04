@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Hooks;
 
-use HDNET\Autoloader\Annotation\Hook;
 use TYPO3\CMS\Core\Resource\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectGetDataHookInterface;
@@ -16,8 +15,6 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Get data for focuspoint.
- *
- * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|tslib/class.tslib_content.php|getData")
  */
 class GetData implements ContentObjectGetDataHookInterface
 {

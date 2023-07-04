@@ -14,8 +14,7 @@
 	},
 	"require": {
 		"php": "^8.0",
-		"typo3/cms-core": "^11.5",
-		"lochmueller/autoloader": "^7.0"
+		"typo3/cms-core": "^12.4"
 	},
 	"type": "typo3-cms-extension",
 	"keywords": [
@@ -27,8 +26,8 @@
 		"issues": "https://github.com/lochmueller/focuspoint/issues"
 	},
 	"require-dev": {
-		"typo3/testing-framework": "^6.2",
-		"friendsofphp/php-cs-fixer": "^3.2",
+		"typo3/testing-framework": "^8.0",
+		"friendsofphp/php-cs-fixer": "^3.20",
 		"scrutinizer/ocular": "^1.3"
 	},
 	"config": {

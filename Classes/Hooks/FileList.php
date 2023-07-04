@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Hooks;
 
-use HDNET\Autoloader\Annotation\Hook;
 use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\FileUtility;
 use HDNET\Focuspoint\Utility\ImageUtility;
@@ -20,8 +19,6 @@ use TYPO3\CMS\Filelist\FileListEditIconHookInterface;
 
 /**
  * Extends the file list.
- *
- * @Hook("TYPO3_CONF_VARS|SC_OPTIONS|fileList|editIconsHook")
  */
 class FileList implements FileListEditIconHookInterface
 {
