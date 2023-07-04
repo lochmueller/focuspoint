@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-
 // @todo add missing stuuff
 
 use HDNET\Focuspoint\Utility\TcaUtility;
 
-return  [
+return [
     'ctrl' => [
         'hideTable' => true,
         'rootLevel' => 1,

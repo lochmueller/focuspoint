@@ -15,6 +15,8 @@ class TcaUtility
 {
     /**
      * Get field configuration.
+     *
+     * @param mixed $label
      */
     public static function getBaseConfiguration($label): array
     {

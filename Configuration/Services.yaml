@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  HDNET\Focuspoint\:
+    resource: '../Classes/*'
+    exclude: '../Classes/ViewHelpers/*'
+# TODO
+
+  HDNET\Focuspoint\EventListener\ProcessFileListActionsEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'FocuspointProcessFileListActionsEventListener'
+        event: TYPO3\CMS\Filelist\Event\ProcessFileListActionsEvent
+
+  HDNET\Focuspoint\EventListener\ModifyInlineElementEnabledControlsEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'FocuspointModifyInlineElementEnabledControlsEventListener'
+        event: TYPO3\CMS\Backend\Form\Event\ModifyInlineElementEnabledControlsEvent

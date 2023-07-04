@@ -24,6 +24,8 @@ class InlineRecord implements InlineElementHookInterface
      * Initializes this hook object.
      *
      * @param object $parentObject
+     *
+     * @todo move to event
      */
     public function init(&$parentObject): void
     {

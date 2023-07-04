@@ -14,6 +14,8 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
  * Get the URI of the cropped image.
+ *
+ * @todo migrate
  */
 class ImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper
 {
