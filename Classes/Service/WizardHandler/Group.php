@@ -42,6 +42,7 @@ class Group extends AbstractWizardHandler
      */
     public function setCurrentPoint(int $x, int $y): void
     {
+        /** @var FileStandaloneRepository $fileStandaloneRepository */
         $fileStandaloneRepository = GeneralUtility::makeInstance(FileStandaloneRepository::class);
         $row = $fileStandaloneRepository->findOneByRelativeFilePath($this->getRelativeFilePath());
 

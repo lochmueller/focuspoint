@@ -24,8 +24,8 @@ class DimensionRepository extends AbstractRawRepository
             ->where(
                 $queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter($identifier))
             )
-            ->execute()
-            ->fetchAll()
+            ->executeQuery()
+            ->fetchAllAssociative()
         ;
 
         return $rows[0] ?? null;

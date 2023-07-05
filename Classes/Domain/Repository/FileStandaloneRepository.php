@@ -24,8 +24,8 @@ class FileStandaloneRepository extends AbstractRawRepository
             ->where(
                 $queryBuilder->expr()->eq('relative_file_path', $queryBuilder->createNamedParameter($relativeFilePath))
             )
-            ->execute()
-            ->fetchAll()
+            ->executeQuery()
+            ->fetchAllAssociative()
         ;
 
         return $rows[0] ?? null;

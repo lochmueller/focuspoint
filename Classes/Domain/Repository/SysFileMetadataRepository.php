@@ -24,8 +24,8 @@ class SysFileMetadataRepository extends AbstractRawRepository
             ->where(
                 $queryBuilder->expr()->eq('file', $fileUid)
             )
-            ->execute()
-            ->fetchAll()
+            ->executeQuery()
+            ->fetchAllAssociative()
         ;
 
         return $rows[0] ?? null;

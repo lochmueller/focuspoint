@@ -7,6 +7,7 @@ namespace HDNET\Focuspoint\EventListener;
 use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\ImageUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\Event\ProcessFileListActionsEvent;
 
@@ -19,7 +20,7 @@ class ProcessFileListActionsEventListener
     public function __invoke(ProcessFileListActionsEvent $event): void
     {
         $resource = $event->getResource();
-        if (!$resource instanceof \TYPO3\CMS\Core\Resource\File || !ImageUtility::isValidFileExtension($resource->getExtension())) {
+        if (!$resource instanceof File || !ImageUtility::isValidFileExtension($resource->getExtension())) {
             return;
         }
 

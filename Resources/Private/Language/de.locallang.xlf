@@ -64,7 +64,7 @@
 			<target>Titel</target>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_filestandalone" approved="yes">
-			<source>fFile standalone</source>
+			<source>File standalone</source>
 			<target>Datei Standalone</target>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_filestandalone.focus_point_x" approved="yes">

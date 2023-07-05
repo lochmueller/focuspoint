@@ -49,7 +49,7 @@
 			<source>Title</source>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_filestandalone">
-			<source>fFile standalone</source>
+			<source>File standalone</source>
 		</trans-unit>
 		<trans-unit id="tx_focuspoint_domain_model_filestandalone.focus_point_x">
 			<source>focus_point_x</source>
