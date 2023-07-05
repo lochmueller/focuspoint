@@ -1,13 +1,18 @@
 {namespace c=TYPO3\CMS\Core\ViewHelpers}
 
-<f:be.container
-	includeCssFiles="{0: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/css/focuspoint.css\')}', 1: '{f:uri.resource(extensionName:\'focuspoint\',path:\'jquery-focuspoint-2015-08-31/demos/demo.css\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/grid/grid.css\')}', 3: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/demos/helper/helper-tool.css\')}', 4: '{f:uri.resource(extensionName: \'focuspoint\', path:\'Css/Helper.css\')}'}"
-	includeJsFiles="{0:'{f:uri.resource(extensionName: \'focuspoint\', path:\'JavaScript/jquery-1.11.3.min.js\')}', 1:'{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.js\')}', 2: '{f:uri.resource(extensionName: \'focuspoint\', path:\'jquery-focuspoint-2015-08-31/js/jquery.focuspoint.helpertool.js\')}'}">
+<f:asset.css identifier="jquery" href="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/css/focuspoint.css" />
+<f:asset.css identifier="demo" href="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/demos/demo.css" />
+<f:asset.css identifier="grid" href="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/demos/grid/grid.css" />
+<f:asset.css identifier="helper-tool" href="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/demos/helper/helper-tool.css" />
+<f:asset.css identifier="helper" href="EXT:focuspoint/Resources/Public/Css/Helper.css" />
 
-	<div style="position: relative; height: 100%; width: 100%">
-		<f:render section="content" arguments="{_all}"/>
-	</div>
-</f:be.container>
+<f:asset.script identifier="jquery" src="EXT:focuspoint/Resources/Public/JavaScript/jquery-1.11.3.min.js" />
+<f:asset.script identifier="focuspoint" src="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/js/jquery.focuspoint.js" />
+<f:asset.script identifier="helper-tool" src="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/js/jquery.focuspoint.helpertool.js" />
+
+<div style="position: relative; height: 100%; width: 100%">
+	<f:render section="content" arguments="{_all}"/>
+</div>
 
 <f:section name="content">
 	<f:if condition="{filePath}">
@@ -41,7 +46,8 @@
 				</div>
 			</div>
 
-			<script type="text/javascript">
+
+			<f:asset.script identifier="inline" type="text/javascript">
 				var currentLeft = '{currentLeft}';
 				var currentTop = '{currentTop}';
 				jQuery(document).ready(function () {
@@ -67,7 +73,7 @@
 						return true;
 					});
 				});
-			</script>
+			</f:asset.script>
 		</f:then>
 		<f:else>
 			<f:translate key="no.handler" extensionName="focuspoint"/>

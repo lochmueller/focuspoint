@@ -6,8 +6,6 @@ services:
 
   HDNET\Focuspoint\:
     resource: '../Classes/*'
-    exclude: '../Classes/ViewHelpers/*'
-# TODO
 
   HDNET\Focuspoint\EventListener\ProcessFileListActionsEventListener:
     tags:
@@ -15,8 +13,8 @@ services:
         identifier: 'FocuspointProcessFileListActionsEventListener'
         event: TYPO3\CMS\Filelist\Event\ProcessFileListActionsEvent
 
-  HDNET\Focuspoint\EventListener\ModifyInlineElementEnabledControlsEventListener:
+  HDNET\Focuspoint\EventListener\ModifyFileReferenceControlsEventListener:
     tags:
       - name: event.listener
-        identifier: 'FocuspointModifyInlineElementEnabledControlsEventListener'
-        event: TYPO3\CMS\Backend\Form\Event\ModifyInlineElementEnabledControlsEvent
+        identifier: 'FocuspointModifyFileReferenceControlsEventListener'
+        event: TYPO3\CMS\Backend\Form\Event\ModifyFileReferenceControlsEvent

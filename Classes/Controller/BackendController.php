@@ -15,35 +15,39 @@ use HDNET\Focuspoint\Service\WizardHandler\Group;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
  * Wizard controller.
  */
-class BackendController
+class BackendController extends ActionController
 {
     /**
-     * Returns the Module menu for the AJAX request.
-     *
-     * @param ResponseInterface $response
+     * BackendController constructor.
      */
-    public function wizardAction(ServerRequestInterface $request, ResponseInterface $response = null): ResponseInterface
+    public function __construct(protected ModuleTemplateFactory $moduleTemplateFactory)
     {
-        if (null === $response) {
-            $response = new HtmlResponse('');
-        }
+    }
+
+    /**
+     * Returns the Module menu for the AJAX request.
+     */
+    public function wizardAction(ServerRequestInterface $request): ResponseInterface
+    {
         $handler = $this->getCurrentHandler();
         $parameter = $request->getQueryParams();
         if (isset($parameter['save'])) {
             if (\is_object($handler)) {
                 $handler->setCurrentPoint((int) ($parameter['xValue'] * 100), (int) ($parameter['yValue'] * 100));
             }
-            HttpUtility::redirect($parameter['P']['returnUrl']);
+
+            return new RedirectResponse($parameter['P']['returnUrl']);
         }
         $saveArguments = [
             'save' => 1,
@@ -52,27 +56,29 @@ class BackendController
             ],
         ];
 
-        /** @var StandaloneView $template */
-        $template = GeneralUtility::makeInstance(StandaloneView::class);
-        $template->setTemplatePathAndFilename(ExtensionManagementUtility::extPath(
-            'focuspoint',
-            'Resources/Private/Templates/Wizard/Focuspoint.html'
-        ));
+        $moduleTemplate = $this->moduleTemplateFactory->create($request);
+
+        /** @var StandaloneView view */
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
+        $view->setTemplatePathAndFilename('EXT:focuspoint/Resources/Private/Templates/Backend/Wizard.html');
 
         if (\is_object($handler)) {
             ArrayUtility::mergeRecursiveWithOverrule($saveArguments, $handler->getArguments());
             [$x, $y] = $handler->getCurrentPoint();
-            $template->assign('filePath', $handler->getPublicUrl());
-            $template->assign('currentLeft', (($x + 100) / 2).'%');
-            $template->assign('currentTop', (($y - 100) / -2).'%');
+
+            $view->assignMultiple([
+                'filePath' => $handler->getPublicUrl(),
+                'currentLeft' => (($x + 100) / 2).'%',
+                'currentTop' => (($y - 100) / -2).'%',
+            ]);
         }
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $template->assign('saveUri', (string) $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
+        $view->assign('saveUri', (string) $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
 
-        $response->getBody()->write((string) $template->render());
+        $moduleTemplate->setContent($view->render());
 
-        return $response;
+        return new HtmlResponse($moduleTemplate->renderContent());
     }
 
     /**

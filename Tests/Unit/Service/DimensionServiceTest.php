@@ -9,8 +9,6 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * @todo General class information
- *
  * @internal
  *
  * @coversNothing
