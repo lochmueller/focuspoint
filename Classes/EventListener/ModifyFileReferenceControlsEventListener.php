@@ -9,6 +9,7 @@ use TYPO3\CMS\Backend\Form\Event\ModifyFileReferenceControlsEvent;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 class ModifyFileReferenceControlsEventListener
 {
@@ -57,9 +58,14 @@ class ModifyFileReferenceControlsEventListener
     /**
      * Check if the record is valid.
      */
-    protected function isValidRecord(string $table, int $uid): bool
+    protected function isValidRecord(string $table, mixed $uid): bool
     {
-        return null !== BackendUtility::getRecord($table, $uid);
+        // Skip if the UID can't be interpreted as integer (e.g. 'NEW64ae7…')
+        if (!MathUtility::canBeInterpretedAsInteger($uid)) {
+            return false;
+        }
+
+        return null !== BackendUtility::getRecord($table, (int)$uid);
     }
 
     /**
