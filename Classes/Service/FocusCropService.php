@@ -9,6 +9,9 @@ declare(strict_types=1);
 namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
+use HDNET\Focuspoint\Event\PostCroppedImageSrcBySrcEvent;
+use HDNET\Focuspoint\Event\PreGenerateTempImageNameEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
@@ -17,24 +20,21 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Crop images via focus crop.
  */
 class FocusCropService extends AbstractService
 {
-    public const SIGNAL_tempImageCropped = 'tempImageCropped';
-
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
     /**
      * @var string
      */
     protected $tempImageFolder;
+
+    public function __construct(
+        protected EventDispatcherInterface $eventDispatcher
+    ) {
+    }
 
     /**
      * get the image.
@@ -204,54 +204,23 @@ class FocusCropService extends AbstractService
             $absoluteTempImageName
         );
 
-        $this->emitTempImageCropped($tempImageName);
+        $event = $this->eventDispatcher->dispatch(new PostCroppedImageSrcBySrcEvent($tempImageName));
 
-        return $tempImageName;
+        return $event->getTempImageName();
     }
 
-    /**
-     * Emit tempImageCropped signal.
-     *
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    protected function emitTempImageCropped(string $tempImageName): void
-    {
-        $this->getSignalSlotDispatcher()->dispatch(__CLASS__, self::SIGNAL_tempImageCropped, [$tempImageName]);
-    }
-
-    /**
-     * Get the SignalSlot dispatcher.
-     *
-     * @return Dispatcher
-     */
-    protected function getSignalSlotDispatcher()
-    {
-        if (!isset($this->signalSlotDispatcher)) {
-            $this->signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        }
-
-        return $this->signalSlotDispatcher;
-    }
-
-    /**
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
     protected function generateTempImageName(string $absoluteImageName, string $ratio, int $focusPointX, int $focusPointY): string
     {
-        $name = '';
-
-        [$name] = $this->getSignalSlotDispatcher()->dispatch(__CLASS__, __FUNCTION__, [
-            $name,
+        $event = $this->eventDispatcher->dispatch(new PreGenerateTempImageNameEvent(
+            '',
             $absoluteImageName,
             $ratio,
             $focusPointX,
-            $focusPointY,
-        ]);
+            $focusPointY
+        ));
 
-        if ($name) {
-            return $name;
+        if ($event->getName()) {
+            return $event->getName();
         }
 
         $hash = \function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);

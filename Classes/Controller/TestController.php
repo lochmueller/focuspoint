@@ -2,28 +2,16 @@
 
 declare(strict_types=1);
 
-/**
- * Test controller.
- */
-
 namespace HDNET\Focuspoint\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Test controller.
- */
 class TestController extends ActionController
 {
-    /**
-     * File repository.
-     *
-     * @var \TYPO3\CMS\Core\Resource\FileRepository
-     *
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $fileRepository;
+    public function __construct(protected \TYPO3\CMS\Core\Resource\FileRepository $fileRepository)
+    {
+    }
 
     /**
      * Test action.

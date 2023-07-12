@@ -65,7 +65,7 @@ class ModifyFileReferenceControlsEventListener
             return false;
         }
 
-        return null !== BackendUtility::getRecord($table, (int)$uid);
+        return null !== BackendUtility::getRecord($table, (int) $uid);
     }
 
     /**
