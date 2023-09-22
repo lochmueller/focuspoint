@@ -2,7 +2,7 @@
 
 (function($) {
 	$(document).ready(function() {
-		
+
 		var defaultImage;
 		var $dataAttrInput;
 		var $cssAttrInput;
@@ -16,7 +16,7 @@
 				y: 0,
 				w: 0,
 				h: 0
-			}; 
+			};
 
 		//Initialize Helper Tool
 		(function() {
@@ -39,34 +39,34 @@
 			setImage( defaultImage );
 
 		})();
-		
+
 		/*-----------------------------------------*/
 
 		// function setImage(<URL>)
 		// Set a new image to use in the demo, requires URI to an image
-		
+
 		/*-----------------------------------------*/
 
 		function setImage(imgURL) {
 			//Get the dimensions of the image by referencing an image stored in memory
-			$("<img/>") 
+			$("<img/>")
 				.attr("src", imgURL)
 				.load(function() {
-					focusPointAttr.w = this.width;  
+					focusPointAttr.w = this.width;
 					focusPointAttr.h = this.height;
-					
+
 					//Set src on the thumbnail used in the GUI
 					$helperToolImage.attr('src', imgURL);
-					
+
 					//Set src on all .focuspoint images
 					$focusPointImages.attr('src', imgURL);
-					
+
 					//Set up initial properties of .focuspoint containers
 
 					/*-----------------------------------------*/
 					// Note ---
 					// Setting these up with attr doesn't really make a difference
-					// added to demo only so changes are made visually in the dom 
+					// added to demo only so changes are made visually in the dom
 					// for users inspecting it. Because of how FocusPoint uses .data()
 					// only the .data() assignments that follow are necessary.
 					/*-----------------------------------------*/
@@ -84,7 +84,7 @@
 					$focusPointContainers.data('focusY', focusPointAttr.y);
 					$focusPointContainers.data('imageW', focusPointAttr.w);
 					$focusPointContainers.data('imageH', focusPointAttr.h);
-					
+
 					//Run FocusPoint for the first time.
 					$('.focuspoint').focusPoint();
 
@@ -99,7 +99,7 @@
 		// Update the data attributes shown to the user
 
 		/*-----------------------------------------*/
-		
+
 		function printDataAttr(){
 			$dataAttrInput.val('data-focus-x="'+focusPointAttr.x.toFixed(2)+'" data-focus-y="'+focusPointAttr.y.toFixed(2)+'" data-focus-w="'+focusPointAttr.w+'" data-focus-h="'+focusPointAttr.h+'"');
 		}
@@ -108,20 +108,22 @@
 
 		// Bind to helper image click event
 		// Adjust focus on Click / provides focuspoint and CSS3 properties
-		
+
 		/*-----------------------------------------*/
 
 		$helperToolImage.click(function(e){
-		
+
 			var imageW = $(this).width();
 			var imageH = $(this).height();
-			
+
+
 			//Calculate FocusPoint coordinates
 			var offsetX = e.pageX - $(this).offset().left;
 			var offsetY = e.pageY - $(this).offset().top;
 
+
 			// start TYPO3
-			if(!$.isNumeric(offsetX) || !$.isNumeric(offsetY)) {
+			if((!$.isNumeric(offsetX) || !$.isNumeric(offsetY)) || (e.pageX === 0 && e.pageY === 0)) {
 				var $imageElement = jQuery('.helper-tool-img');
 				imageW = $imageElement.width();
 				imageH = $imageElement.height();
@@ -151,19 +153,19 @@
 			$cssAttrInput.val(backgroundPositionCSS);
 
 			//Leave a sweet target reticle at the focus point.
-			$('.reticle').css({ 
+			$('.reticle').css({
 				'top':percentageY+'%',
 				'left':percentageX+'%'
 			});
 		});
-		
+
 		/*-----------------------------------------*/
 
 		// Change image on paste/blur
 		// When you paste an image into the specified input, it will be used for the demo
 
 		/*-----------------------------------------*/
-		
+
 		$('input.helper-tool-set-src').on('paste blur', function(e){
 		  var element = this;
 		  setTimeout(function () {
@@ -175,10 +177,10 @@
 		/*-----------------------------------------*/
 
 		/* Update Helper */
-		// This function is used to update the focuspoint 
+		// This function is used to update the focuspoint
 
 		/*-----------------------------------------*/
-		
+
 		function updateFocusPoint(){
 			/*-----------------------------------------*/
 			// See note in setImage() function regarding these attribute assignments.
@@ -187,7 +189,7 @@
 			$focusPointContainers.attr({
 				'data-focus-x': focusPointAttr.x,
 				'data-focus-y': focusPointAttr.y
-			});			
+			});
 			/*-----------------------------------------*/
 			// These you DO need :)
 			/*-----------------------------------------*/

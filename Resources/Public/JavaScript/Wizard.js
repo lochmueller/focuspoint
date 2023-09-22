@@ -2,8 +2,9 @@ jQuery(document).ready(function () {
     jQuery('#set-src').trigger('blur');
     var saveFocusButton = jQuery('#saveFocus');
     var reticle = jQuery('.reticle');
-    reticle.css('top', saveFocusButton.data('currentLeft'));
-    reticle.css('left', saveFocusButton.data('currentTop'));
+    reticle.css('top', saveFocusButton.data('currentTop'));
+    reticle.css('left', saveFocusButton.data('currentLeft'));
+
     setTimeout(function () {
         jQuery('img.helper-tool-img').trigger('click');
     }, 1000);
