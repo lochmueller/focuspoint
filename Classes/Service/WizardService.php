@@ -11,7 +11,6 @@ namespace HDNET\Focuspoint\Service;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * WizardService.
@@ -24,9 +23,11 @@ class WizardService extends AbstractService
     public function getWizardButton(?string $uri = null, bool $addDataActionNavigation = false, bool $light = false): string
     {
         $spriteIcon = $this->getWizardIcon($light);
-        $label = LocalizationUtility::translate('focuspoint.wizard', 'focuspoint');
+        $label = $GLOBALS['LANG']->sL('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard');
         if (null === $uri) {
-            $label .= ' '.LocalizationUtility::translate('focuspoint.wizard.imagesonly', 'focuspoint');
+            $label .= ' ' . $GLOBALS['LANG']->sL(
+                'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard.imagesonly'
+            );
 
             return '<span class="btn btn-default disabled" title="'.$label.'">'.$spriteIcon.'</span>';
         }
