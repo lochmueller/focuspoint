@@ -44,7 +44,9 @@ class BackendController extends ActionController
         $parameter = $request->getQueryParams();
         if (isset($parameter['save'])) {
             if (\is_object($handler)) {
-                $handler->setCurrentPoint((int) ($parameter['xValue'] * 100), (int) ($parameter['yValue'] * 100));
+                $xValue = (float)$parameter['xValue'];
+                $yValue = (float)$parameter['yValue'];
+                $handler->setCurrentPoint((int)($xValue * 100), (int)($yValue * 100));
             }
 
             return new RedirectResponse($parameter['P']['returnUrl']);
