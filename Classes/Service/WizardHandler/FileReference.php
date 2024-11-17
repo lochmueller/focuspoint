@@ -84,7 +84,7 @@ class FileReference extends AbstractWizardHandler
      */
     protected function getReferenceUid(): ?int
     {
-        $parameter = GeneralUtility::_GET();
+        $parameter = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
         if (!isset($parameter['P'])) {
             return null;
         }

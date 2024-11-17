@@ -25,7 +25,7 @@ class ModifyFileReferenceControlsEventListener
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
         if ($this->isValidRecord($event->getForeignTable(), $uid)) {
-            $arguments = GeneralUtility::_GET();
+            $arguments = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
             // The arguments array is different in case this is called by an AJAX request
             // via an IRRE inside an IRRE...
             if (!isset($arguments['edit'])) {
@@ -34,7 +34,7 @@ class ModifyFileReferenceControlsEventListener
             }
             $returnUrl = [
                 'edit' => $arguments['edit'],
-                'returnUrl' => $arguments['returnUrl'],
+                'returnUrl' => $arguments['returnUrl'] ?? '',
             ];
 
             $wizardArguments = [

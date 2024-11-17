@@ -15,13 +15,12 @@ class TestController extends ActionController
     public function testAction(): ResponseInterface
     {
         $contentElement = $this->configurationManager->getContentObject()->data;
-        $fileReferences = $this->fileRepository->findByRelation('tt_content', 'image', $contentElement['uid']);
 
         $this->view->assignMultiple([
-            'fileReferences' => $fileReferences,
+            'fileReferences' => $this->fileRepository->findByRelation('tt_content', 'image', $contentElement['uid']),
             'customRatio' => $contentElement['image_ratio'],
         ]);
 
-        return $this->htmlResponse($this->view->render());
+        return $this->htmlResponse();
     }
 }

@@ -74,7 +74,7 @@ class Group extends AbstractWizardHandler
      */
     public function getArguments(): array
     {
-        $parameter = GeneralUtility::_GET();
+        $parameter = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
         $p = $parameter['P'];
 
         return [
@@ -91,7 +91,7 @@ class Group extends AbstractWizardHandler
      */
     protected function getRelativeFilePath(): ?string
     {
-        $parameter = GeneralUtility::_GET();
+        $parameter = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
         if (!isset($parameter['P'])) {
             return null;
         }

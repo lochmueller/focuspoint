@@ -74,7 +74,7 @@ class File extends AbstractWizardHandler
      */
     protected function getMataDataUid(): ?int
     {
-        $parameter = GeneralUtility::_GET();
+        $parameter = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
         if (!isset($parameter['P'])) {
             return null;
         }
