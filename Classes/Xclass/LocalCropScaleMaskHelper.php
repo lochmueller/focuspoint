@@ -68,7 +68,8 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
                 $targetFile = $task->getTargetFile();
                 ObjectAccess::setProperty($targetFile, 'originalFile', $file, true);
                 ObjectAccess::setProperty($targetFile, 'originalFileSha1', $file->getSha1(), true);
-                ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), true);
+                // @todo double check if this line is needed
+                // ObjectAccess::setProperty($targetFile, 'storage', $file->getStorage(), true);
                 ObjectAccess::setProperty($task, 'sourceFile', $file, true);
                 ObjectAccess::setProperty($task, 'targetFile', $targetFile, true);
             }
