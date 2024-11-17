@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Get data for focuspoint.
- */
-
 namespace HDNET\Focuspoint\Hooks;
 
 use TYPO3\CMS\Core\Resource\FileReference;
@@ -13,9 +9,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectGetDataHookInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
-/**
- * Get data for focuspoint.
- */
 class GetData implements ContentObjectGetDataHookInterface
 {
     /**

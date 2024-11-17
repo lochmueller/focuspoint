@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Abstract raw repository.
- */
 
 namespace HDNET\Focuspoint\Domain\Repository;
 
@@ -13,14 +10,8 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Abstract raw repository.
- */
 abstract class AbstractRawRepository
 {
-    /**
-     * Find by uid.
-     */
     public function findByUid(int $uid): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -29,30 +20,22 @@ abstract class AbstractRawRepository
             ->where(
                 $queryBuilder->expr()->eq('uid', $uid)
             )
-            ->execute()
-            ->fetchAll()
-        ;
+            ->executeQuery()
+            ->fetchAllAssociative();
 
         return $rows[0] ?? null;
     }
 
-    /**
-     * Find all.
-     */
     public function findAll(): array
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        return (array) $queryBuilder->select('*')
+        return (array)$queryBuilder->select('*')
             ->from($this->getTableName())
-            ->execute()
-            ->fetchAll()
-        ;
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
-    /**
-     * Update by uid.
-     */
     public function update(int $uid, array $values): void
     {
         $this->getConnection()->update(
@@ -62,9 +45,6 @@ abstract class AbstractRawRepository
         );
     }
 
-    /**
-     * Insert.
-     */
     public function insert(array $values): void
     {
         $this->getConnection()->insert(
@@ -73,30 +53,20 @@ abstract class AbstractRawRepository
         );
     }
 
-    /**
-     * Get connection.
-     */
     protected function getConnection(): Connection
     {
         return $this->getConnectionPool()->getConnectionForTable($this->getTableName());
     }
 
-    /**
-     * Get query builder.
-     */
+
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->getConnectionPool()->getQueryBuilderForTable($this->getTableName());
     }
 
-    /**
-     * Get the tablename.
-     */
+
     abstract protected function getTableName(): string;
 
-    /**
-     * Get connection pool.
-     */
     private function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);

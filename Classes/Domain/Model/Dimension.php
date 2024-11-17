@@ -2,82 +2,44 @@
 
 declare(strict_types=1);
 
-/**
- * Dimension.
- */
-
 namespace HDNET\Focuspoint\Domain\Model;
 
-/**
- * Dimension.
- */
 class Dimension extends AbstractModel
 {
-    /**
-     * Title.
-     *
-     * @var string
-     */
-    protected $title;
 
-    /**
-     * Identifier.
-     *
-     * @var string
-     */
-    protected $identifier;
+    protected string $title = '';
 
-    /**
-     * Dimension.
-     *
-     * @var string
-     */
-    protected $dimension;
+    protected string $identifier = '';
 
-    /**
-     * @return mixed
-     */
-    public function getTitle()
+    protected string $dimension = '';
+
+
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title): void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @param mixed $identifier
-     */
-    public function setIdentifier($identifier): void
+    public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDimension()
+    public function getDimension(): string
     {
         return $this->dimension;
     }
 
-    /**
-     * @param mixed $dimension
-     */
-    public function setDimension($dimension): void
+    public function setDimension(string $dimension): void
     {
         $this->dimension = $dimension;
     }

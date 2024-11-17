@@ -2,18 +2,13 @@
 
 declare(strict_types=1);
 
-/**
- * Image Utility.
- */
 
 namespace HDNET\Focuspoint\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
-/**
- * Image Utility.
- */
+
 class ImageUtility
 {
     /**

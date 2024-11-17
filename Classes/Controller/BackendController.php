@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Wizard controller.
- */
-
 namespace HDNET\Focuspoint\Controller;
 
 use HDNET\Focuspoint\Service\WizardHandler\AbstractWizardHandler;
@@ -28,9 +24,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class BackendController extends ActionController
 {
-    /**
-     * BackendController constructor.
-     */
+
     public function __construct(protected ModuleTemplateFactory $moduleTemplateFactory)
     {
     }
@@ -94,17 +88,13 @@ class BackendController extends ActionController
                 return $handler;
             }
         }
+        return null;
     }
 
-    /**
-     * Get the wizard handler.
-     */
-    protected function getWizardHandler(): array
+    protected function getWizardHandler(): iterable
     {
-        return [
-            GeneralUtility::makeInstance(File::class),
-            GeneralUtility::makeInstance(FileReference::class),
-            GeneralUtility::makeInstance(Group::class),
-        ];
+        yield GeneralUtility::makeInstance(File::class);
+        yield GeneralUtility::makeInstance(FileReference::class);
+        yield GeneralUtility::makeInstance(Group::class);
     }
 }

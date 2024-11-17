@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Override the ViewHelper with ratio.
- */
 
 namespace HDNET\Focuspoint\ViewHelpers;
 

@@ -2,72 +2,33 @@
 
 declare(strict_types=1);
 
-/**
- * File standalone.
- */
-
 namespace HDNET\Focuspoint\Domain\Model;
 
-/**
- * File standalone.
- */
 class FileStandalone extends AbstractModel
 {
-    /**
-     * Focus point Y.
-     *
-     * @var int
-     */
-    protected $focusPointY;
+    protected int $focusPointY = 0;
 
-    /**
-     * Focus point X.
-     *
-     * @var int
-     */
-    protected $focusPointX;
+    protected int $focusPointX = 0;
 
-    /**
-     * @var string
-     */
-    protected $relativeFilePath;
+    protected string $relativeFilePath = '';
 
-    /**
-     * Get Y.
-     *
-     * @return int
-     */
-    public function getFocusPointY()
+
+    public function getFocusPointY(): int
     {
         return $this->focusPointY;
     }
 
-    /**
-     * Set Y.
-     *
-     * @param int $focusPointY
-     */
-    public function setFocusPointY($focusPointY): void
+    public function setFocusPointY(int $focusPointY): void
     {
         $this->focusPointY = $focusPointY;
     }
 
-    /**
-     * Get X.
-     *
-     * @return int
-     */
-    public function getFocusPointX()
+    public function getFocusPointX(): int
     {
         return $this->focusPointX;
     }
 
-    /**
-     * Set X.
-     *
-     * @param int $focusPointX
-     */
-    public function setFocusPointX($focusPointX): void
+    public function setFocusPointX(int $focusPointX): void
     {
         $this->focusPointX = $focusPointX;
     }

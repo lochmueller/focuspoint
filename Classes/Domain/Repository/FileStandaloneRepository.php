@@ -2,20 +2,13 @@
 
 declare(strict_types=1);
 
-/**
- * FileStandalone.
- */
 
 namespace HDNET\Focuspoint\Domain\Repository;
 
-/**
- * FileStandalone.
- */
+
 class FileStandaloneRepository extends AbstractRawRepository
 {
-    /**
-     * Find one by relative file path.
-     */
+
     public function findOneByRelativeFilePath(string $relativeFilePath): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -31,9 +24,7 @@ class FileStandaloneRepository extends AbstractRawRepository
         return $rows[0] ?? null;
     }
 
-    /**
-     * Get the tablename.
-     */
+
     protected function getTableName(): string
     {
         return 'tx_focuspoint_domain_model_filestandalone';

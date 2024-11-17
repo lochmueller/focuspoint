@@ -2,67 +2,32 @@
 
 declare(strict_types=1);
 
-/**
- * File metadata.
- */
-
 namespace HDNET\Focuspoint\Domain\Model;
 
-/**
- * File metadata.
- */
 class FileReference extends AbstractModel
 {
-    /**
-     * Focus point Y.
-     *
-     * @var int
-     */
-    protected $focusPointY;
 
-    /**
-     * Focus point X.
-     *
-     * @var int
-     */
-    protected $focusPointX;
+    protected int $focusPointY = 0;
 
-    /**
-     * Get Y.
-     *
-     * @return int
-     */
-    public function getFocusPointY()
+    protected int $focusPointX = 0;
+
+
+    public function getFocusPointY():int
     {
         return $this->focusPointY;
     }
 
-    /**
-     * Set Y.
-     *
-     * @param int $focusPointY
-     */
-    public function setFocusPointY($focusPointY): void
+    public function setFocusPointY(int $focusPointY): void
     {
         $this->focusPointY = $focusPointY;
     }
 
-    /**
-     * Get X.
-     *
-     * @return int
-     */
-    public function getFocusPointX()
+    public function getFocusPointX():int
     {
         return $this->focusPointX;
     }
 
-    /**
-     * Set X.
-     *
-     * @param int $focusPointX
-     */
-    public function setFocusPointX($focusPointX): void
+    public function setFocusPointX(int $focusPointX): void
     {
         $this->focusPointX = $focusPointX;
     }

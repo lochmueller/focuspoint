@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace HDNET\Focuspoint\Controller;
 
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class TestController extends ActionController
 {
-    public function __construct(protected \TYPO3\CMS\Core\Resource\FileRepository $fileRepository)
+    public function __construct(protected FileRepository $fileRepository)
     {
     }
 
-    /**
-     * Test action.
-     */
+
     public function testAction(): ResponseInterface
     {
         $contentElement = $this->configurationManager->getContentObject()->data;

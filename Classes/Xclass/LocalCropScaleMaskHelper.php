@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Local crop scale mask helper (overwrite).
- */
-
 namespace HDNET\Focuspoint\Xclass;
 
 use HDNET\Focuspoint\Service\DimensionService;
@@ -23,24 +19,12 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 {
     /**
      * If set to true, the pocess is running and no addinal calculation are needed.
-     *
-     * @var bool
      */
-    protected static $deepCheck = false;
+    protected static bool $deepCheck = false;
 
-    /**
-     * Dimension service.
-     *
-     * @var DimensionService
-     */
-    protected $dimensionService;
+    protected DimensionService $dimensionService;
 
-    /**
-     * focus crop service.
-     *
-     * @var FocusCropService
-     */
-    protected $focusCropService;
+    protected FocusCropService $focusCropService;
 
     /**
      * Build up the object.

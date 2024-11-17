@@ -2,19 +2,12 @@
 
 declare(strict_types=1);
 
-/**
- * Helper class for wizard handling.
- */
-
 namespace HDNET\Focuspoint\Service;
 
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * WizardService.
- */
 class WizardService extends AbstractService
 {
     /**

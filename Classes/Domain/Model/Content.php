@@ -2,40 +2,18 @@
 
 declare(strict_types=1);
 
-/**
- * Content.
- */
-
 namespace HDNET\Focuspoint\Domain\Model;
 
-/**
- * Content.
- */
 class Content extends AbstractModel
 {
-    /**
-     * Image ratio.
-     *
-     * @var string
-     */
-    protected $imageRatio;
+    protected string $imageRatio = '';
 
-    /**
-     * Get image ratio.
-     *
-     * @return string
-     */
-    public function getImageRatio()
+    public function getImageRatio(): string
     {
         return $this->imageRatio;
     }
 
-    /**
-     * Set image ratio.
-     *
-     * @param string $imageRatio
-     */
-    public function setImageRatio($imageRatio): void
+    public function setImageRatio(string $imageRatio): void
     {
         $this->imageRatio = $imageRatio;
     }

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-/**
- * Crop images via focus crop.
- */
+
 
 namespace HDNET\Focuspoint\Service;
 

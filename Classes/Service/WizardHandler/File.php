@@ -9,9 +9,6 @@ use HDNET\Focuspoint\Utility\FileUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
-/**
- * File.
- */
 class File extends AbstractWizardHandler
 {
     /**

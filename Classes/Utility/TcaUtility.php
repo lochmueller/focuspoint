@@ -2,15 +2,11 @@
 
 declare(strict_types=1);
 
-/**
- * TCA functions.
- */
+
 
 namespace HDNET\Focuspoint\Utility;
 
-/**
- * TCA functions.
- */
+
 class TcaUtility
 {
     /**

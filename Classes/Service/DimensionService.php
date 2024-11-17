@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Calc dimensions for focus point cropping.
- */
 
 namespace HDNET\Focuspoint\Service;
 

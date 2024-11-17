@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Abstract wizard handler.
- */
-
 namespace HDNET\Focuspoint\Service\WizardHandler;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -13,9 +9,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Service\ImageService;
 
-/**
- * Abstract wizard handler.
- */
 abstract class AbstractWizardHandler
 {
     /**

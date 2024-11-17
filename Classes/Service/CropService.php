@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * Crop images.
- */
 
 namespace HDNET\Focuspoint\Service;
 
@@ -17,9 +14,6 @@ use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
 
-/**
- * Crop images.
- */
 class CropService extends AbstractService
 {
     /**

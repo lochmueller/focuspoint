@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-/**
- * Utility functions for files.
- */
+
 
 namespace HDNET\Focuspoint\Utility;
 

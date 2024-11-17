@@ -7,9 +7,6 @@ namespace HDNET\Focuspoint\Service\WizardHandler;
 use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Group.
- */
 class Group extends AbstractWizardHandler
 {
     /**

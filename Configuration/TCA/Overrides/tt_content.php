@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HDNET\Focuspoint\Service\TcaService;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 $GLOBALS['TCA']['tt_content']['columns']['image_ratio'] = [
     'exclude' => 1,
@@ -149,7 +150,7 @@ foreach ($checkPalettes as $p) {
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['focuspoint_test'] = 'image,image_ratio';
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+ExtensionUtility::registerPlugin(
     'Focuspoint',
     'Test',
     'Focuspoint Test'
