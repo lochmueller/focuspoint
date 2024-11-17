@@ -105,8 +105,8 @@ class ImageViewHelper extends AbstractTagBasedViewHelper
 
         if ((string) $this->arguments['fileExtension'] && !GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], (string) $this->arguments['fileExtension'])) {
             throw new Exception(
-                'The extension '.$this->arguments['fileExtension'].' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
-                .' as a valid image file extension and can not be processed.',
+                'The extension ' . $this->arguments['fileExtension'] . ' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
+                . ' as a valid image file extension and can not be processed.',
                 1618989190
             );
         }

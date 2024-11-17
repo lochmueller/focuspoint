@@ -46,13 +46,13 @@ return [
         ],
         'relative_file_path' => [
             'exclude' => false,
-            'label' => $ll.'.relative_file_path',
+            'label' => $ll . '.relative_file_path',
             'config' => [
                 'type' => 'input',
             ],
         ],
-        'focus_point_y' => TcaUtility::getBaseConfiguration($ll.'.focus_point_y'),
-        'focus_point_x' => TcaUtility::getBaseConfiguration($ll.'.focus_point_x'),
+        'focus_point_y' => TcaUtility::getBaseConfiguration($ll . '.focus_point_y'),
+        'focus_point_x' => TcaUtility::getBaseConfiguration($ll . '.focus_point_x'),
     ],
     'types' => [
         0 => [

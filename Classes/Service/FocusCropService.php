@@ -141,7 +141,7 @@ class FocusCropService extends AbstractService
 
         /** @var NormalizedParams $params */
         $params = $GLOBALS['TYPO3_REQUEST']->getAttribute('normalizedParams');
-        $docRoot = rtrim($params->getDocumentRoot(), '/').'/';
+        $docRoot = rtrim($params->getDocumentRoot(), '/') . '/';
         $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
         $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
         $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
@@ -161,7 +161,7 @@ class FocusCropService extends AbstractService
 
         $tempImageFolder = $this->getTempImageFolder();
         $tempImageName = $this->generateTempImageName($absoluteImageName, $ratio, $focusPointX, $focusPointY);
-        $tempImageName = $tempImageFolder.$tempImageName;
+        $tempImageName = $tempImageFolder . $tempImageName;
 
         $absoluteTempImageName = GeneralUtility::getFileAbsFileName($tempImageName);
 
@@ -224,11 +224,11 @@ class FocusCropService extends AbstractService
         }
 
         $hash = \function_exists('sha1_file') ? sha1_file($absoluteImageName) : md5_file($absoluteImageName);
-        $name = $hash.'-fp-'.preg_replace(
+        $name = $hash . '-fp-' . preg_replace(
             '/[^0-9a-z-]/',
             '-',
             $ratio
-        ).'-'.$focusPointX.'-'.$focusPointY.'.'.PathUtility::pathinfo(
+        ) . '-' . $focusPointX . '-' . $focusPointY . '.' . PathUtility::pathinfo(
             $absoluteImageName,
             PATHINFO_EXTENSION
         );

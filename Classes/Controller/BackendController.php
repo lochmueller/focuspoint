@@ -55,8 +55,8 @@ class BackendController extends ActionController
 
             $moduleTemplate->assignMultiple([
                 'filePath' => $handler->getPublicUrl(),
-                'currentLeft' => (($x + 100) / 2).'%',
-                'currentTop' => (($y - 100) / -2).'%',
+                'currentLeft' => (($x + 100) / 2) . '%',
+                'currentTop' => (($y - 100) / -2) . '%',
             ]);
         }
 

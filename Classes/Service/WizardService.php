@@ -18,16 +18,16 @@ class WizardService extends AbstractService
         $spriteIcon = $this->getWizardIcon($light);
         $label = $GLOBALS['LANG']->sL('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard');
         if (null === $uri) {
-            $label .= ' '.$GLOBALS['LANG']->sL(
+            $label .= ' ' . $GLOBALS['LANG']->sL(
                 'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard.imagesonly'
             );
 
-            return '<span class="btn btn-default disabled" title="'.$label.'">'.$spriteIcon.'</span>';
+            return '<span class="btn btn-default disabled" title="' . $label . '">' . $spriteIcon . '</span>';
         }
 
-        $dataAction = $addDataActionNavigation ? ' data-action-navigate="'.$uri.'"' : '';
+        $dataAction = $addDataActionNavigation ? ' data-action-navigate="' . $uri . '"' : '';
 
-        return '<a href="'.$uri.'"'.$dataAction.' class="btn btn-default" title="'.$label.'">'.$spriteIcon.'</a>';
+        return '<a href="' . $uri . '"' . $dataAction . ' class="btn btn-default" title="' . $label . '">' . $spriteIcon . '</a>';
     }
 
     /**
@@ -40,7 +40,7 @@ class WizardService extends AbstractService
         /** @var IconFactory $iconFactory */
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $icon = $iconFactory->getIcon(
-            'tcarecords-tx_focuspoint_domain_model_filestandalone-default'.($light ? '-light' : ''),
+            'tcarecords-tx_focuspoint_domain_model_filestandalone-default' . ($light ? '-light' : ''),
             Icon::SIZE_SMALL,
             null
         );

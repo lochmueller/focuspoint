@@ -42,21 +42,21 @@ return [
             ],
         ],
         'title' => [
-            'label' => $ll.'.title',
+            'label' => $ll . '.title',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim,required',
             ],
         ],
         'identifier' => [
-            'label' => $ll.'.identifier',
+            'label' => $ll . '.identifier',
             'config' => [
                 'type' => 'input',
                 'eval' => 'alphanum_x,lower,nospace,trim,required,unique',
             ],
         ],
         'dimension' => [
-            'label' => $ll.'.dimension',
+            'label' => $ll . '.dimension',
             'config' => [
                 'type' => 'input',
                 'eval' => 'trim,nospace,required',

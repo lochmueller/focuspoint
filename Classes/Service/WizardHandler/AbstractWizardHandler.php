@@ -52,7 +52,7 @@ abstract class AbstractWizardHandler
             return $url;
         }
 
-        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL').ltrim($url, '/');
+        return GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . ltrim($url, '/');
     }
 
     /**

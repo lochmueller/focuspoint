@@ -11,7 +11,7 @@ $GLOBALS['TCA']['tt_content']['columns']['image_ratio'] = [
     'config' => [
         'type' => 'select',
         'renderType' => 'selectSingle',
-        'itemsProcFunc' => TcaService::class.'->addDatabaseItems',
+        'itemsProcFunc' => TcaService::class . '->addDatabaseItems',
         'items' => [
             [
                 'Natural',

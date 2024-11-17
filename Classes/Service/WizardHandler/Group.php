@@ -111,10 +111,10 @@ class Group extends AbstractWizardHandler
         $uploadFolder = $fieldTca['config']['uploadfolder'] ?? '';
         $baseFolder = '';
         if ('' !== trim($uploadFolder, '/')) {
-            $baseFolder = rtrim($uploadFolder, '/').'/';
+            $baseFolder = rtrim($uploadFolder, '/') . '/';
         }
 
-        $filePath = $baseFolder.$p['file'];
+        $filePath = $baseFolder . $p['file'];
         if (!is_file(GeneralUtility::getFileAbsFileName($filePath))) {
             return null;
         }
