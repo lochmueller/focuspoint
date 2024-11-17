@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace HDNET\Focuspoint\Domain\Repository;
 
 class DimensionRepository extends AbstractRawRepository

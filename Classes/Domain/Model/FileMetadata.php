@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-
-
 namespace HDNET\Focuspoint\Domain\Model;
-
 
 class FileMetadata extends AbstractModel
 {
@@ -13,7 +10,7 @@ class FileMetadata extends AbstractModel
 
     protected int $focusPointX = 0;
 
-    public function getFocusPointY():int
+    public function getFocusPointY(): int
     {
         return $this->focusPointY;
     }
@@ -23,7 +20,7 @@ class FileMetadata extends AbstractModel
         $this->focusPointY = $focusPointY;
     }
 
-    public function getFocusPointX():int
+    public function getFocusPointX(): int
     {
         return $this->focusPointX;
     }

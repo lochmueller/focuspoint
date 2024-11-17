@@ -12,7 +12,6 @@ class FileStandalone extends AbstractModel
 
     protected string $relativeFilePath = '';
 
-
     public function getFocusPointY(): int
     {
         return $this->focusPointY;

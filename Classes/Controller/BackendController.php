@@ -24,10 +24,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class BackendController extends ActionController
 {
-
-    public function __construct(protected ModuleTemplateFactory $moduleTemplateFactory)
-    {
-    }
+    public function __construct(protected ModuleTemplateFactory $moduleTemplateFactory) {}
 
     /**
      * Returns the Module menu for the AJAX request.
@@ -38,9 +35,9 @@ class BackendController extends ActionController
         $parameter = $request->getQueryParams();
         if (isset($parameter['save'])) {
             if (\is_object($handler)) {
-                $xValue = (float)$parameter['xValue'];
-                $yValue = (float)$parameter['yValue'];
-                $handler->setCurrentPoint((int)($xValue * 100), (int)($yValue * 100));
+                $xValue = (float) $parameter['xValue'];
+                $yValue = (float) $parameter['yValue'];
+                $handler->setCurrentPoint((int) ($xValue * 100), (int) ($yValue * 100));
             }
 
             return new RedirectResponse($parameter['P']['returnUrl']);
@@ -88,13 +85,16 @@ class BackendController extends ActionController
                 return $handler;
             }
         }
+
         return null;
     }
 
     protected function getWizardHandler(): iterable
     {
         yield GeneralUtility::makeInstance(File::class);
+
         yield GeneralUtility::makeInstance(FileReference::class);
+
         yield GeneralUtility::makeInstance(Group::class);
     }
 }

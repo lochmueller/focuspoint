@@ -6,9 +6,7 @@ namespace HDNET\Focuspoint\Event;
 
 final class PostCroppedImageSrcBySrcEvent
 {
-    public function __construct(protected string $tempImageName)
-    {
-    }
+    public function __construct(protected string $tempImageName) {}
 
     public function getTempImageName(): string
     {

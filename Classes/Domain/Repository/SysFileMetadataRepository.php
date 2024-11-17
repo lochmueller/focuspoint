@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-
-
 namespace HDNET\Focuspoint\Domain\Repository;
-
 
 class SysFileMetadataRepository extends AbstractRawRepository
 {
-
     public function findOneByFileUid(int $fileUid): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -24,7 +20,6 @@ class SysFileMetadataRepository extends AbstractRawRepository
 
         return $rows[0] ?? null;
     }
-
 
     protected function getTableName(): string
     {

@@ -6,13 +6,11 @@ namespace HDNET\Focuspoint\Domain\Model;
 
 class FileReference extends AbstractModel
 {
-
     protected int $focusPointY = 0;
 
     protected int $focusPointX = 0;
 
-
-    public function getFocusPointY():int
+    public function getFocusPointY(): int
     {
         return $this->focusPointY;
     }
@@ -22,7 +20,7 @@ class FileReference extends AbstractModel
         $this->focusPointY = $focusPointY;
     }
 
-    public function getFocusPointX():int
+    public function getFocusPointX(): int
     {
         return $this->focusPointX;
     }

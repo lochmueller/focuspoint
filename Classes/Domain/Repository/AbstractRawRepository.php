@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace HDNET\Focuspoint\Domain\Repository;
 
 use TYPO3\CMS\Core\Database\Connection;
@@ -21,7 +20,8 @@ abstract class AbstractRawRepository
                 $queryBuilder->expr()->eq('uid', $uid)
             )
             ->executeQuery()
-            ->fetchAllAssociative();
+            ->fetchAllAssociative()
+        ;
 
         return $rows[0] ?? null;
     }
@@ -30,10 +30,11 @@ abstract class AbstractRawRepository
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        return (array)$queryBuilder->select('*')
+        return (array) $queryBuilder->select('*')
             ->from($this->getTableName())
             ->executeQuery()
-            ->fetchAllAssociative();
+            ->fetchAllAssociative()
+        ;
     }
 
     public function update(int $uid, array $values): void
@@ -58,12 +59,10 @@ abstract class AbstractRawRepository
         return $this->getConnectionPool()->getConnectionForTable($this->getTableName());
     }
 
-
     protected function getQueryBuilder(): QueryBuilder
     {
         return $this->getConnectionPool()->getQueryBuilderForTable($this->getTableName());
     }
-
 
     abstract protected function getTableName(): string;
 

@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace HDNET\Focuspoint\ViewHelpers\Uri;
 
 use HDNET\Focuspoint\Service\FocusCropService;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
@@ -48,8 +50,8 @@ class ImageViewHelper extends AbstractViewHelper
      *
      * @return string
      *
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     * @throws FileDoesNotExistException
+     * @throws ResourceDoesNotExistException
      */
     public static function renderStatic(
         array $arguments,

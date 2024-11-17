@@ -18,7 +18,7 @@ class WizardService extends AbstractService
         $spriteIcon = $this->getWizardIcon($light);
         $label = $GLOBALS['LANG']->sL('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard');
         if (null === $uri) {
-            $label .= ' ' . $GLOBALS['LANG']->sL(
+            $label .= ' '.$GLOBALS['LANG']->sL(
                 'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard.imagesonly'
             );
 

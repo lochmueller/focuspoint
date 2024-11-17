@@ -10,10 +10,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class TestController extends ActionController
 {
-    public function __construct(protected FileRepository $fileRepository)
-    {
-    }
-
+    public function __construct(protected FileRepository $fileRepository) {}
 
     public function testAction(): ResponseInterface
     {

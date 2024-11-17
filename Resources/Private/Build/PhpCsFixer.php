@@ -1,15 +1,17 @@
 <?php
 
 declare(strict_types=1);
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
 
 $baseDir = dirname(__DIR__, 3);
 
 require $baseDir.'/.Build/vendor/autoload.php';
 
-return (new PhpCsFixer\Config())
+return (new Config())
     ->setRiskyAllowed(true)
     ->setFinder(
-        PhpCsFixer\Finder::create()
+        Finder::create()
             ->in($baseDir.'/Classes')
             ->in($baseDir.'/Configuration')
             ->in($baseDir.'/Tests')

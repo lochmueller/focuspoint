@@ -12,8 +12,7 @@ final class PreGenerateTempImageNameEvent
         protected string $ratio,
         protected int $focusPointX,
         protected int $focusPointY
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

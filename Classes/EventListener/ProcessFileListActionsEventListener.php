@@ -13,9 +13,7 @@ use TYPO3\CMS\Filelist\Event\ProcessFileListActionsEvent;
 
 class ProcessFileListActionsEventListener
 {
-    public function __construct(protected WizardService $wizardService)
-    {
-    }
+    public function __construct(protected WizardService $wizardService) {}
 
     public function __invoke(ProcessFileListActionsEvent $event): void
     {

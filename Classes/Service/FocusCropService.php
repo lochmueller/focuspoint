@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-
-
 namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Domain\Repository\FileStandaloneRepository;
@@ -11,8 +9,13 @@ use HDNET\Focuspoint\Event\PostCroppedImageSrcBySrcEvent;
 use HDNET\Focuspoint\Event\PreGenerateTempImageNameEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Http\NormalizedParams;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileInterface;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
+use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -31,8 +34,7 @@ class FocusCropService extends AbstractService
 
     public function __construct(
         protected EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+    ) {}
 
     /**
      * get the image.
@@ -41,15 +43,15 @@ class FocusCropService extends AbstractService
      * @param mixed $image
      * @param mixed $treatIdAsReference
      *
-     * @return CoreFileReference|FileInterface|\TYPO3\CMS\Core\Resource\File|\TYPO3\CMS\Core\Resource\Folder
+     * @return CoreFileReference|File|FileInterface|Folder
      *
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     * @throws FileDoesNotExistException
+     * @throws ResourceDoesNotExistException
      */
     public function getViewHelperImage($src, $image, $treatIdAsReference)
     {
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-        if ($image instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+        if ($image instanceof CoreFileReference) {
             return $image;
         }
         if ($image instanceof FileReference) {
@@ -74,8 +76,8 @@ class FocusCropService extends AbstractService
      *
      * @return string
      *
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     * @throws FileDoesNotExistException
+     * @throws ResourceDoesNotExistException
      */
     public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, string $ratio)
     {
@@ -137,7 +139,7 @@ class FocusCropService extends AbstractService
             return '';
         }
 
-        /** @var \TYPO3\CMS\Core\Http\NormalizedParams $params */
+        /** @var NormalizedParams $params */
         $params = $GLOBALS['TYPO3_REQUEST']->getAttribute('normalizedParams');
         $docRoot = rtrim($params->getDocumentRoot(), '/').'/';
         $relativeSrc = str_replace($docRoot, '', $absoluteImageName);

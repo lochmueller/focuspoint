@@ -6,13 +6,11 @@ namespace HDNET\Focuspoint\Domain\Model;
 
 class Dimension extends AbstractModel
 {
-
     protected string $title = '';
 
     protected string $identifier = '';
 
     protected string $dimension = '';
-
 
     public function getTitle(): string
     {

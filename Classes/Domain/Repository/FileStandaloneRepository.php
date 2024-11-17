@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace HDNET\Focuspoint\Domain\Repository;
-
 
 class FileStandaloneRepository extends AbstractRawRepository
 {
-
     public function findOneByRelativeFilePath(string $relativeFilePath): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
@@ -23,7 +20,6 @@ class FileStandaloneRepository extends AbstractRawRepository
 
         return $rows[0] ?? null;
     }
-
 
     protected function getTableName(): string
     {

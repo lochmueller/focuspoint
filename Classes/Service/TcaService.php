@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace HDNET\Focuspoint\Service;
 
 use HDNET\Focuspoint\Domain\Repository\DimensionRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 
 class TcaService extends AbstractService
 {

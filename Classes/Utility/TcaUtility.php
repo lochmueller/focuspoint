@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-
-
 namespace HDNET\Focuspoint\Utility;
-
 
 class TcaUtility
 {

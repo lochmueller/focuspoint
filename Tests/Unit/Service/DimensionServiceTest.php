@@ -54,7 +54,7 @@ final class DimensionServiceTest extends UnitTestCase
     /**
      * @return array
      */
-    public function provideFocusBoxSizeCases()
+    public static function provideFocusBoxSizeCases(): iterable
     {
         return [
             [
@@ -100,7 +100,7 @@ final class DimensionServiceTest extends UnitTestCase
     /**
      * @return array
      */
-    public function provideFocusSourcePointCases()
+    public static function provideFocusSourcePointCases(): iterable
     {
         return [
             [

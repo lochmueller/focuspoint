@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace HDNET\Focuspoint\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
-
 
 class ImageUtility
 {
