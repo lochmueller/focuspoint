@@ -87,34 +87,6 @@ class ImageViewHelper extends AbstractTagBasedViewHelper
         } catch (\Exception $ex) {
             return 'Missing image!';
         }
-
-        if ($this->arguments['realCrop']) {
-            return $this->tag->render();
-        }
-
-        // Ratio calculation
-        if (null !== $internalImage) {
-            $metadata = null;
-            if ($internalImage instanceof FileReference) {
-                $metadata = $internalImage->getOriginalFile()->getMetaData();
-            }
-            if ($internalImage instanceof File) {
-                $metadata = $internalImage->getMetaData();
-            }
-            $focusPointY = $internalImage->getProperty('focus_point_y') ?: $metadata['focus_point_y'] ?? 0;
-            $focusPointX = $internalImage->getProperty('focus_point_x') ?: $metadata['focus_point_x'] ?? 0;
-
-            $additionalClassDiv = 'focuspoint';
-            if (!empty($this->arguments['additionalClassDiv'])) {
-                $additionalClassDiv .= ' '.$this->arguments['additionalClassDiv'];
-            }
-
-            $focusTag = '<div class="'.$additionalClassDiv.'" data-image-imageSrc="'.$this->tag->getAttribute('src').'" data-focus-x="'.($focusPointX / 100).'" data-focus-y="'.($focusPointY / 100).'" data-image-w="'.$this->tag->getAttribute('width').'" data-image-h="'.$this->tag->getAttribute('height').'">';
-
-            return $focusTag.$this->tag->render().'</div>';
-        }
-
-        return 'Missing internal image!';
     }
 
     /**
