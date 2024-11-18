@@ -153,7 +153,7 @@ class CropService extends AbstractService
 
         // prevent the problem of large images result in a "Allowed memory size" error
         // we do not need the alpha layer at all, because the PNG rendered with cropViaGraphicalFunctions
-        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true, true);
+        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true);
 
         $graphicalFunctions->imagecopyresized(
             $destinationImage,

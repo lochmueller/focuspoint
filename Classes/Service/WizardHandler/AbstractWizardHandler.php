@@ -61,8 +61,8 @@ abstract class AbstractWizardHandler
     protected function cleanupPosition(array $position): array
     {
         return [
-            MathUtility::forceIntegerInRange((int) $position[0], -100, 100, 0),
-            MathUtility::forceIntegerInRange((int) $position[1], -100, 100, 0),
+            MathUtility::forceIntegerInRange((int) $position[0], -100, 100),
+            MathUtility::forceIntegerInRange((int) $position[1], -100, 100),
         ];
     }
 }

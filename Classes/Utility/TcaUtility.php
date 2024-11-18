@@ -8,10 +8,8 @@ class TcaUtility
 {
     /**
      * Get field configuration.
-     *
-     * @param mixed $label
      */
-    public static function getBaseConfiguration($label): array
+    public static function getBaseConfiguration(string $label): array
     {
         return [
             'exclude' => 1,

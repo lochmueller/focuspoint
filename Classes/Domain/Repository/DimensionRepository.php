@@ -9,16 +9,16 @@ class DimensionRepository extends AbstractRawRepository
     public function findOneByIdentifier(string $identifier): ?array
     {
         $queryBuilder = $this->getQueryBuilder();
-        $rows = $queryBuilder->select('*')
+        $row = $queryBuilder->select('*')
             ->from($this->getTableName())
             ->where(
                 $queryBuilder->expr()->eq('identifier', $queryBuilder->createNamedParameter($identifier))
             )
             ->executeQuery()
-            ->fetchAllAssociative()
+            ->fetchAssociative()
         ;
 
-        return $rows[0] ?? null;
+        return $row !== false ? $row : null;
     }
 
     protected function getTableName(): string

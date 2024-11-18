@@ -27,10 +27,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
  */
 class FocusCropService extends AbstractService
 {
-    /**
-     * @var string
-     */
-    protected $tempImageFolder;
+    protected ?string $tempImageFolder = null;
 
     public function __construct(
         protected EventDispatcherInterface $eventDispatcher
@@ -48,7 +45,7 @@ class FocusCropService extends AbstractService
      * @throws FileDoesNotExistException
      * @throws ResourceDoesNotExistException
      */
-    public function getViewHelperImage($src, $image, $treatIdAsReference)
+    public function getViewHelperImage(string|int|null $src, $image, bool $treatIdAsReference)
     {
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         if ($image instanceof CoreFileReference) {
@@ -72,14 +69,11 @@ class FocusCropService extends AbstractService
      *
      * @param mixed $src
      * @param mixed $image
-     * @param mixed $treatIdAsReference
-     *
-     * @return string
      *
      * @throws FileDoesNotExistException
      * @throws ResourceDoesNotExistException
      */
-    public function getCroppedImageSrcForViewHelper($src, $image, $treatIdAsReference, string $ratio)
+    public function getCroppedImageSrcForViewHelper(string|int|null $src, $image, bool $treatIdAsReference, string $ratio): string
     {
         $file = $this->getViewHelperImage($src, $image, $treatIdAsReference);
 
@@ -88,12 +82,8 @@ class FocusCropService extends AbstractService
 
     /**
      * Get the cropped image.
-     *
-     * @param string $fileReference
-     *
-     * @return string The new filename
      */
-    public function getCroppedImageSrcByFileReference($fileReference, string $ratio)
+    public function getCroppedImageSrcByFileReference(FileReference|CoreFileReference $fileReference, string $ratio): string
     {
         if ($fileReference instanceof FileReference) {
             $fileReference = $fileReference->getOriginalResource();
@@ -110,7 +100,7 @@ class FocusCropService extends AbstractService
      *
      * @return string The new filename
      */
-    public function getCroppedImageSrcByFile(FileInterface $file, string $ratio)
+    public function getCroppedImageSrcByFile(FileInterface $file, string $ratio): string
     {
         $result = $this->getCroppedImageSrcBySrc(
             $file->getForLocalProcessing(false),
@@ -143,8 +133,8 @@ class FocusCropService extends AbstractService
         $params = $GLOBALS['TYPO3_REQUEST']->getAttribute('normalizedParams');
         $docRoot = rtrim($params->getDocumentRoot(), '/') . '/';
         $relativeSrc = str_replace($docRoot, '', $absoluteImageName);
-        $focusPointX = MathUtility::forceIntegerInRange((int) $x, -100, 100, 0);
-        $focusPointY = MathUtility::forceIntegerInRange((int) $y, -100, 100, 0);
+        $focusPointX = MathUtility::forceIntegerInRange($x, -100, 100);
+        $focusPointY = MathUtility::forceIntegerInRange($y, -100, 100);
 
         // if image is SVG simply return its relative path we can not crop it
         if ('image/svg+xml' === mime_content_type($absoluteImageName)) {
@@ -154,8 +144,8 @@ class FocusCropService extends AbstractService
         if (0 === $focusPointX && 0 === $focusPointY) {
             $row = GeneralUtility::makeInstance(FileStandaloneRepository::class)->findOneByRelativeFilePath($relativeSrc);
             if (isset($row['focus_point_x'])) {
-                $focusPointX = MathUtility::forceIntegerInRange((int) $row['focus_point_x'], -100, 100, 0);
-                $focusPointY = MathUtility::forceIntegerInRange((int) $row['focus_point_y'], -100, 100, 0);
+                $focusPointX = MathUtility::forceIntegerInRange((int) $row['focus_point_x'], -100, 100);
+                $focusPointY = MathUtility::forceIntegerInRange((int) $row['focus_point_y'], -100, 100);
             }
         }
 

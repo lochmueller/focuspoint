@@ -52,8 +52,8 @@ class File extends AbstractWizardHandler
     public function setCurrentPoint(int $x, int $y): void
     {
         $values = [
-            'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100, 0),
-            'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100, 0),
+            'focus_point_x' => MathUtility::forceIntegerInRange($x, -100, 100),
+            'focus_point_y' => MathUtility::forceIntegerInRange($y, -100, 100),
         ];
 
         GeneralUtility::makeInstance(SysFileMetadataRepository::class)->update((int) $this->getMataDataUid(), $values);

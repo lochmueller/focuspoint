@@ -26,14 +26,14 @@ abstract class AbstractRawRepository
         return $rows[0] ?? null;
     }
 
-    public function findAll(): array
+    public function findAll(): iterable
     {
         $queryBuilder = $this->getQueryBuilder();
 
-        return (array) $queryBuilder->select('*')
+        yield from $queryBuilder->select('*')
             ->from($this->getTableName())
             ->executeQuery()
-            ->fetchAllAssociative()
+            ->iterateAssociative()
         ;
     }
 

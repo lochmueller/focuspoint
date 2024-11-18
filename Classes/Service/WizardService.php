@@ -35,7 +35,7 @@ class WizardService extends AbstractService
      *
      * @param mixed $light
      */
-    protected function getWizardIcon($light = false): string
+    protected function getWizardIcon(bool $light = false): string
     {
         /** @var IconFactory $iconFactory */
         $iconFactory = GeneralUtility::makeInstance(IconFactory::class);

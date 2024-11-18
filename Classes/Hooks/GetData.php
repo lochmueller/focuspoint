@@ -61,7 +61,7 @@ class GetData implements ContentObjectGetDataHookInterface
 
                 case 'w':
                 case 'h':
-                    $fileName = GeneralUtility::getFileAbsFileName($fileObject->getPublicUrl(true));
+                    $fileName = GeneralUtility::getFileAbsFileName($fileObject->getPublicUrl());
                     if (file_exists($fileName)) {
                         $sizes = getimagesize($fileName);
 

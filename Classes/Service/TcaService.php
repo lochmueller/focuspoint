@@ -46,7 +46,7 @@ class TcaService extends AbstractService
     /**
      * Get custom elements.
      */
-    protected function getCustomItems(): array
+    protected function getCustomItems(): iterable
     {
         return GeneralUtility::makeInstance(DimensionRepository::class)->findAll();
     }
