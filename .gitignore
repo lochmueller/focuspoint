@@ -4,3 +4,4 @@
 /Resources/External/
 /.php-cs-fixer.cache
 /composer.lock
+.DS_Store
