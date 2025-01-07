@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HDNET\Focuspoint\Service;
 
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Imaging\ImageResource;
 use TYPO3\CMS\Core\Imaging\GraphicalFunctions;
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -146,16 +147,40 @@ class CropService extends AbstractService
         int $sourceY,
         string $absoluteTempImageName
     ): void {
-        /** @var GraphicalFunctions $graphicalFunctions */
-        $graphicalFunctions = GeneralUtility::makeInstance(GraphicalFunctions::class);
-        $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
+        // Create image resource using GD functions based on file extension
+        $extension = strtolower(pathinfo($absoluteImageName, PATHINFO_EXTENSION));
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                $sourceImage = imagecreatefromjpeg($absoluteImageName);
+                break;
+            case 'png':
+                $sourceImage = imagecreatefrompng($absoluteImageName);
+                break;
+            case 'gif':
+                $sourceImage = imagecreatefromgif($absoluteImageName);
+                break;
+            case 'webp':
+                $sourceImage = imagecreatefromwebp($absoluteImageName);
+                break;
+            default:
+                throw new \RuntimeException('Unsupported image type: ' . $extension, 1641234567);
+        }
+
+        if (!$sourceImage) {
+            throw new \RuntimeException('Could not create image resource from file: ' . $absoluteImageName, 1641234568);
+        }
+
         $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
 
-        // prevent the problem of large images result in a "Allowed memory size" error
-        // we do not need the alpha layer at all, because the PNG rendered with cropViaGraphicalFunctions
-        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true);
+        // Handle transparency for PNG images
+        if ($extension === 'png') {
+            imagealphablending($destinationImage, false);
+            imagesavealpha($destinationImage, true);
+        }
 
-        $graphicalFunctions->imagecopyresized(
+        // Use PHP's native imagecopyresampled for better quality
+        imagecopyresampled(
             $destinationImage,
             $sourceImage,
             0,
@@ -168,10 +193,25 @@ class CropService extends AbstractService
             $focusHeight
         );
 
-        $graphicalFunctions->ImageWrite(
-            $destinationImage,
-            $absoluteTempImageName,
-            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']
-        );
+        // Save the image based on file extension
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                imagejpeg($destinationImage, $absoluteTempImageName, (int)($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'] ?? 85));
+                break;
+            case 'png':
+                imagepng($destinationImage, $absoluteTempImageName);
+                break;
+            case 'gif':
+                imagegif($destinationImage, $absoluteTempImageName);
+                break;
+            case 'webp':
+                imagewebp($destinationImage, $absoluteTempImageName, (int)($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'] ?? 85));
+                break;
+        }
+
+        // Clean up
+        imagedestroy($sourceImage);
+        imagedestroy($destinationImage);
     }
 }
