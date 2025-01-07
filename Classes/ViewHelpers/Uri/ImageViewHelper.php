@@ -12,17 +12,20 @@ use HDNET\Focuspoint\Service\FocusCropService;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Resource\ImageInterface;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * Get the URI of the cropped image.
  */
 class ImageViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
+    /**
+     * @var bool
+     */
+    protected $escapeOutput = false;
 
     public function initializeArguments(): void
     {
@@ -46,33 +49,45 @@ class ImageViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param callable|\Closure $renderChildrenClosure
-     *
      * @return string
-     *
      * @throws FileDoesNotExistException
      * @throws ResourceDoesNotExistException
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
+    public function render(): string
+    {
+        $src = $this->arguments['src'];
+        $image = $this->arguments['image'];
+        $treatIdAsReference = $this->arguments['treatIdAsReference'];
+        $ratio = $this->arguments['ratio'];
+
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
-        $arguments['src'] = $service->getCroppedImageSrcForViewHelper(
-            $arguments['src'],
-            $arguments['image'],
-            $arguments['treatIdAsReference'],
-            $arguments['ratio']
+        $this->arguments['src'] = $service->getCroppedImageSrcForViewHelper(
+            $src,
+            $image,
+            $treatIdAsReference,
+            $ratio
         );
-        $arguments['image'] = null;
-        $arguments['treatIdAsReference'] = false;
+        $this->arguments['image'] = null;
+        $this->arguments['treatIdAsReference'] = false;
 
-        return \TYPO3\CMS\Fluid\ViewHelpers\Uri\ImageViewHelper::renderStatic($arguments, $renderChildrenClosure, $renderingContext);
+        /** @var ImageService $imageService */
+        $imageService = GeneralUtility::makeInstance(ImageService::class);
+        $image = $imageService->getImage($this->arguments['src'], null, false);
+        $processingInstructions = [
+            'width' => $this->arguments['width'],
+            'height' => $this->arguments['height'],
+            'minWidth' => $this->arguments['minWidth'],
+            'minHeight' => $this->arguments['minHeight'],
+            'maxWidth' => $this->arguments['maxWidth'],
+            'maxHeight' => $this->arguments['maxHeight'],
+            'crop' => $this->arguments['crop'],
+        ];
+        $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
+        return $imageService->getImageUri($processedImage, $this->arguments['absolute']);
     }
 
-    protected static function getImageService(): ImageService
+    protected function getImageService(): ImageService
     {
         return GeneralUtility::makeInstance(ImageService::class);
     }
