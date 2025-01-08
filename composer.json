@@ -1,58 +1,58 @@
 {
-  "name": "lochmueller/focuspoint",
-  "description": "Focuspoint integrate the focal point method to crop images in the frontend of the web page. Use the jQuery-focuspoint plugin (https://github.com/jonom/jquery-focuspoint example http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) to crop the images. Use the function as wizard in the file list view and directly in the content element.",
-  "license": "GPL-2.0-or-later",
-  "autoload": {
-    "psr-4": {
-      "HDNET\\Focuspoint\\": "Classes/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "HDNET\\Focuspoint\\Tests\\": "Tests"
-    }
-  },
-  "require": {
-    "php": "^8.1",
-    "typo3/cms-core": "^12.4||^13.4"
-  },
-  "type": "typo3-cms-extension",
-  "keywords": [
-    "TYPO3 CMS",
-    "Focuspoint"
-  ],
-  "homepage": "https://github.com/lochmueller/focuspoint",
-  "support": {
-    "issues": "https://github.com/lochmueller/focuspoint/issues"
-  },
-  "require-dev": {
-    "typo3/testing-framework": "^8.0",
-    "friendsofphp/php-cs-fixer": "^3.60"
-  },
-  "config": {
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
-    "allow-plugins": {
-      "typo3/cms-composer-installers": true,
-      "typo3/class-alias-loader": true
-    }
-  },
-  "extra": {
-    "typo3/cms": {
-      "extension-key": "focuspoint",
-      "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build/Web",
-      "Package": {
-        "partOfMinimalUsableSystem": true
-      }
-    }
-  },
-  "scripts": {
-    "code-fix": [
-      "@tool:php-cs-fixer"
-    ],
-    "tool:php-cs-fixer": [
-      "php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
-    ]
-  }
+	"name": "lochmueller/focuspoint",
+	"description": "Focuspoint integrate the focal point method to crop images in the frontend of the web page. Use the jQuery-focuspoint plugin (https://github.com/jonom/jquery-focuspoint example http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) to crop the images. Use the function as wizard in the file list view and directly in the content element.",
+	"license": "GPL-2.0-or-later",
+	"autoload": {
+		"psr-4": {
+			"HDNET\\Focuspoint\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"HDNET\\Focuspoint\\Tests\\": "Tests"
+		}
+	},
+	"require": {
+		"php": "^8.1",
+		"typo3/cms-core": "^12.4||^13.4"
+	},
+	"type": "typo3-cms-extension",
+	"keywords": [
+		"TYPO3 CMS",
+		"Focuspoint"
+	],
+	"homepage": "https://github.com/lochmueller/focuspoint",
+	"support": {
+		"issues": "https://github.com/lochmueller/focuspoint/issues"
+	},
+	"require-dev": {
+		"typo3/testing-framework": "^8.0",
+		"friendsofphp/php-cs-fixer": "^3.60"
+	},
+	"config": {
+		"vendor-dir": ".Build/vendor",
+		"bin-dir": ".Build/bin",
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true
+		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "focuspoint",
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"web-dir": ".Build/Web",
+			"Package": {
+				"partOfMinimalUsableSystem": true
+			}
+		}
+	},
+	"scripts": {
+		"code-fix": [
+			"@tool:php-cs-fixer"
+		],
+		"tool:php-cs-fixer": [
+			"php-cs-fixer fix --config Resources/Private/Build/PhpCsFixer.php"
+		]
+	}
 }
