@@ -1,5 +1,5 @@
 {
-  "name": "mohsinqk/focuspoint",
+  "name": "lochmueller/focuspoint",
   "description": "Focuspoint integrate the focal point method to crop images in the frontend of the web page. Use the jQuery-focuspoint plugin (https://github.com/jonom/jquery-focuspoint example http://jonom.github.io/jquery-focuspoint/demos/helper/index.html) to crop the images. Use the function as wizard in the file list view and directly in the content element.",
   "license": "GPL-2.0-or-later",
   "autoload": {
@@ -36,9 +36,6 @@
       "typo3/cms-composer-installers": true,
       "typo3/class-alias-loader": true
     }
-  },
-  "replace": {
-    "lochmueller/focuspoint": "*"
   },
   "extra": {
     "typo3/cms": {
