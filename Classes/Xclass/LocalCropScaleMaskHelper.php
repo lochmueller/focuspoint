@@ -88,7 +88,11 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
      */
     protected function getCurrentRatioConfiguration(): string
     {
-        $currentRecord = $GLOBALS['TSFE']->currentRecord;
+        $currentRecord = $GLOBALS['TSFE']->currentRecord ?? '';
+        if (empty($currentRecord)) {
+            throw new \Exception('No current record found in TSFE', 12366);
+        }
+
         $parts = GeneralUtility::trimExplode(':', $currentRecord);
         if (2 !== \count($parts)) {
             throw new \Exception('Invalid count of current record parts', 12367);

@@ -12,6 +12,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
+use TYPO3\CMS\Core\Core\Environment;
 
 class CropService extends AbstractService
 {
@@ -126,13 +127,16 @@ class CropService extends AbstractService
                 'crop' => $sourceX . ',' . $sourceY . ',' . $focusWidth . ',' . $focusHeight,
             ],
         ];
-
         /** @var GifBuilder $gifBuilder */
         $gifBuilder = GeneralUtility::makeInstance(GifBuilder::class);
         $gifBuilder->start($configuration, []);
-        $gifBuilder->make();
-        $gifBuilder->output($absoluteTempImageName);
-        $gifBuilder->destroy();
+        $imageResource = $gifBuilder->gifBuild();
+        if ($imageResource !== null) {
+            $processedFile = $imageResource->getPublicUrl();
+            if ($processedFile && !file_exists($absoluteTempImageName)) {
+                copy(Environment::getPublicPath() . '/' . $processedFile, $absoluteTempImageName);
+            }
+        }
     }
 
     /**
@@ -146,32 +150,6 @@ class CropService extends AbstractService
         int $sourceY,
         string $absoluteTempImageName
     ): void {
-        /** @var GraphicalFunctions $graphicalFunctions */
-        $graphicalFunctions = GeneralUtility::makeInstance(GraphicalFunctions::class);
-        $sourceImage = $graphicalFunctions->imageCreateFromFile($absoluteImageName);
-        $destinationImage = imagecreatetruecolor($focusWidth, $focusHeight);
-
-        // prevent the problem of large images result in a "Allowed memory size" error
-        // we do not need the alpha layer at all, because the PNG rendered with cropViaGraphicalFunctions
-        ObjectAccess::setProperty($graphicalFunctions, 'saveAlphaLayer', true);
-
-        $graphicalFunctions->imagecopyresized(
-            $destinationImage,
-            $sourceImage,
-            0,
-            0,
-            $sourceX,
-            $sourceY,
-            $focusWidth,
-            $focusHeight,
-            $focusWidth,
-            $focusHeight
-        );
-
-        $graphicalFunctions->ImageWrite(
-            $destinationImage,
-            $absoluteTempImageName,
-            $GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality']
-        );
+        $this->cropViaGifBuilder($absoluteImageName, $focusWidth, $focusHeight, $sourceX, $sourceY, $absoluteTempImageName);
     }
 }
