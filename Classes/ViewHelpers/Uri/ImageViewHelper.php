@@ -68,12 +68,10 @@ class ImageViewHelper extends AbstractViewHelper
             $treatIdAsReference,
             $ratio
         );
-        $this->arguments['image'] = null;
-        $this->arguments['treatIdAsReference'] = false;
 
         /** @var ImageService $imageService */
         $imageService = GeneralUtility::makeInstance(ImageService::class);
-        $image = $imageService->getImage($this->arguments['src'], null, false);
+        $image = $imageService->getImage($this->arguments['src'], $this->arguments['image'], $this->arguments['treatIdAsReference']);
         $processingInstructions = [
             'width' => $this->arguments['width'],
             'height' => $this->arguments['height'],
