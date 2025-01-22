@@ -100,6 +100,11 @@ class CropService extends AbstractService
         int $sourceY,
         string $absoluteTempImageName
     ): void {
+
+        // early exit if absoluteTempImage exists
+        if (file_exists($absoluteTempImageName)) {
+            return;
+        }
         $size = getimagesize($absoluteImageName);
         $relativeImagePath = rtrim(PathUtility::getRelativePath(
             GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT'),
@@ -133,7 +138,7 @@ class CropService extends AbstractService
         $imageResource = $gifBuilder->gifBuild();
         if ($imageResource !== null) {
             $processedFile = $imageResource->getPublicUrl();
-            if ($processedFile && !file_exists($absoluteTempImageName)) {
+            if ($processedFile) {
                 copy(Environment::getPublicPath() . '/' . $processedFile, $absoluteTempImageName);
             }
         }
