@@ -55,19 +55,17 @@ class ImageViewHelper extends AbstractViewHelper
      */
     public function render(): string
     {
-        $src = $this->arguments['src'];
-        $image = $this->arguments['image'];
-        $treatIdAsReference = $this->arguments['treatIdAsReference'];
-        $ratio = $this->arguments['ratio'];
-
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
         $this->arguments['src'] = $service->getCroppedImageSrcForViewHelper(
-            $src,
-            $image,
-            $treatIdAsReference,
-            $ratio
+            $this->arguments['src'],
+            $this->arguments['image'],
+            $this->arguments['treatIdAsReference'],
+            $this->arguments['ratio']
         );
+
+        $this->arguments['image'] = null;
+        $this->arguments['treatIdAsReference'] = false;
 
         /** @var ImageService $imageService */
         $imageService = GeneralUtility::makeInstance(ImageService::class);
