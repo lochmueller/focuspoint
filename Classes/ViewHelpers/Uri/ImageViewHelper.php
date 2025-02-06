@@ -43,6 +43,7 @@ class ImageViewHelper extends AbstractViewHelper
         $this->registerArgument('maxWidth', 'int', 'maximum width of the image');
         $this->registerArgument('maxHeight', 'int', 'maximum height of the image');
         $this->registerArgument('absolute', 'bool', 'Force absolute URL', false, false);
+        $this->registerArgument('base64', 'bool', 'Return a base64 encoded version of the image', false, false);
 
         // EXT:focuspoint
         $this->registerArgument('ratio', 'string', 'Ratio of the image', false, '1:1');
@@ -79,7 +80,14 @@ class ImageViewHelper extends AbstractViewHelper
             'maxHeight' => $this->arguments['maxHeight'],
             'crop' => $this->arguments['crop'],
         ];
+        if (!empty($this->arguments['fileExtension'] ?? '')) {
+            $processingInstructions['fileExtension'] = $this->arguments['fileExtension'];
+        }
         $processedImage = $imageService->applyProcessingInstructions($image, $processingInstructions);
+
+        if ($this->arguments['base64']) {
+            return 'data:' . $processedImage->getMimeType() . ';base64,' . base64_encode($processedImage->getContents());
+        }
         return $imageService->getImageUri($processedImage, $this->arguments['absolute']);
     }
 
