@@ -142,17 +142,17 @@ class CropService extends AbstractService
         if ($versionService->getMajorVersion() < 13) {
             // TYPO3 prior v13 returns a string
             // see https://api.typo3.org/12.4/classes/TYPO3-CMS-Frontend-Imaging-GifBuilder.html#method_gifBuild
-            $processedFile = $gifBuilder->gifBuild();
+            $processedFile = Environment::getPublicPath() . '/' . $gifBuilder->gifBuild();
         } else {
             // TYPO3 from v13 up returns an imageResource
             // https://api.typo3.org/13.4/classes/TYPO3-CMS-Frontend-Imaging-GifBuilder.html#method_gifBuild
             $imageResource = $gifBuilder->gifBuild();
             if ($imageResource !== null) {
-                $processedFile = $imageResource->getPublicUrl();
+                $processedFile = $imageResource->getFullPath();
             }
         }
         if ($processedFile) {
-            copy(Environment::getPublicPath() . '/' . $processedFile, $absoluteTempImageName);
+            copy($processedFile, $absoluteTempImageName);
         }
     }
 
