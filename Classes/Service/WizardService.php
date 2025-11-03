@@ -4,47 +4,37 @@ declare(strict_types=1);
 
 namespace HDNET\Focuspoint\Service;
 
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Imaging\IconSize;
 
 class WizardService extends AbstractService
 {
+
+    public function __construct(private readonly IconFactory $iconFactory) {}
+
     /**
      * Get the wizard button with the given URI.
      */
     public function getWizardButton(?string $uri = null, bool $addDataActionNavigation = false, bool $light = false): string
     {
-        $spriteIcon = $this->getWizardIcon($light);
+        // When the icon is rendered inline, the currentColor is inherited (Light/Dark)
+        $iconHtml = $this->iconFactory
+            ->getIcon('focuspoint-filestandalone', IconSize::SMALL)
+            ->render('inline');
+
+
         $label = $GLOBALS['LANG']->sL('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard');
         if (null === $uri) {
             $label .= ' ' . $GLOBALS['LANG']->sL(
                 'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard.imagesonly'
             );
 
-            return '<span class="btn btn-default disabled" title="' . $label . '">' . $spriteIcon . '</span>';
+            return '<span class="btn btn-default disabled" title="' . $label . '">' . $iconHtml . '</span>';
         }
 
         $dataAction = $addDataActionNavigation ? ' data-action-navigate="' . $uri . '"' : '';
 
-        return '<a href="' . $uri . '"' . $dataAction . ' class="btn btn-default" title="' . $label . '">' . $spriteIcon . '</a>';
+        return '<a href="' . $uri . '"' . $dataAction . ' class="btn btn-default" title="' . $label . '">' . $iconHtml . '</a>';
     }
 
-    /**
-     * Get the wizard icon.
-     *
-     * @param mixed $light
-     */
-    protected function getWizardIcon(bool $light = false): string
-    {
-        /** @var IconFactory $iconFactory */
-        $iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-        $icon = $iconFactory->getIcon(
-            'tcarecords-tx_focuspoint_domain_model_filestandalone-default' . ($light ? '-light' : ''),
-            Icon::SIZE_SMALL,
-            null
-        );
-
-        return $icon->render();
-    }
 }

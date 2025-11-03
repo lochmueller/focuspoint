@@ -5,12 +5,8 @@ declare(strict_types=1);
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 
 return [
-    'tcarecords-tx_focuspoint_domain_model_filestandalone-default' => [
+    'focuspoint-filestandalone' => [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:focuspoint/Resources/Public/Icons/Extension.svg',
-    ],
-    'tcarecords-tx_focuspoint_domain_model_filestandalone-default-light' => [
-        'provider' => SvgIconProvider::class,
-        'source' => 'EXT:focuspoint/Resources/Public/Icons/ExtensionLight.svg',
     ],
 ];
