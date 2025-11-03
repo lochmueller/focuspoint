@@ -9,7 +9,6 @@ use TYPO3\CMS\Core\Imaging\IconSize;
 
 class WizardService extends AbstractService
 {
-
     public function __construct(private readonly IconFactory $iconFactory) {}
 
     /**
