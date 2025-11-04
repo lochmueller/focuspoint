@@ -6,6 +6,10 @@
 			<generator>LFEditor</generator>
 		</header>
 		<body>
+		<trans-unit id="focuspoint" approved="yes">
+			<source>Focus point</source>
+			<target>Fokuspunkt</target>
+		</trans-unit>
 		<trans-unit id="focuspoint.wizard" approved="yes">
 			<source>Focus point wizard</source>
 			<target>Fokuspunkt Assistent</target>

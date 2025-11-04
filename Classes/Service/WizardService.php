@@ -14,7 +14,7 @@ class WizardService extends AbstractService
     /**
      * Get the wizard button with the given URI.
      */
-    public function getWizardButton(?string $uri = null, bool $addDataActionNavigation = false, bool $light = false): string
+    public function getWizardButton(?string $uri = null, bool $fileReferenceControls = true): string
     {
         // When the icon is rendered inline, the currentColor is inherited (Light/Dark)
         $iconHtml = $this->iconFactory
@@ -22,18 +22,25 @@ class WizardService extends AbstractService
             ->render('inline');
 
 
-        $label = $GLOBALS['LANG']->sL('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard');
+        $label = $GLOBALS['LANG']->sL('LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint');
         if (null === $uri) {
             $label .= ' ' . $GLOBALS['LANG']->sL(
                 'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:focuspoint.wizard.imagesonly'
             );
 
-            return '<span class="btn btn-default disabled" title="' . $label . '">' . $iconHtml . '</span>';
+            if ($fileReferenceControls) {
+                return '<span class="btn btn-default" title="' . $label . '">' . $iconHtml . '</span>';
+            } else {
+                return '<span role="button" class="dropdown-item dropdown-item-spaced" title="' . $label . '">' . $iconHtml . '</a>';
+            }
         }
 
-        $dataAction = $addDataActionNavigation ? ' data-action-navigate="' . $uri . '"' : '';
+        if ($fileReferenceControls) {
+            return '<a href="' . $uri . '"' . ' data-action-navigate="' . $uri . '"' . ' class="btn btn-default" title="' . $label . '">' . $iconHtml . '</a>';
+        } else {
+            return '<a role="button" href="' . $uri . '"' . ' class="dropdown-item dropdown-item-spaced" title="' . $label . '">' . $iconHtml . '</a>';
+        }
 
-        return '<a href="' . $uri . '"' . $dataAction . ' class="btn btn-default" title="' . $label . '">' . $iconHtml . '</a>';
     }
 
 }
