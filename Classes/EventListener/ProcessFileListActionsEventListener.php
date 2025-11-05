@@ -34,7 +34,7 @@ class ProcessFileListActionsEventListener
 
         // Add item
         $items = $event->getActionItems();
-        $items['focuspoint'] = $this->wizardService->getWizardButton($wizardUri, false, true);
+        $items['focuspoint'] = $this->wizardService->getWizardButton($wizardUri, false);
         $event->setActionItems($items);
     }
 }
