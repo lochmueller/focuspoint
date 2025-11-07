@@ -10,6 +10,7 @@ use HDNET\Focuspoint\Service\WizardHandler\FileReference;
 use HDNET\Focuspoint\Service\WizardHandler\Group;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Http\RedirectResponse;
@@ -26,6 +27,7 @@ class BackendController extends ActionController
 
     /**
      * Returns the Module menu for the AJAX request.
+     * @throws RouteNotFoundException
      */
     public function wizardAction(ServerRequestInterface $request): ResponseInterface
     {
@@ -61,6 +63,16 @@ class BackendController extends ActionController
         }
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $closeUrl = (string)$uriBuilder->buildUriFromRoute(
+            'record_edit',
+            [
+                'token' => $parameter['P']['token'] ?? '',
+                'edit' => $parameter['P']['edit'] ?? [],
+                'returnUrl' => rawurldecode($parameter['P']['returnUrl'] ?? ''),
+            ]
+        );
+
+        $moduleTemplate->assign('returnUrl', rawurldecode($closeUrl));
         $moduleTemplate->assign('saveUri', (string) $uriBuilder->buildUriFromRoute('focuspoint', $saveArguments));
 
         return $moduleTemplate->renderResponse('Backend/Wizard');

@@ -1,4 +1,10 @@
-{namespace c=TYPO3\CMS\Core\ViewHelpers}
+<html data-namespace-typo3-fluid="true"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+>
+
+
+
 
 <f:asset.css identifier="jquery" href="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/css/focuspoint.css" />
 <f:asset.css identifier="demo" href="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/demos/demo.css" />
@@ -11,26 +17,35 @@
 <f:asset.script identifier="helper-tool" src="EXT:focuspoint/Resources/Public/jquery-focuspoint-2015-08-31/js/jquery.focuspoint.helpertool.js" />
 <f:asset.script identifier="focuspoint-backend" src="EXT:focuspoint/Resources/Public/JavaScript/Wizard.js"/>
 
-<div style="position: relative; height: 800px; width: 100%">
-	<f:render section="content" arguments="{_all}"/>
+<f:render section="Header" arguments="{_all}"/>
+<div class="module-body t3js-module-body" style="position: relative; height: 800px; width: 100%">
+	<f:render section="Content" arguments="{_all}"/>
 </div>
 
-<f:section name="content">
+<f:section name="Header">
+	<div class="module-docheader t3js-module-docheader">
+		<div class="module-docheader-bar module-docheader-bar-navigation t3js-module-docheader-bar t3js-module-docheader-bar-navigation"></div>
+		<div class="module-docheader-bar module-docheader-bar-buttons t3js-module-docheader-bar t3js-module-docheader-bar-buttons">
+			<div class="module-docheader-bar-column-left">
+				<div class="btn-toolbar" role="toolbar" aria-label="">
+					<a role="button" href="{returnUrl}" class="btn btn-sm btn-default t3js-editform-close" title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:close')}"><core:icon identifier="actions-close" title="Close"></core:icon> <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:close" /></a>
+					<a role="button" id="saveFocus" href="{saveUri}" class="btn btn-sm btn-default t3js-editform-close" title="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:save')}" data-current-left="{currentLeft}" data-current-top="{currentTop}"><core:icon identifier="actions-save" title="Save"></core:icon> <f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:save" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="Content">
+	<div >
 	<f:if condition="{filePath}">
 		<f:then>
-
-			<div id="Frames">
-			</div>
-
+			<div id="Frames"></div>
 			<div id="Info">
 				<div class="helper-tool">
 					<h1>
 						<f:translate key="wizard.title" extensionName="focuspoint"/>
-						<a href="{saveUri}" id="saveFocus" data-current-left="{currentLeft}" data-current-top="{currentTop}">
-							<c:icon identifier="actions-document-save-close"/>
-						</a>
 					</h1>
-
 					<div class="helper-tool-target">
 						<img class="helper-tool-img" width="100%">
 						<img class="reticle"
@@ -39,7 +54,6 @@
 					<p style="display: none;">
 						<input name="set-src" id="set-src" class='helper-tool-set-src' type='text' value="{filePath}">
 					</p>
-
 					<p style="display: none;">
 						<input class='helper-tool-data-attr' id="data-attr" name="data-attr" type='text'
 									 placeholder='data-focus-x="0" data-focus-y="0" '>
@@ -51,4 +65,5 @@
 			<f:translate key="no.handler" extensionName="focuspoint"/>
 		</f:else>
 	</f:if>
+	</div>
 </f:section>
