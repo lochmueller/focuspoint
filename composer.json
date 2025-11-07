@@ -14,7 +14,8 @@
 	},
 	"require": {
 		"php": "^8.1",
-		"typo3/cms-core": "^12.4||^13.4"
+		"typo3/cms-core": "^12.4||^13.4",
+		"t3docs/examples": "^13.2"
 	},
 	"type": "typo3-cms-extension",
 	"keywords": [
