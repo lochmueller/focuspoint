@@ -71,6 +71,7 @@ class ImageViewHelper extends AbstractTagBasedViewHelper
         /** @var FocusCropService $service */
         $service = GeneralUtility::makeInstance(FocusCropService::class);
 
+        $internalImage = null;
         try {
             $internalImage = $service->getViewHelperImage($this->arguments['src'], $this->arguments['image'], $this->arguments['treatIdAsReference']);
             if ($this->arguments['realCrop'] && $internalImage instanceof FileInterface) {
@@ -83,10 +84,35 @@ class ImageViewHelper extends AbstractTagBasedViewHelper
         }
 
         try {
-            return $this->originalRender();
+            $imgTag = $this->originalRender();
         } catch (\Exception $ex) {
             return 'Missing image!';
         }
+
+        // When realCrop is disabled, wrap the image in a focuspoint div so the
+        // jQuery FocusPoint plugin can shift the image client-side.
+        if (!$this->arguments['realCrop'] && $internalImage instanceof FileInterface) {
+            $rawX = $internalImage->getProperty('focus_point_x');
+            $rawY = $internalImage->getProperty('focus_point_y');
+            // DB stores values as integers in the range -100..100; plugin expects -1..1
+            $focusX = $rawX !== null ? round((int)$rawX / 100, 4) : 0;
+            $focusY = $rawY !== null ? round((int)$rawY / 100, 4) : 0;
+            $imageW = (int)($internalImage->getProperty('width') ?? 0);
+            $imageH = (int)($internalImage->getProperty('height') ?? 0);
+            $additionalClass = (string)$this->arguments['additionalClassDiv'] !== ''
+                ? ' ' . $this->arguments['additionalClassDiv']
+                : '';
+
+            return '<div class="focuspoint' . $additionalClass . '"'
+                . ' data-focus-x="' . $focusX . '"'
+                . ' data-focus-y="' . $focusY . '"'
+                . ' data-image-w="' . $imageW . '"'
+                . ' data-image-h="' . $imageH . '">'
+                . $imgTag
+                . '</div>';
+        }
+
+        return $imgTag;
     }
 
     /**
