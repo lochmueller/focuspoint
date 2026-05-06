@@ -41,8 +41,8 @@ class FileReference extends AbstractWizardHandler
         $properties = $reference->getProperties();
 
         return $this->cleanupPosition([
-            $properties['focus_point_x'],
-            $properties['focus_point_y'],
+            $properties['focus_point_x'] ?? 0,
+            $properties['focus_point_y'] ?? 0,
         ]);
     }
 
@@ -92,5 +92,7 @@ class FileReference extends AbstractWizardHandler
         if (isset($p['referenceUid']) && MathUtility::canBeInterpretedAsInteger($p['referenceUid'])) {
             return (int) $p['referenceUid'];
         }
+
+        return null;
     }
 }

@@ -7,13 +7,17 @@ namespace HDNET\Focuspoint\EventListener;
 use HDNET\Focuspoint\Service\WizardService;
 use HDNET\Focuspoint\Utility\ImageUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Backend\Template\Components\ComponentFactory;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Filelist\Event\ProcessFileListActionsEvent;
 
 class ProcessFileListActionsEventListener
 {
-    public function __construct(protected WizardService $wizardService) {}
+    public function __construct(
+        protected WizardService $wizardService,
+        protected ComponentFactory $componentFactory,
+    ) {}
 
     public function __invoke(ProcessFileListActionsEvent $event): void
     {
@@ -33,8 +37,7 @@ class ProcessFileListActionsEventListener
         $wizardUri = (string) $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
 
         // Add item
-        $items = $event->getActionItems();
-        $items['focuspoint'] = $this->wizardService->getWizardButton($wizardUri, false);
-        $event->setActionItems($items);
+        $button = $this->componentFactory->createFullyRenderedButton()->setHtmlSource($this->wizardService->getWizardButton($wizardUri, false));
+        $event->setAction($button, 'focuspoint');
     }
 }

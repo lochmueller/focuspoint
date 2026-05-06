@@ -11,14 +11,15 @@ use TYPO3\CMS\Core\Resource\Processing\TaskInterface;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
- * Local crop scale mask helper (overwrite).
+ * Local image processor (overwrite).
  */
-class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\LocalCropScaleMaskHelper
+class LocalImageProcessor extends \TYPO3\CMS\Core\Resource\Processing\LocalImageProcessor
 {
     /**
-     * If set to true, the pocess is running and no addinal calculation are needed.
+     * If set to true, the process is running and no additional calculation is needed.
      */
     protected static bool $deepCheck = false;
 
@@ -26,9 +27,6 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 
     protected FocusCropService $focusCropService;
 
-    /**
-     * Build up the object.
-     */
     public function __construct()
     {
         $this->dimensionService = GeneralUtility::makeInstance(DimensionService::class);
@@ -36,17 +34,24 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
     }
 
     /**
-     * Processing the focus point crop (fallback to LocalCropScaleMaskHelper).
+     * Processing the focus point crop (fallback to LocalImageProcessor).
      *
-     * @return null|array
+     * Both 'Preview' and 'CropScaleMask' tasks route through this method,
+     * so we only intercept 'CropScaleMask'.
      */
-    public function process(TaskInterface $task)
+    public function processTask(TaskInterface $task): void
     {
+        if ($task->getName() !== 'CropScaleMask') {
+            parent::processTask($task);
+            return;
+        }
+
         $configuration = $task->getConfiguration();
         $crop = isset($configuration['crop']) ? json_decode((string) $configuration['crop']) : null;
         if ($crop instanceof \stdClass && isset($crop->x)) {
             // if crop is enable release the process
-            return parent::process($task);
+            parent::processTask($task);
+            return;
         }
 
         $sourceFile = $task->getSourceFile();
@@ -59,7 +64,9 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
 
                 $newFile = $this->focusCropService->getCroppedImageSrcByFile($sourceFile, $ratio);
                 if (null === $newFile) {
-                    return parent::process($task);
+                    self::$deepCheck = false;
+                    parent::processTask($task);
+                    return;
                 }
                 $file = GeneralUtility::makeInstance(ResourceFactory::class)
                     ->retrieveFileOrFolderObject($newFile)
@@ -78,7 +85,7 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
         }
         self::$deepCheck = false;
 
-        return parent::process($task);
+        parent::processTask($task);
     }
 
     /**
@@ -88,9 +95,12 @@ class LocalCropScaleMaskHelper extends \TYPO3\CMS\Core\Resource\Processing\Local
      */
     protected function getCurrentRatioConfiguration(): string
     {
-        $currentRecord = $GLOBALS['TSFE']->currentRecord ?? '';
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
+        $cObj = $request?->getAttribute('currentContentObject');
+        $currentRecord = $cObj instanceof ContentObjectRenderer ? (string) $cObj->currentRecord : '';
+
         if (empty($currentRecord)) {
-            throw new \Exception('No current record found in TSFE', 12366);
+            throw new \Exception('No current record found on the request', 12366);
         }
 
         $parts = GeneralUtility::trimExplode(':', $currentRecord);

@@ -6,11 +6,15 @@ namespace HDNET\Focuspoint\Controller;
 
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Resource\FileRepository;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class TestController extends ActionController
 {
-    public function __construct(protected FileRepository $fileRepository) {}
+    public function __construct(
+        protected FileRepository                $fileRepository,
+        protected ConfigurationManagerInterface $configurationManager
+    ) {}
 
     public function testAction(): ResponseInterface
     {

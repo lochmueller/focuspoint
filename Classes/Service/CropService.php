@@ -12,8 +12,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Frontend\Imaging\GifBuilder;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Information\Typo3Version;
 
 class CropService extends AbstractService
 {
@@ -137,22 +135,9 @@ class CropService extends AbstractService
         $gifBuilder = GeneralUtility::makeInstance(GifBuilder::class);
         $gifBuilder->start($configuration, []);
 
-        $versionService = GeneralUtility::makeInstance(Typo3Version::class);
-        $processedFile = false;
-        if ($versionService->getMajorVersion() < 13) {
-            // TYPO3 prior v13 returns a string
-            // see https://api.typo3.org/12.4/classes/TYPO3-CMS-Frontend-Imaging-GifBuilder.html#method_gifBuild
-            $processedFile = Environment::getPublicPath() . '/' . $gifBuilder->gifBuild();
-        } else {
-            // TYPO3 from v13 up returns an imageResource
-            // https://api.typo3.org/13.4/classes/TYPO3-CMS-Frontend-Imaging-GifBuilder.html#method_gifBuild
-            $imageResource = $gifBuilder->gifBuild();
-            if ($imageResource !== null) {
-                $processedFile = $imageResource->getFullPath();
-            }
-        }
-        if ($processedFile) {
-            copy($processedFile, $absoluteTempImageName);
+        $imageResource = $gifBuilder->gifBuild();
+        if ($imageResource !== null) {
+            copy($imageResource->getFullPath(), $absoluteTempImageName);
         }
     }
 
