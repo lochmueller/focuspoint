@@ -18,3 +18,9 @@ services:
       - name: event.listener
         identifier: 'FocuspointModifyFileReferenceControlsEventListener'
         event: TYPO3\CMS\Backend\Form\Event\ModifyFileReferenceControlsEvent
+
+  HDNET\Focuspoint\EventListener\AfterGetDataResolvedEventListener:
+    tags:
+      - name: event.listener
+        identifier: 'FocuspointAfterGetDataResolvedEventListener'
+        event: TYPO3\CMS\Frontend\ContentObject\Event\AfterGetDataResolvedEvent
