@@ -11,7 +11,7 @@
 						 edit-on-github-branch="master"
 						 edit-on-github="lochmueller/focuspoint"
 						 typo3-core-preferred="13.4"/>
-	<project title="Static File Cache"
+	<project title="Focuspoint"
 					 release="main (development)"
 					 version="main (development)"
 					 copyright="by Tim Lochmüller &amp; Contributors"/>
