@@ -55,6 +55,11 @@ class LocalImageProcessor extends \TYPO3\CMS\Core\Resource\Processing\LocalImage
         }
 
         $sourceFile = $task->getSourceFile();
+        if ($this->focusCropService->isFocusCroppedFile($sourceFile)) {
+            // The file is already cropped (e.g. via fp:uri.image or fp:image) - only scale/convert it
+            parent::processTask($task);
+            return;
+        }
 
         try {
             if (false === self::$deepCheck) {

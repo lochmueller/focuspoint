@@ -199,6 +199,29 @@ class FocusCropService extends AbstractService
         return $event->getTempImageName();
     }
 
+    /**
+     * Check if the given file is already a focus point cropped image (located in the temp image folder).
+     * These files must not be cropped again, e.g. if they are processed afterwards (scaling, file extension change).
+     */
+    public function isFocusCroppedFile(FileInterface $file): bool
+    {
+        $absoluteTempImageFolder = GeneralUtility::getFileAbsFileName($this->getTempImageFolder());
+        if ('' === $absoluteTempImageFolder) {
+            return false;
+        }
+
+        try {
+            $localFile = $file->getForLocalProcessing(false);
+        } catch (\Exception $exception) {
+            return false;
+        }
+
+        return str_starts_with(
+            PathUtility::getCanonicalPath($localFile),
+            rtrim(PathUtility::getCanonicalPath($absoluteTempImageFolder), '/') . '/'
+        );
+    }
+
     protected function generateTempImageName(string $absoluteImageName, string $ratio, int $focusPointX, int $focusPointY): string
     {
         $event = $this->eventDispatcher->dispatch(new PreGenerateTempImageNameEvent(
