@@ -63,6 +63,12 @@
 		<trans-unit id="tx_focuspoint_domain_model_filestandalone.relative_file_path">
 			<source>relative_file_path</source>
 		</trans-unit>
+		<trans-unit id="focuspoint.wizard.saveFirst.title">
+			<source>Record not saved yet</source>
+		</trans-unit>
+		<trans-unit id="focuspoint.wizard.saveFirst.message">
+			<source>Please save the base record first, because opening this wizard will not save the changes in the current form!</source>
+		</trans-unit>
 		</body>
 	</file>
 </xliff>

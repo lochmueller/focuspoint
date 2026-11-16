@@ -23,6 +23,8 @@ class ModifyFileReferenceControlsEventListener
         $uid = $record['uid'] ?? 0;
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+        $wizardService = GeneralUtility::makeInstance(WizardService::class);
+        $controls = $event->getControls();
 
         if ($this->isValidRecord($event->getForeignTable(), $uid)) {
             $arguments = $GLOBALS['TYPO3_REQUEST']->getQueryParams();
@@ -44,14 +46,12 @@ class ModifyFileReferenceControlsEventListener
                 ],
             ];
             $wizardUri = (string) $uriBuilder->buildUriFromRoute('focuspoint', $wizardArguments);
+            $controls['focuspoint'] = $wizardService->getWizardButton($wizardUri, true);
         } else {
-            $wizardUri = 'javascript:alert(\'Please save the base record first, because open this wizard will not save the changes in the current form!\');';
+            // No inline JavaScript (javascript:alert) here, because it is blocked by the backend CSP
+            $controls['focuspoint'] = $wizardService->getSaveFirstButton();
         }
 
-        $wizardService = GeneralUtility::makeInstance(WizardService::class);
-
-        $controls = $event->getControls();
-        $controls['focuspoint'] = $wizardService->getWizardButton((string) $wizardUri, true);
         $event->setControls($controls);
     }
 
