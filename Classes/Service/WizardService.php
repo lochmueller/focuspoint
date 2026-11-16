@@ -43,4 +43,26 @@ class WizardService extends AbstractService
 
     }
 
+    /**
+     * Get a wizard button for records that are not saved yet.
+     * Uses the TYPO3 core modal markup trigger, so no inline JavaScript is needed (CSP compliant).
+     */
+    public function getSaveFirstButton(): string
+    {
+        $iconHtml = $this->iconFactory
+            ->getIcon('focuspoint-filestandalone', IconSize::SMALL)
+            ->render('inline');
+
+        $languagePrefix = 'LLL:EXT:focuspoint/Resources/Private/Language/locallang.xlf:';
+        $label = $GLOBALS['LANG']->sL($languagePrefix . 'focuspoint');
+        $title = $GLOBALS['LANG']->sL($languagePrefix . 'focuspoint.wizard.saveFirst.title');
+        $message = $GLOBALS['LANG']->sL($languagePrefix . 'focuspoint.wizard.saveFirst.message');
+
+        return '<button type="button" class="btn btn-default t3js-modal-trigger"'
+            . ' title="' . htmlspecialchars($label) . '"'
+            . ' data-severity="warning"'
+            . ' data-title="' . htmlspecialchars($title) . '"'
+            . ' data-content="' . htmlspecialchars($message) . '"'
+            . '>' . $iconHtml . '</button>';
+    }
 }

@@ -83,6 +83,14 @@
 			<source>relative_file_path</source>
 			<target>Relativer Datei Pfad</target>
 		</trans-unit>
+		<trans-unit id="focuspoint.wizard.saveFirst.title" approved="yes">
+			<source>Record not saved yet</source>
+			<target>Datensatz noch nicht gespeichert</target>
+		</trans-unit>
+		<trans-unit id="focuspoint.wizard.saveFirst.message" approved="yes">
+			<source>Please save the base record first, because opening this wizard will not save the changes in the current form!</source>
+			<target>Bitte speichere zuerst den Datensatz, da beim Öffnen des Assistenten die Änderungen im aktuellen Formular nicht gespeichert werden!</target>
+		</trans-unit>
 		</body>
 	</file>
 </xliff>
