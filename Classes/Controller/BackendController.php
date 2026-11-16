@@ -63,7 +63,7 @@ class BackendController extends ActionController
         }
 
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $closeUrl = (string)$uriBuilder->buildUriFromRoute(
+        $closeUrl = (string) $uriBuilder->buildUriFromRoute(
             'record_edit',
             [
                 'token' => $parameter['P']['token'] ?? '',

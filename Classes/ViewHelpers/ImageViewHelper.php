@@ -87,11 +87,11 @@ class ImageViewHelper extends AbstractTagBasedViewHelper
             $rawX = $internalImage->getProperty('focus_point_x');
             $rawY = $internalImage->getProperty('focus_point_y');
             // DB stores values as integers in the range -100..100; plugin expects -1..1
-            $focusX = $rawX !== null ? round((int)$rawX / 100, 4) : 0;
-            $focusY = $rawY !== null ? round((int)$rawY / 100, 4) : 0;
-            $imageW = (int)($internalImage->getProperty('width') ?? 0);
-            $imageH = (int)($internalImage->getProperty('height') ?? 0);
-            $additionalClass = (string)$this->arguments['additionalClassDiv'] !== ''
+            $focusX = $rawX !== null ? round((int) $rawX / 100, 4) : 0;
+            $focusY = $rawY !== null ? round((int) $rawY / 100, 4) : 0;
+            $imageW = (int) ($internalImage->getProperty('width') ?? 0);
+            $imageH = (int) ($internalImage->getProperty('height') ?? 0);
+            $additionalClass = (string) $this->arguments['additionalClassDiv'] !== ''
                 ? ' ' . $this->arguments['additionalClassDiv']
                 : '';
 
